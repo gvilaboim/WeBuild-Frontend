@@ -32,7 +32,7 @@ const DraggableComponent = ({ component }) => {
       ref={drag}
       style={{ ...style, opacity }}
     >
-      {component.title}
+      {component.name}
     </div>
   )
 }
