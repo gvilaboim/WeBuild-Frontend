@@ -1,0 +1,12 @@
+.canvas{
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border: 1px solid black;
+}
+
+.canvas > * {
+    position: relative;
+    flex-wrap: wrap;
+ }

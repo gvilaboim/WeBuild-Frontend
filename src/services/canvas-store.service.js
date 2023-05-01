@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-class ExampleService {
+class CanvasStoreService {
   constructor() {
     this.api = axios.create({
       baseURL: process.env.REACT_APP_SERVER_URL || "http://localhost:5005"
@@ -24,9 +24,9 @@ class ExampleService {
     return this.api.post('/api/examples', requestBody);
   }
 
-  // GET /api/examples
+  // GET /api/canvas-store
   getAll = async () => {
-    return this.api.get('/api/examples');
+    return this.api.get('/api/canvas-store');
   }
 
   // GET /api/examples/:id
@@ -48,6 +48,6 @@ class ExampleService {
 }
 
 // Create one instance of the service
-const exampleService = new ExampleService();
+const canvasStoreService = new CanvasStoreService();
 
-export default exampleService;
+export default canvasStoreService;

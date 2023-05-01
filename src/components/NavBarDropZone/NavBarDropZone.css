@@ -1,0 +1,6 @@
+.navbar-drop-zone {
+  flex: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

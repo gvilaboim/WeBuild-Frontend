@@ -18,8 +18,8 @@ function Navbar() {
         <>
           <button onClick={logOutUser}>Logout</button>
 
-          <Link to="/profile">
-            <button>Profile</button>
+          <Link to="/dashboard">
+            <button>Dashboard</button>
             {/* <img src="https://picsum.photos/id/402/200/300" style={{ width: 50, height: 50, borderRadius: 25}} alt="profile" /> */}
           </Link>
 

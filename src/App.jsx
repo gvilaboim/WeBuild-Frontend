@@ -1,34 +1,46 @@
-import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import './App.css'
+import { Routes, Route } from 'react-router-dom'
 
-import HomePage from "./pages/HomePage/HomePage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import SignupPage from "./pages/SignupPage/SignupPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
+import HomePage from './pages/HomePage/HomePage'
+import Dashboard from './pages/Dashboard/Dashboard'
+import SignupPage from './pages/SignupPage/SignupPage'
+import LoginPage from './pages/LoginPage/LoginPage'
 
-import Navbar from "./components/Navbar/Navbar";
-import IsPrivate from "./components/IsPrivate/IsPrivate";
-import IsAnon from "./components/IsAnon/IsAnon";
+import Navbar from './components/Navbar/Navbar'
+import IsPrivate from './components/IsPrivate/IsPrivate'
+import IsAnon from './components/IsAnon/IsAnon'
+import Create from './pages/Create/Create'
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path='/'
+          element={<HomePage />}
+        />
 
         <Route
-          path="/profile"
+          path='/dashboard'
           element={
             <IsPrivate>
-              <ProfilePage />
+              <Dashboard />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path='/create'
+          element={
+            <IsPrivate>
+              <Create />
             </IsPrivate>
           }
         />
 
         <Route
-          path="/signup"
+          path='/signup'
           element={
             <IsAnon>
               <SignupPage />
@@ -36,7 +48,7 @@ function App() {
           }
         />
         <Route
-          path="/login"
+          path='/login'
           element={
             <IsAnon>
               <LoginPage />
@@ -45,7 +57,7 @@ function App() {
         />
       </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
