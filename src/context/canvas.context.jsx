@@ -5,7 +5,6 @@ import canvasStoreService from '../services/canvas-store.service'
 const CanvasContext = React.createContext()
 
 function CanvasProviderWrapper(props) {
-  
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
 
@@ -16,22 +15,16 @@ function CanvasProviderWrapper(props) {
   const [navbarComponents, setNavbarComponents] = useState([])
   const [bodyComponents, setBodyComponents] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
-  
-  const getStoreComponents = async () => {
-    return await canvasStoreService.getAll()
-  }
 
   useEffect(() => {
-    canvasStoreService.getAllWebsites().then(response => {
+    canvasStoreService.getAllWebsites().then((response) => {
       setWebSites(response.data)
-    
+      console.log(response.data)
     })
-   }, []);
-   
-  
-  //later will get from DB current website components
-  useEffect(() => {
-    getStoreComponents().then((res) => setStoreComponents(res.data))
+    canvasStoreService.getStoreItems().then((response) => {
+      setStoreComponents(response.data)
+      console.log(response.data)
+    })
   }, [])
 
   return (
@@ -45,7 +38,7 @@ function CanvasProviderWrapper(props) {
         footerComponents,
         setFooterComponents,
         webSites,
-        setWebSites
+        setWebSites,
       }}
     >
       {props.children}

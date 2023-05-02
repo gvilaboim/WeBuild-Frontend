@@ -1,7 +1,7 @@
 .body-drop-zone{
-    flex: 1;
     display: flex; 
     flex-direction: column;
     justify-content: center; 
     align-items: center;
+    /* overflow: scroll; */
 }

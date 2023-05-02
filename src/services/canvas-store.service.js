@@ -1,69 +1,60 @@
-import axios from 'axios';
+import axios from 'axios'
 
 class CanvasStoreService {
   constructor() {
     this.api = axios.create({
-      baseURL: process.env.REACT_APP_SERVER_URL || "http://localhost:5005"
-    });
+      baseURL: process.env.REACT_APP_SERVER_URL || 'http://localhost:5005',
+    })
 
     // Automatically set JWT token in the headers for every request
     this.api.interceptors.request.use((config) => {
       // Retrieve the JWT token from the local storage
-      const storedToken = localStorage.getItem("authToken");
+      const storedToken = localStorage.getItem('authToken')
 
       if (storedToken) {
-        config.headers = { Authorization: `Bearer ${storedToken}` };
+        config.headers = { Authorization: `Bearer ${storedToken}` }
       }
 
-      return config;
-    });
+      return config
+    })
   }
 
-  // POST /api/examples
+  // WEBSITE calls
+  // CREATE NEW OR EDIT EXISTING WEBSITE
+  // POST /api/websites//create
   createWebSite = async (siteData) => {
-    return this.api.post('/api/websites/create', {siteData});
+    return this.api.post('/api/websites/create', { siteData })
   }
 
- // GET /api/canvas-store
- getAllWebsites = async () => {
-  return this.api.get('/api/websites');
-}
-
-  saveChanges = async (siteData) => {
-    return this.api.put('/api/websites', {siteData});
+  // Get website from DB - to Edit
+  // GET /api/websites/:id
+  getOneWebsite = async (id) => {
+    return this.api.get(`/api/websites/${id}`)
   }
-
- getAllWebsites = async (id) => {
-  return this.api.get(`/api/websites/${id}`);
-}
-
   // GET /api/canvas-store
-  getAll = async () => {
-    return this.api.get('/api/canvas-store');
+  getStoreItems = async () => {
+    return this.api.get('/api/canvas-store')
   }
 
-  // GET /api/examples/:id
-  getOne = async (id) => {
-    return this.api.get(`/api/examples/${id}`);
+  //Add current website changes to DB
+  saveChanges = async (siteData) => {
+    return this.api.put('/api/websites', { siteData })
   }
 
-  // PUT /api/examples/:id
-  updateOne = async (id, requestBody) => {
-    return this.api.put(`/api/examples/${id}`, requestBody);
+  // DASHBOARD
+  // GET /api//websites/get-all
+  getAllWebsites = async () => {
+    return this.api.get('/api//websites/get-all')
   }
+
 
   // DELETE /api/examples/:id
   deleteProject = async (id) => {
-    return this.api.delete(`/api/examples/${id}`);
-  } 
-
-
-
-
-
+    return this.api.delete(`/api/examples/${id}`)
+  }
 }
 
 // Create one instance of the service
-const canvasStoreService = new CanvasStoreService();
+const canvasStoreService = new CanvasStoreService()
 
-export default canvasStoreService;
+export default canvasStoreService

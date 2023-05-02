@@ -72,7 +72,7 @@ const BodyDropZone = () => {
     >
       <div
         ref={containerRef}
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100%', height: '100%', position: 'relative' }}
       >
         {bodyComponents.length > 0 ? (
           bodyComponents.map((component) => {

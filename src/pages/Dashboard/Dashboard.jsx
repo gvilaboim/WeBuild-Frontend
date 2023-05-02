@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import './Dashboard.css'
 import { useContext, useEffect } from 'react';
-import canvasStoreService from '../../services/canvas-store.service';
 import { CanvasContext } from '../../context/canvas.context';
 
 
@@ -11,6 +10,7 @@ const {webSites} = useContext(CanvasContext)
       <div>
         {/* Later Add all the graphs and stats of all the websitres the user has created already */}
         <Link to={'/websites'}>Create a new website</Link>
+        Websites
         <ul> 
         {webSites.length >0 && 
         webSites.map(element =>  {
