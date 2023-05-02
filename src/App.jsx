@@ -10,12 +10,15 @@ import Navbar from './components/Navbar/Navbar'
 import IsPrivate from './components/IsPrivate/IsPrivate'
 import IsAnon from './components/IsAnon/IsAnon'
 import Create from './pages/Create/Create'
+import CreateForm from './pages/Create/CreateForm'
+
+import { CanvasProviderWrapper } from './context/canvas.context'
 
 function App() {
   return (
     <div className='App'>
+      <CanvasProviderWrapper>
       <Navbar />
-
       <Routes>
         <Route
           path='/'
@@ -31,13 +34,21 @@ function App() {
           }
         />
         <Route
-          path='/create'
+          path='/websites'
           element={
             <IsPrivate>
-              <Create />
+              <CreateForm />
             </IsPrivate>
           }
-        />
+        />  
+        <Route
+        path='/websites/edit/:id'
+        element={
+          <IsPrivate>
+            <Create />
+          </IsPrivate>
+        }
+      />
 
         <Route
           path='/signup'
@@ -56,6 +67,8 @@ function App() {
           }
         />
       </Routes>
+      </CanvasProviderWrapper>
+
     </div>
   )
 }

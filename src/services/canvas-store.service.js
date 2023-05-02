@@ -20,9 +20,22 @@ class CanvasStoreService {
   }
 
   // POST /api/examples
-  createOne = async (requestBody) => {
-    return this.api.post('/api/examples', requestBody);
+  createWebSite = async (siteData) => {
+    return this.api.post('/api/websites/create', {siteData});
   }
+
+ // GET /api/canvas-store
+ getAllWebsites = async () => {
+  return this.api.get('/api/websites');
+}
+
+  saveChanges = async (siteData) => {
+    return this.api.put('/api/websites', {siteData});
+  }
+
+ getAllWebsites = async (id) => {
+  return this.api.get(`/api/websites/${id}`);
+}
 
   // GET /api/canvas-store
   getAll = async () => {
@@ -43,6 +56,9 @@ class CanvasStoreService {
   deleteProject = async (id) => {
     return this.api.delete(`/api/examples/${id}`);
   } 
+
+
+
 
 
 }

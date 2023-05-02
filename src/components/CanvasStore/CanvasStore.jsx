@@ -11,7 +11,6 @@ const CanvasStore = ({ setShowSidebar }) => {
 
   return (
     <>
-      {currentPage.pathname === '/create' && (
         <div>
           <div>
             <div>Add a Section</div>
@@ -39,7 +38,7 @@ const CanvasStore = ({ setShowSidebar }) => {
             Hide Sidebar
           </button>
         </div>
-      )}
+   
     </>
   )
 }

@@ -40,7 +40,7 @@ const FooterDropZone = () => {
     >
       {footerComponents.length !== 0 ? (
         footerComponents.map((component) => {
-          return <div key={component._id}>{component.title}</div>
+          return <div key={component._id}>{component.name}</div>
         })
       ) : (
         <div>Drag a Footer here</div>

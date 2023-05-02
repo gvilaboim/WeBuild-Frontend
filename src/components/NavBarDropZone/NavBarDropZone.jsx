@@ -42,7 +42,7 @@ const NavBarDropZone = () => {
     >
       {navbarComponents.length !== 0 ? (
         navbarComponents.map((component) => {
-          return <div key={component._id}>{component.title}</div>
+          return <div key={component._id}>{component.name}</div>
         })
       ) : (
         <div>Drag a Header Item here</div>

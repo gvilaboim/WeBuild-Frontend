@@ -1,12 +1,51 @@
 import "./Navbar.css";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
+import canvasStoreService from '../../services/canvas-store.service'
+import { CanvasContext } from "../../context/canvas.context";
+
 
 function Navbar() {
   // Subscribe to the AuthContext to gain access to
   // the values from AuthContext.Provider's `value` prop
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
+  const { navbarComponents , bodyComponents , footerComponents} = useContext(CanvasContext);
+  const [websiteID, setWebsiteID] = useState('')
+  const location = useLocation();
+
+  const regex = /^.*\/websites\/edit\/(\w+)$/;
+  const match = location.pathname.match(regex);
+
+  useEffect(() => {
+    if (match) {
+      const id = match[1];
+      setWebsiteID(id);
+      console.log(id); 
+    }
+   
+  }, [])
+  
+
+
+
+  
+ const saveChangesBTN = () => {
+  let siteData = {
+    id:websiteID,
+    navbarComponents,
+    bodyComponents,
+    footerComponents
+  }
+
+  canvasStoreService.saveChanges(siteData).then((res) =>
+  console.log(res.data))
+
+  }
+
+
+
+  const isEditPage = /^\/websites\/edit\/\w+$/.test(location.pathname)
 
   return (
     <nav>
@@ -25,7 +64,13 @@ function Navbar() {
 
           <span>{user && user.name}</span>
         </>
+      )} 
+
+        {isEditPage &&(
+       <button onClick={() => saveChangesBTN()}>Save Changes</button>
       )}
+     
+
 
       {!isLoggedIn && (
         <>
@@ -39,6 +84,7 @@ function Navbar() {
           </Link>
         </>
       )}
+           
     </nav>
   );
 }

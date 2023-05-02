@@ -8,7 +8,10 @@ function CanvasProviderWrapper(props) {
   
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
-  
+
+  //DashBoard Websites created by user
+  const [webSites, setWebSites] = useState([])
+
   // components already dragged to the canvas
   const [navbarComponents, setNavbarComponents] = useState([])
   const [bodyComponents, setBodyComponents] = useState([])
@@ -17,6 +20,14 @@ function CanvasProviderWrapper(props) {
   const getStoreComponents = async () => {
     return await canvasStoreService.getAll()
   }
+
+  useEffect(() => {
+    canvasStoreService.getAllWebsites().then(response => {
+      setWebSites(response.data)
+    
+    })
+   }, []);
+   
   
   //later will get from DB current website components
   useEffect(() => {
@@ -33,6 +44,8 @@ function CanvasProviderWrapper(props) {
         setBodyComponents,
         footerComponents,
         setFooterComponents,
+        webSites,
+        setWebSites
       }}
     >
       {props.children}
