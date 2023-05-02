@@ -19,11 +19,9 @@ function CanvasProviderWrapper(props) {
   useEffect(() => {
     canvasStoreService.getAllWebsites().then((response) => {
       setWebSites(response.data)
-      console.log(response.data)
     })
     canvasStoreService.getStoreItems().then((response) => {
       setStoreComponents(response.data)
-      console.log(response.data)
     })
   }, [])
 

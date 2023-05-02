@@ -8,7 +8,6 @@ const CanvasStore = ({ setShowSidebar }) => {
   const currentPage = useLocation()
 
   const { storeComponents } = useContext(CanvasContext)
-  console.log(storeComponents)
 
   return (
     <>

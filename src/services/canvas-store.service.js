@@ -44,7 +44,7 @@ class CanvasStoreService {
   // DASHBOARD
   // GET /api//websites/get-all
   getAllWebsites = async () => {
-    return this.api.get('/api//websites/get-all')
+    return this.api.get('/api/websites/get-all')
   }
 
 

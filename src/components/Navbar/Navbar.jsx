@@ -21,14 +21,9 @@ function Navbar() {
     if (match) {
       const id = match[1];
       setWebsiteID(id);
-      console.log(id); 
     }
    
   }, [match])
-  
-
-
-
   
  const saveChangesBTN = () => {
   let siteData = {
