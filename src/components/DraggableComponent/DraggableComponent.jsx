@@ -5,9 +5,6 @@ import { CanvasContext } from '../../context/canvas.context'
 const DraggableComponent = ({ component }) => {
 
 
-  const {navbarComponents, bodyComponents, footerComponents} = useContext(CanvasContext)
-
-
   const [{ isDragging }, drag] = useDrag(() => ({
     type: component.type,
     item: component,
