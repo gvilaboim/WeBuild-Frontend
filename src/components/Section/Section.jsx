@@ -38,8 +38,9 @@ const Section = ({ section }) => {
       </div>
       <div className='section-content'>
         {subsections.length > 0 ? (
-          subsections.map((subsection) => {
-            return <Subsection key={subsection._id} />
+          subsections.map((subsection, index) => {
+            console.log(subsection)
+            return <Subsection key={subsection._id} sectionName={section.name} subsectionName={subsection.name} subsection={subsection} />
           })
         ) : (
           <Loading />

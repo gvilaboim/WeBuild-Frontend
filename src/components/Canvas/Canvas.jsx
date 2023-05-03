@@ -16,7 +16,6 @@ const Canvas = () => {
           <Loading />
         ) : (
           contentSections.map((section) => {
-            console.log(section)
             return (
               <Section
                 key={section._id}

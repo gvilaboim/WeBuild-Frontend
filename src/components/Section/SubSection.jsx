@@ -1,12 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { Rnd } from 'react-rnd'
+import { CanvasContext } from '../../context/canvas.context'
 
-const Subsection = ({ title }) =>   {
-  
+const Subsection = ({ sectionName, subsectionName, subsection }) => {
   const [subsectionItems, setSubsectionItems] = useState([])
+  const { contentSections, setContentSections } = useContext(CanvasContext)
 
+
+  console.log(subsection)
   //Defines this Component as a Drop zone
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // Only accepts Items with type Body
@@ -14,11 +17,25 @@ const Subsection = ({ title }) =>   {
     drop: (item, monitor) => {
       const draggedComponent = monitor.getItem()
 
-      //on Drop, add to this components array of items to render
-      setSubsectionItems((previousValues) => [
-        ...previousValues,
-        draggedComponent,
-      ])
+      // Find the section and subsection to modify
+      const sectionIndex = contentSections.findIndex(
+        (section) => section.name === sectionName
+      )
+
+      const subsectionIndex = contentSections[
+        sectionIndex
+      ].subsections.findIndex(
+        (subsection) => subsection.name === subsectionName
+      )
+      console.log(sectionIndex, subsectionIndex)
+      // // Update the components array of the subsection
+      contentSections[sectionIndex].subsections[subsectionIndex].components.push(
+        draggedComponent
+      )
+
+      // // Update the contentSections state with the modified array
+      setContentSections([...contentSections])
+      setSubsectionItems(previousValues=>([...previousValues, draggedComponent]))
     },
     collect: (monitor) => ({
       // collects properties to be used for logic and styling
@@ -42,9 +59,9 @@ const Subsection = ({ title }) =>   {
       style={{ ...style, backgroundColor }}
       className='sub-section'
     >
-      {subsectionItems.length > 0 ? (
+      {subsection.components.length > 0 ? (
         <>
-          {subsectionItems.map((comp, index) => (
+          {subsection.components.map((comp, index) => (
             <Rnd
               key={index}
               bounds='parent'

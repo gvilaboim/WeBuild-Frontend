@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 
 import canvasStoreService from '../services/canvas-store.service'
-import Section from '../components/Section/Section'
 
 const CanvasContext = React.createContext()
 
