@@ -3,7 +3,6 @@ import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { Rnd } from 'react-rnd'
 import { CanvasContext } from '../../context/canvas.context'
-import uuid from 'react-uuid'
 
 const Subsection = ({ sectionName, subsectionName, subsection }) => {
   const {
@@ -71,7 +70,7 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
         <>
           {subsection.components.map((comp, index) => (
             <Rnd
-              key={uuid()}
+              key={comp._id}
               bounds='parent'
               className='sub-section-item'
               onClick={() => getComponentInfo(comp)}
