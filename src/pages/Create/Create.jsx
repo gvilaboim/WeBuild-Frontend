@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CanvasStore from '../../components/CanvasStore/CanvasStore'
 import Canvas from '../../components/Canvas/Canvas'
 import './Create.css'
 import canvasStoreService from '../../services/canvas-store.service'
 import { useLocation } from 'react-router-dom'
+import { CanvasContext } from '../../context/canvas.context'
 
 const Create = () => {
   const [showSidebar, setShowSidebar] = useState(true)
@@ -13,16 +14,12 @@ const Create = () => {
   const regex = /^.*\/websites\/edit\/(\w+)$/
   const match = location.pathname.match(regex)
 
+  const { fetchOneWebsite } = useContext(CanvasContext)
   useEffect(() => {
     if (match) {
       const id = match[1]
       setWebsiteID(id)
-      canvasStoreService.getOneWebsite(id).then(response => {
-        setWebsiteItems(response.data)
-        console.log(response.data)
-      }).catch(error => {
-        console.log(error)
-      })
+      fetchOneWebsite(id)
     }
   }, [])
 

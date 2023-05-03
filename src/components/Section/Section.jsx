@@ -1,27 +1,50 @@
+import './Section.css'
 import { useState } from 'react'
-import SubSection from './SubSection'
+import Subsection from './Subsection'
+import Loading from '../Loading/Loading'
 
-const Section = () => {
-  const [subSections, setSubSections] = useState([<SubSection />])
-
+const Section = ({ section }) => {
+  const [subsections, setSubSections] = useState(section.subsections)
+  const [numberOfColumns, setNumberOfColumns] = useState(section.numberOfColumns)
+  
   const handleSplitSections = (numberOfSections) => {
-    if(subSections.length < numberOfSections){
-        setSubSections(previousValue => [...previousValue, <Section />])
+    if (subsections.length < numberOfSections) {
+      if (subsections.length === numberOfSections - 1) {
+        setNumberOfColumns(prevValue => prevValue+1)
+        setSubSections((previousValue) => [...previousValue, <Subsection />])
+      } else {
+        setNumberOfColumns(prevValue => prevValue+2)
+        setSubSections((previousValue) => [
+          ...previousValue,
+          <Subsection />,
+          <Subsection />,
+        ])
+      }
     }
   }
 
   const style = { minHeight: '20%' }
-
   return (
-    <div style={style}>
-      <div>
+    <div
+      style={style}
+      className='section'
+    >
+      <div className='button-wrapper'>
         <button onClick={() => handleSplitSections(1)}>1</button>
         <button onClick={() => handleSplitSections(2)}>2</button>
         <button onClick={() => handleSplitSections(3)}>3</button>
+        <button>X</button>
+        <button>number of subsections: {numberOfColumns}</button>
       </div>
-      {subSections.map((subSection) => {
-        return <SubSection />
-      })}
+      <div className='section-content'>
+        {subsections.length > 0 ? (
+          subsections.map((subsection) => {
+            return <Subsection key={subsection._id} />
+          })
+        ) : (
+          <Loading />
+        )}
+      </div>
     </div>
   )
 }

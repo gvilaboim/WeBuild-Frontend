@@ -1,10 +1,12 @@
-import React, { useContext } from 'react'
-import { CanvasContext } from '../../context/canvas.context'
+import React, { useState } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
+import { Rnd } from 'react-rnd'
 
-const SubSection = ({ title }) => {
-  const { bodyComponents, setBodyComponents } = useContext(CanvasContext)
+const Subsection = ({ title }) =>   {
+  
+  const [subsectionItems, setSubsectionItems] = useState([])
+
   //Defines this Component as a Drop zone
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // Only accepts Items with type Body
@@ -13,7 +15,7 @@ const SubSection = ({ title }) => {
       const draggedComponent = monitor.getItem()
 
       //on Drop, add to this components array of items to render
-      setBodyComponents((previousValues) => [
+      setSubsectionItems((previousValues) => [
         ...previousValues,
         draggedComponent,
       ])
@@ -38,11 +40,25 @@ const SubSection = ({ title }) => {
     <div
       ref={drop}
       style={{ ...style, backgroundColor }}
+      className='sub-section'
     >
-      {bodyComponents.length > 0 ? bodyComponents.map((comp) => comp.name) 
-      : <div> You can drop an item here </div>}
+      {subsectionItems.length > 0 ? (
+        <>
+          {subsectionItems.map((comp, index) => (
+            <Rnd
+              key={index}
+              bounds='parent'
+              className='sub-section-item'
+            >
+              {comp.name}
+            </Rnd>
+          ))}
+        </>
+      ) : (
+        <div> You can drop an item here </div>
+      )}
     </div>
   )
 }
 
-export default SubSection
+export default Subsection

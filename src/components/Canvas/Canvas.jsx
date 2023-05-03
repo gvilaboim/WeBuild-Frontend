@@ -1,17 +1,32 @@
-import { useState } from 'react'
-import BodyDropZone from '../BodyDropZone/BodyDropZone'
+import { useContext } from 'react'
 import FooterDropZone from '../FooterDropZone/FooterDropZone'
 import NavBarDropZone from '../NavBarDropZone/NavBarDropZone'
 import Section from '../Section/Section'
 import './Canvas.css'
+import { CanvasContext } from '../../context/canvas.context'
+import Loading from '../Loading/Loading'
 const Canvas = () => {
+  const { contentSections } = useContext(CanvasContext)
 
-  const [sections, setSections] = useState([<Section />, <Section />, <Section />])
   return (
     <div className='canvas'>
       <NavBarDropZone />
-      {/* <BodyDropZone /> */}
-      {sections.map((section, index) => section)}
+      <div className='website-body'>
+        {contentSections.length === 0 ? (
+          <Loading />
+        ) : (
+          contentSections.map((section) => {
+            console.log(section)
+            return (
+              <Section
+                key={section._id}
+                section={section}
+              />
+            )
+          })
+        )}
+      </div>
+
       <FooterDropZone />
     </div>
   )

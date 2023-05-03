@@ -1,29 +1,51 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 
 import canvasStoreService from '../services/canvas-store.service'
+import Section from '../components/Section/Section'
 
 const CanvasContext = React.createContext()
 
 function CanvasProviderWrapper(props) {
-  //components that the user can drag to the canvas
-  const [storeComponents, setStoreComponents] = useState([])
 
   //DashBoard Websites created by user
   const [webSites, setWebSites] = useState([])
 
-  // components already dragged to the canvas
+  //components that the user can drag to the canvas
+  const [storeComponents, setStoreComponents] = useState([])
+
+  // components rendered in the canvas
   const [navbarComponents, setNavbarComponents] = useState([])
-  const [bodyComponents, setBodyComponents] = useState([])
+  const [contentSections, setContentSections] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
 
-  useEffect(() => {
-    canvasStoreService.getAllWebsites().then((response) => {
-      setWebSites(response.data)
-    })
-    canvasStoreService.getStoreItems().then((response) => {
-      setStoreComponents(response.data)
-    })
-  }, [])
+  const fetchAllWebsites = () => {
+    canvasStoreService
+      .getAllWebsites()
+      .then((response) => {
+        setWebSites(response.data)
+      })
+      .catch((err) => console.log('getAllWebsites err'))
+  }
+
+  const fetchStoreItems = () => {
+    canvasStoreService
+      .getStoreItems()
+      .then((response) => {
+        setStoreComponents(response.data)
+      })
+      .catch((err) => console.log('getStoreItems err'))
+  }
+
+  const fetchOneWebsite = (websiteId) => {
+    canvasStoreService
+      .getOneWebsite(websiteId)
+      .then((response) => {
+        setNavbarComponents(response.data.navbar)
+        setContentSections(response.data.sections)
+        setFooterComponents(response.data.footer)
+      })
+      .catch((err) => console.log('getOneWebsite err'))
+  }
 
   return (
     <CanvasContext.Provider
@@ -31,12 +53,15 @@ function CanvasProviderWrapper(props) {
         storeComponents,
         navbarComponents,
         setNavbarComponents,
-        bodyComponents,
-        setBodyComponents,
         footerComponents,
         setFooterComponents,
         webSites,
         setWebSites,
+        contentSections,
+        setContentSections,
+        fetchAllWebsites,
+        fetchStoreItems,
+        fetchOneWebsite
       }}
     >
       {props.children}

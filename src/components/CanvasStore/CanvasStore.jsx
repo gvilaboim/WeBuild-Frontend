@@ -1,14 +1,18 @@
 import { useLocation } from 'react-router'
 import DraggableComponent from '../DraggableComponent/DraggableComponent'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { CanvasContext } from '../../context/canvas.context'
 import Loading from '../Loading/Loading'
 
 const CanvasStore = ({ setShowSidebar }) => {
-  const currentPage = useLocation()
 
-  const { storeComponents } = useContext(CanvasContext)
+  const { storeComponents, fetchStoreItems } = useContext(CanvasContext)
 
+  useEffect(() => {
+    
+    fetchStoreItems()
+  }, [])
+  
   return (
     <>
         <div>
