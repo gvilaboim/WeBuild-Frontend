@@ -9,15 +9,15 @@ import SideBar from '../../components/SideBarSettings/SideBar'
 
 const Create = () => {
   const [showSidebar, setShowSidebar] = useState(true)
-  const [websiteItems, setWebsiteItems] = useState()
-  const {webSiteID, setWebSiteID , fetchOneWebsite} = useContext(CanvasContext)
-  const {id} = useParams();
+  const { setWebSiteID, fetchOneWebsite } = useContext(CanvasContext)
+  const { id } = useParams()
 
   useEffect(() => {
+    if (id) {
       setWebSiteID(id)
-      fetchOneWebsite(webSiteID)
-  
-  }, [])
+      fetchOneWebsite(id)
+    }
+  }, [id])
 
   return (
     <div className='create-page'>
@@ -28,7 +28,7 @@ const Create = () => {
       )}
       <Canvas />
 
-      <SideBar/>
+      <SideBar />
     </div>
   )
 }

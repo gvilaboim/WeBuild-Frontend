@@ -1,13 +1,16 @@
 import './Section.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Subsection from './Subsection'
 import Loading from '../Loading/Loading'
-import uuid from 'react-uuid';
 
 const Section = ({ section }) => {
   const [subsections, setSubSections] = useState(section.subsections)
   const [numberOfColumns, setNumberOfColumns] = useState(section.numberOfColumns)
   
+  useEffect(() => {
+    setSubSections(section.subsections);
+  }, [section])
+
   const handleSplitSections = (numberOfSections) => {
     if (subsections.length < numberOfSections) {
       if (subsections.length === numberOfSections - 1) {
@@ -41,7 +44,7 @@ const Section = ({ section }) => {
         {  subsections.length > 0 ? (
           subsections.map((subsection, index) => {
             console.log(subsection)
-            return <Subsection key={uuid()} sectionName={section.name} subsectionName={subsection.name} subsection={subsection} />
+            return <Subsection key={subsection._id} sectionName={section.name} subsectionName={subsection.name} subsection={subsection} />
           })
         ) : (
           <Loading />

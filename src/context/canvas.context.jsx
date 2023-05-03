@@ -5,11 +5,10 @@ import canvasStoreService from '../services/canvas-store.service'
 const CanvasContext = React.createContext()
 
 function CanvasProviderWrapper(props) {
-
   //DashBoard Websites created by user
   const [webSites, setWebSites] = useState([])
-//fazer Website ID GLOBAL
-  
+  //fazer Website ID GLOBAL
+
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
 
@@ -18,36 +17,21 @@ function CanvasProviderWrapper(props) {
   const [contentSections, setContentSections] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
 
-
   const [webSiteID, setWebSiteID] = useState()
 
-
-  const saveChanges = () => {
-
-    console.log(contentSections)
-    let siteData = {
-      id:webSiteID,
-      navbarComponents,
-      contentSections,
-      footerComponents,
+  const saveChanges = async (siteData) => {
+    try {
+      const response = await canvasStoreService.saveChanges(siteData);
+      return response.data.sections;
+    } catch (error) {
+      console.log(error);
     }
-    canvasStoreService
-      .saveChanges(siteData)
-      .then((res) => {
-        console.log(res.data)
-        setContentSections(res.data.sections)
-        setNavbarComponents(res.data.navbar)
-        setFooterComponents(res.data.footer)
-      })
-      
-  }
-
+  };
 
   const getComponentInfo = (component) => {
     console.log(component)
-  return component
+    return component
   }
-
 
   const fetchAllWebsites = () => {
     canvasStoreService
@@ -96,7 +80,7 @@ function CanvasProviderWrapper(props) {
         getComponentInfo,
         setWebSiteID,
         webSiteID,
-        saveChanges
+        saveChanges,
       }}
     >
       {props.children}

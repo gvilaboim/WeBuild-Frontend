@@ -1,15 +1,22 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { Rnd } from 'react-rnd'
 import { CanvasContext } from '../../context/canvas.context'
-import uuid from 'react-uuid';
-
+import uuid from 'react-uuid'
 
 const Subsection = ({ sectionName, subsectionName, subsection }) => {
-  const [subsectionItems, setSubsectionItems] = useState([])
-  const { getComponentInfo , contentSections, setContentSections ,saveChanges} = useContext(CanvasContext)
+  const {
+    webSiteID,
+    getComponentInfo,
+    contentSections,
+    setContentSections,
+    saveChanges,
+  } = useContext(CanvasContext)
 
+  // useEffect(() => {
+  //   console.log('subsection', subsection)
+  // }, [subsection])
 
   //Defines this Component as a Drop zone
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -28,19 +35,15 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
       ].subsections.findIndex(
         (subsection) => subsection.name === subsectionName
       )
-      console.log(sectionIndex, subsectionIndex)
-      // // Update the components array of the subsection
-      
-      contentSections[sectionIndex].subsections[subsectionIndex].components.push(
-        {name: draggedComponent.name }
-      )
 
-      // // Update the contentSections state with the modified array
-
-      
-      setContentSections([...contentSections])
-    
-      saveChanges();
+      saveChanges({
+        id: webSiteID,
+        draggedComponent,
+        sectionIndex,
+        subsectionIndex,
+      }).then((updatedContentSections) => {
+        setContentSections(updatedContentSections)
+      })
     },
     collect: (monitor) => ({
       // collects properties to be used for logic and styling
@@ -64,15 +67,14 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
       style={{ ...style, backgroundColor }}
       className='sub-section'
     >
-      
-      { subsection.components.length > 0 ? (
+      {subsection.components.length > 0 ? (
         <>
           {subsection.components.map((comp, index) => (
             <Rnd
               key={uuid()}
               bounds='parent'
               className='sub-section-item'
-              onClick = {() => getComponentInfo(comp)}
+              onClick={() => getComponentInfo(comp)}
             >
               {comp.name}
             </Rnd>
