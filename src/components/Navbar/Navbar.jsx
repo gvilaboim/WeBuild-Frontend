@@ -59,10 +59,7 @@ function Navbar() {
         </>
       )}
 
-      {isEditPage && (
-        <button onClick={() => saveChangesBTN()}>Save Changes</button>
-      )}
-
+      
       {!isLoggedIn && (
         <>
           <Link to='/signup'>

@@ -2,6 +2,7 @@ import './Section.css'
 import { useState } from 'react'
 import Subsection from './Subsection'
 import Loading from '../Loading/Loading'
+import uuid from 'react-uuid';
 
 const Section = ({ section }) => {
   const [subsections, setSubSections] = useState(section.subsections)
@@ -37,10 +38,10 @@ const Section = ({ section }) => {
         <button>number of subsections: {numberOfColumns}</button>
       </div>
       <div className='section-content'>
-        {subsections.length > 0 ? (
+        {  subsections.length > 0 ? (
           subsections.map((subsection, index) => {
             console.log(subsection)
-            return <Subsection key={subsection._id} sectionName={section.name} subsectionName={subsection.name} subsection={subsection} />
+            return <Subsection key={uuid()} sectionName={section.name} subsectionName={subsection.name} subsection={subsection} />
           })
         ) : (
           <Loading />

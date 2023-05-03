@@ -8,7 +8,8 @@ function CanvasProviderWrapper(props) {
 
   //DashBoard Websites created by user
   const [webSites, setWebSites] = useState([])
-
+//fazer Website ID GLOBAL
+  
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
 
@@ -16,6 +17,37 @@ function CanvasProviderWrapper(props) {
   const [navbarComponents, setNavbarComponents] = useState([])
   const [contentSections, setContentSections] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
+
+
+  const [webSiteID, setWebSiteID] = useState()
+
+
+  const saveChanges = () => {
+
+    console.log(contentSections)
+    let siteData = {
+      id:webSiteID,
+      navbarComponents,
+      contentSections,
+      footerComponents,
+    }
+    canvasStoreService
+      .saveChanges(siteData)
+      .then((res) => {
+        console.log(res.data)
+        setContentSections(res.data.sections)
+        setNavbarComponents(res.data.navbar)
+        setFooterComponents(res.data.footer)
+      })
+      
+  }
+
+
+  const getComponentInfo = (component) => {
+    console.log(component)
+  return component
+  }
+
 
   const fetchAllWebsites = () => {
     canvasStoreService
@@ -60,7 +92,11 @@ function CanvasProviderWrapper(props) {
         setContentSections,
         fetchAllWebsites,
         fetchStoreItems,
-        fetchOneWebsite
+        fetchOneWebsite,
+        getComponentInfo,
+        setWebSiteID,
+        webSiteID,
+        saveChanges
       }}
     >
       {props.children}

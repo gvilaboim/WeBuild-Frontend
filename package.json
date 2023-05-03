@@ -11,7 +11,8 @@
     "react-grid-layout": "^1.3.4",
     "react-rnd": "^10.4.1",
     "react-router-dom": "^6.11.0",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "react-uuid": "^2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

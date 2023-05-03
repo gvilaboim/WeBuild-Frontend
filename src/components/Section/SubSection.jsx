@@ -3,13 +3,14 @@ import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { Rnd } from 'react-rnd'
 import { CanvasContext } from '../../context/canvas.context'
+import uuid from 'react-uuid';
+
 
 const Subsection = ({ sectionName, subsectionName, subsection }) => {
   const [subsectionItems, setSubsectionItems] = useState([])
-  const { contentSections, setContentSections } = useContext(CanvasContext)
+  const { getComponentInfo , contentSections, setContentSections ,saveChanges} = useContext(CanvasContext)
 
 
-  console.log(subsection)
   //Defines this Component as a Drop zone
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     // Only accepts Items with type Body
@@ -29,13 +30,17 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
       )
       console.log(sectionIndex, subsectionIndex)
       // // Update the components array of the subsection
+      
       contentSections[sectionIndex].subsections[subsectionIndex].components.push(
-        draggedComponent
+        {name: draggedComponent.name }
       )
 
       // // Update the contentSections state with the modified array
+
+      
       setContentSections([...contentSections])
-      setSubsectionItems(previousValues=>([...previousValues, draggedComponent]))
+    
+      saveChanges();
     },
     collect: (monitor) => ({
       // collects properties to be used for logic and styling
@@ -59,13 +64,15 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
       style={{ ...style, backgroundColor }}
       className='sub-section'
     >
-      {subsection.components.length > 0 ? (
+      
+      { subsection.components.length > 0 ? (
         <>
           {subsection.components.map((comp, index) => (
             <Rnd
-              key={index}
+              key={uuid()}
               bounds='parent'
               className='sub-section-item'
+              onClick = {() => getComponentInfo(comp)}
             >
               {comp.name}
             </Rnd>

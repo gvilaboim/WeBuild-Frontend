@@ -3,6 +3,7 @@ import DraggableComponent from '../DraggableComponent/DraggableComponent'
 import { useContext, useEffect } from 'react'
 import { CanvasContext } from '../../context/canvas.context'
 import Loading from '../Loading/Loading'
+import uuid from 'react-uuid'
 
 const CanvasStore = ({ setShowSidebar }) => {
 
@@ -25,7 +26,7 @@ const CanvasStore = ({ setShowSidebar }) => {
               storeComponents.map((component) => {
                 return (
                   <DraggableComponent
-                    key={component._id}
+                    key={uuid()}
                     component={component}
                   />
                 )
