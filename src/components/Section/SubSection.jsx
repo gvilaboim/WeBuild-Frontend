@@ -40,8 +40,8 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
         draggedComponent,
         sectionIndex,
         subsectionIndex,
-      }).then((updatedContentSections) => {
-        setContentSections(updatedContentSections)
+      }).then((updatedContent) => {
+        setContentSections(updatedContent.sections)
       })
     },
     collect: (monitor) => ({

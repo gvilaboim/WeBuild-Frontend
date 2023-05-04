@@ -1,21 +1,29 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { CanvasContext } from '../../context/canvas.context'
 import './FooterDropZone.css'
+import { useParams } from 'react-router-dom'
 
 const FooterDropZone = () => {
-  const {footerComponents, setFooterComponents} = useContext(CanvasContext)
+  const {footerComponents, setFooterComponents, saveChanges, setWebSiteID} = useContext(CanvasContext)
 
+
+  const { id } = useParams()
+
+  useEffect(() => {
+    if (id) {
+      setWebSiteID(id)
+    }
+  }, [id])
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.FOOTER,
     drop: (item, monitor) => {
       const draggedComponent = monitor.getItem()
 
-      setFooterComponents((previousValues) => [
-        ...previousValues,
-        draggedComponent,
-      ])
+      saveChanges(id, { draggedComponent }).then((updatedContent) => {
+        setFooterComponents(updatedContent.footer)
+      })
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import FooterDropZone from '../FooterDropZone/FooterDropZone'
 import NavBarDropZone from '../NavBarDropZone/NavBarDropZone'
 import Section from '../Section/Section'
@@ -8,9 +8,6 @@ import Loading from '../Loading/Loading'
 const Canvas = () => {
   const { contentSections } = useContext(CanvasContext)
 
-  // useEffect(() => {
-  //   console.log('contentSections', contentSections)
-  // }, [contentSections])
 
   return (
     <div className='canvas'>

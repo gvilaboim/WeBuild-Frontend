@@ -37,8 +37,8 @@ class CanvasStoreService {
   }
 
   //Add current website changes to DB
-  saveChanges = async (siteData) => {
-    return this.api.put('/api/websites', { siteData })
+  saveChanges = async (id, siteData) => {
+    return this.api.put(`/api/websites/${id}`, { siteData })
   }
 
   // DASHBOARD

@@ -19,10 +19,11 @@ function CanvasProviderWrapper(props) {
 
   const [webSiteID, setWebSiteID] = useState()
 
-  const saveChanges = async (siteData) => {
+  const saveChanges = async (id, siteData) => {
     try {
-      const response = await canvasStoreService.saveChanges(siteData);
-      return response.data.sections;
+      const response = await canvasStoreService.saveChanges(id, siteData);
+      console.log(response.data)
+      return response.data;
     } catch (error) {
       console.log(error);
     }
