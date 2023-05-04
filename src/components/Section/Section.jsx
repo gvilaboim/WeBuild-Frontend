@@ -1,6 +1,6 @@
 import './Section.css'
 import { useEffect, useState } from 'react'
-import Subsection from './Subsection'
+import Subsection from './SubSection'
 import Loading from '../Loading/Loading'
 
 const Section = ({ section }) => {
