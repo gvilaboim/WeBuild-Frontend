@@ -30,8 +30,15 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
         (subsection) => subsection.name === subsectionName
       )
 
+      //removing the id
+      let componentToDb = {
+        type: draggedComponent.type,
+        name: draggedComponent.name,
+        layout: draggedComponent.layout,
+        bgColor: draggedComponent.bgColor,
+      }
       saveChanges(webSiteID, {
-        draggedComponent,
+        draggedComponent: componentToDb,
         sectionIndex,
         subsectionIndex,
       }).then((updatedContent) => {

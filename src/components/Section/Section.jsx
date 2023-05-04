@@ -15,7 +15,7 @@ const Section = ({ section }) => {
     setSubSections(section.subsections)
   }, [section])
 
-  const handleSplitSections = (numberOfSubsectionsClicked) => {
+  const handleSplitSections = async (numberOfSubsectionsClicked) => {
     const subsectionsIncrease = numberOfSubsectionsClicked - numberOfColumns
     const sectionIndex = contentSections.findIndex(
       (sectionToFind) => sectionToFind.name === section.name
@@ -24,10 +24,19 @@ const Section = ({ section }) => {
     saveChanges(webSiteID, {
       subsectionsIncrease: subsectionsIncrease,
       sectionIndex: sectionIndex,
-    }).then((updatedContent) => {
-      console.log('number of columns from db', updatedContent.sections[2].numberOfColumns)
-      // setNumberOfColumns(updatedContent.sections[sectionIndex].numberOfColumns)
     })
+      .then((updatedContent) => {
+        setSubSections(updatedContent.sections[sectionIndex].subsections)
+
+        setNumberOfColumns(
+          (prevValue) => updatedContent.sections[sectionIndex].numberOfColumns
+        )
+        console.log(
+          updatedContent.sections[sectionIndex].numberOfColumns,
+          numberOfColumns
+        )
+      })
+      .catch((err) => console.log(err))
   }
 
   const style = { minHeight: '20%' }

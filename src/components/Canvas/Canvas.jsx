@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import FooterDropZone from '../FooterDropZone/FooterDropZone'
 import NavBarDropZone from '../NavBarDropZone/NavBarDropZone'
 import Section from '../Section/Section'
@@ -8,7 +8,12 @@ import Loading from '../Loading/Loading'
 const Canvas = () => {
   const { contentSections } = useContext(CanvasContext)
 
-
+  useEffect(() => {
+    
+  console.log('contentSections updated')
+    
+  }, [contentSections])
+  
   return (
     <div className='canvas'>
       <NavBarDropZone />
@@ -17,6 +22,7 @@ const Canvas = () => {
           <Loading />
         ) : (
           contentSections.map((section) => {
+            console.log(section.numberOfColumns)
             return (
               <Section
                 key={section._id}
