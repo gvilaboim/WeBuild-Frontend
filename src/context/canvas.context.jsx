@@ -22,7 +22,7 @@ function CanvasProviderWrapper(props) {
   const saveChanges = async (id, siteData) => {
     try {
       const response = await canvasStoreService.saveChanges(id, siteData);
-      console.log(response.data)
+      console.log(response.data.sections)
       return response.data;
     } catch (error) {
       console.log(error);
@@ -30,7 +30,7 @@ function CanvasProviderWrapper(props) {
   };
 
   const getComponentInfo = (component) => {
-    console.log(component)
+    
     return component
   }
 

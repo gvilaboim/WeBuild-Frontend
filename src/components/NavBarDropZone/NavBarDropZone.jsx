@@ -7,26 +7,14 @@ import './NavBarDropZone.css'
 import { useParams } from 'react-router-dom'
 
 const NavBarDropZone = () => {
-  const { setWebSiteID, navbarComponents, setNavbarComponents, saveChanges } =
+  const { webSiteID, navbarComponents, setNavbarComponents, saveChanges } =
     useContext(CanvasContext)
-  const { id } = useParams()
-
-  useEffect(() => {
-    if (id) {
-      setWebSiteID(id)
-      console.log(id)
-    }
-  }, [id])
-  useEffect(() => {
-    console.log(navbarComponents)
-  }, [navbarComponents])
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.NAVBAR,
     drop: (item, monitor) => {
       const draggedComponent = monitor.getItem()
-      console.log(id)
-      saveChanges(id, { draggedComponent }).then((updatedContent) => {
+      saveChanges(webSiteID, { draggedComponent }).then((updatedContent) => {
         setNavbarComponents(updatedContent.navbar)
       })
     },

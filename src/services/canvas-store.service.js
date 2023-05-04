@@ -41,6 +41,7 @@ class CanvasStoreService {
     return this.api.put(`/api/websites/${id}`, { siteData })
   }
 
+
   // DASHBOARD
   // GET /api//websites/get-all
   getAllWebsites = async () => {

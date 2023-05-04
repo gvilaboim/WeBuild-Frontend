@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
-import { Rnd } from 'react-rnd'
 import { CanvasContext } from '../../context/canvas.context'
 
 const Subsection = ({ sectionName, subsectionName, subsection }) => {
@@ -12,10 +11,6 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
     setContentSections,
     saveChanges,
   } = useContext(CanvasContext)
-
-  // useEffect(() => {
-  //   console.log('subsection', subsection)
-  // }, [subsection])
 
   //Defines this Component as a Drop zone
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -35,8 +30,7 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
         (subsection) => subsection.name === subsectionName
       )
 
-      saveChanges({
-        id: webSiteID,
+      saveChanges(webSiteID, {
         draggedComponent,
         sectionIndex,
         subsectionIndex,
@@ -69,14 +63,14 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
       {subsection.components.length > 0 ? (
         <>
           {subsection.components.map((comp, index) => (
-            <Rnd
+            <div
               key={comp._id}
-              bounds='parent'
+              // bounds='parent'
               className='sub-section-item'
               onClick={() => getComponentInfo(comp)}
             >
               {comp.name}
-            </Rnd>
+            </div>
           ))}
         </>
       ) : (

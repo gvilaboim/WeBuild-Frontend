@@ -24,7 +24,7 @@ const BodyItem = ({
       y: y / parentHeight,
     }
     setComponentLayout(newLayout)
-    console.log(newLayout)
+    
     // handle drag stop event here, e.g. update the layout in the parent component's state
   }
 

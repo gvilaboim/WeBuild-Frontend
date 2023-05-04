@@ -26,7 +26,6 @@ function Navbar() {
 
   const saveChangesBTN = () => {
 
-    console.log(contentSections)
     let siteData = {
       id: websiteID,
       navbarComponents,

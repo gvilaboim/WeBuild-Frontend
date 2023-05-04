@@ -1,30 +1,33 @@
 import './Section.css'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Subsection from './Subsection'
 import Loading from '../Loading/Loading'
+import { CanvasContext } from '../../context/canvas.context'
 
 const Section = ({ section }) => {
   const [subsections, setSubSections] = useState(section.subsections)
-  const [numberOfColumns, setNumberOfColumns] = useState(section.numberOfColumns)
-  
+  const [numberOfColumns, setNumberOfColumns] = useState(
+    section.numberOfColumns
+  )
+
+  const { webSiteID, saveChanges, contentSections } = useContext(CanvasContext)
   useEffect(() => {
-    setSubSections(section.subsections);
+    setSubSections(section.subsections)
   }, [section])
 
-  const handleSplitSections = (numberOfSections) => {
-    if (subsections.length < numberOfSections) {
-      if (subsections.length === numberOfSections - 1) {
-        setNumberOfColumns(prevValue => prevValue+1)
-        setSubSections((previousValue) => [...previousValue, <Subsection />])
-      } else {
-        setNumberOfColumns(prevValue => prevValue+2)
-        setSubSections((previousValue) => [
-          ...previousValue,
-          <Subsection />,
-          <Subsection />,
-        ])
-      }
-    }
+  const handleSplitSections = (numberOfSubsectionsClicked) => {
+    const subsectionsIncrease = numberOfSubsectionsClicked - numberOfColumns
+    const sectionIndex = contentSections.findIndex(
+      (sectionToFind) => sectionToFind.name === section.name
+    )
+
+    saveChanges(webSiteID, {
+      subsectionsIncrease: subsectionsIncrease,
+      sectionIndex: sectionIndex,
+    }).then((updatedContent) => {
+      console.log('number of columns from db', updatedContent.sections[2].numberOfColumns)
+      // setNumberOfColumns(updatedContent.sections[sectionIndex].numberOfColumns)
+    })
   }
 
   const style = { minHeight: '20%' }
@@ -41,9 +44,16 @@ const Section = ({ section }) => {
         <button>number of subsections: {numberOfColumns}</button>
       </div>
       <div className='section-content'>
-        {  subsections.length > 0 ? (
+        {subsections.length > 0 ? (
           subsections.map((subsection, index) => {
-            return <Subsection key={subsection._id} sectionName={section.name} subsectionName={subsection.name} subsection={subsection} />
+            return (
+              <Subsection
+                key={subsection._id}
+                sectionName={section.name}
+                subsectionName={subsection.name}
+                subsection={subsection}
+              />
+            )
           })
         ) : (
           <Loading />
