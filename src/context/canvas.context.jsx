@@ -22,7 +22,7 @@ function CanvasProviderWrapper(props) {
   const saveChanges = async (id, siteData) => {
     try {
       const response = await canvasStoreService.saveChanges(id, siteData);
-      console.log(response.data.sections)
+      console.log(response.data.sections[2])
       return response.data;
     } catch (error) {
       console.log(error);
