@@ -27,8 +27,6 @@ const SideBar = () => {
    canvasStoreService.saveComponentChanges(componentData).then((res) => {
     console.log(res.data)
     })
- 
-
   }
 
   return (
@@ -39,7 +37,7 @@ const SideBar = () => {
           <label> <b> ID: </b>{componentData._id } </label>
           <br/> 
           <label> Type: </label>
-          <input  name="type" type="text"  value={componentData.type} onChange={handleChange} /> 
+          <input type="text"  value={componentData.type} /> 
           <br/> 
           <label> Name: </label>
           <input  name="name" type="text" value={componentData.name } onChange={handleChange}/>

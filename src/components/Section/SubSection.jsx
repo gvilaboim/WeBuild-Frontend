@@ -36,6 +36,9 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
         name: draggedComponent.name,
         layout: draggedComponent.layout,
         bgColor: draggedComponent.bgColor,
+        src: draggedComponent.src,
+        htmltag: draggedComponent.htmltag,
+
       }
       saveChanges(webSiteID, {
         draggedComponent: componentToDb,
@@ -69,18 +72,16 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
     >
       {subsection.components.length > 0 ? (
         <>
-          {subsection.components.map((comp, index) => (
-            <div
-              key={comp._id}
-              // bounds='parent'
-              className='sub-section-item'
-              onClick={() => getComponentInfo(comp)}
-            >
-              {comp.name}
-              <br/>
-              {comp.text}
-            </div>
-          ))}
+          {subsection.components.map((comp, index) => {
+            let htmlTag = comp.htmlTag;
+            let elementProps = {
+              key: comp._id,
+              className: 'sub-section-item',
+              onClick: () => getComponentInfo(comp),
+              src: comp.src
+            };
+            return React.createElement("img", elementProps);
+          })}
         </>
       ) : (
         <div> You can drop an item here </div>

@@ -31,7 +31,6 @@ function CanvasProviderWrapper(props) {
   };
 
   const getComponentInfo = (component) => {
-    console.log(component._id)
     setSelectedComponent(component);
     console.log(component)
     return component
