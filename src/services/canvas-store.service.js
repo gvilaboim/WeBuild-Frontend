@@ -41,6 +41,11 @@ class CanvasStoreService {
     return this.api.put(`/api/websites/${id}`, { siteData })
   }
 
+  //UPDATE COMPONENT INFO
+
+  saveComponentChanges = async (componentData) => {
+    return this.api.put(`/api/websites/components/edit/`, { componentData })
+  }
 
   // DASHBOARD
   // GET /api//websites/get-all

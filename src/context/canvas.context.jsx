@@ -16,6 +16,7 @@ function CanvasProviderWrapper(props) {
   const [navbarComponents, setNavbarComponents] = useState([])
   const [contentSections, setContentSections] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
+  const [selectedComponent, setSelectedComponent] = useState({})
 
   const [webSiteID, setWebSiteID] = useState()
 
@@ -30,8 +31,8 @@ function CanvasProviderWrapper(props) {
   };
 
   const getComponentInfo = (component) => {
-    
-    return component
+    console.log(component._id)
+    setSelectedComponent(component);
   }
 
   const fetchAllWebsites = () => {
@@ -82,6 +83,9 @@ function CanvasProviderWrapper(props) {
         setWebSiteID,
         webSiteID,
         saveChanges,
+        selectedComponent,
+        setSelectedComponent
+
       }}
     >
       {props.children}

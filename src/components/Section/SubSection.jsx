@@ -70,6 +70,8 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
               onClick={() => getComponentInfo(comp)}
             >
               {comp.name}
+              <br/>
+              {comp.text}
             </div>
           ))}
         </>
