@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import SignupPage from './pages/SignupPage/SignupPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 
-import Navbar from './components/Navbar/Navbar'
+import NavBar from './components/NavBar/NavBar'
 import IsPrivate from './components/IsPrivate/IsPrivate'
 import IsAnon from './components/IsAnon/IsAnon'
 import Create from './pages/Create/Create'
@@ -15,7 +15,7 @@ import CreateForm from './pages/Create/CreateForm'
 function App() {
   return (
     <div className='App'>
-      <Navbar />
+      <NavBar />
       <Routes>
         <Route
           path='/'

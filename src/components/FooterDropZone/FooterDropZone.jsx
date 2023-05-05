@@ -6,22 +6,28 @@ import './FooterDropZone.css'
 import { useParams } from 'react-router-dom'
 
 const FooterDropZone = () => {
-  const {footerComponents, setFooterComponents, saveChanges, setWebSiteID} = useContext(CanvasContext)
-
+  const { footerComponents, setFooterComponents, saveChanges } =
+    useContext(CanvasContext)
 
   const { id } = useParams()
 
-  useEffect(() => {
-    if (id) {
-      setWebSiteID(id)
-    }
-  }, [id])
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.FOOTER,
     drop: (item, monitor) => {
       const draggedComponent = monitor.getItem()
 
-      saveChanges(id, { draggedComponent }).then((updatedContent) => {
+      //removing the id
+      let droppedComponent = {
+        type: draggedComponent.type,
+        name: draggedComponent.name,
+        layout: draggedComponent.layout,
+        bgColor: draggedComponent.bgColor,
+      }
+
+      console.log(id)
+      saveChanges(id, {
+        droppedComponent,
+      }).then((updatedContent) => {
         setFooterComponents(updatedContent.footer)
       })
     },

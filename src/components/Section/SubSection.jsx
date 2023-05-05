@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { CanvasContext } from '../../context/canvas.context'
+import Component from '../Component/Component'
 
 const Subsection = ({ sectionName, subsectionName, subsection }) => {
   const {
@@ -10,7 +11,11 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
     contentSections,
     setContentSections,
     saveChanges,
+    setShowSettingsSidebar,
   } = useContext(CanvasContext)
+
+  const handleShowSettingsSidebar = () => setShowSettingsSidebar(true)
+
 
   //Defines this Component as a Drop zone
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -31,17 +36,16 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
       )
 
       //removing the id
-      let componentToDb = {
+      let droppedComponent = {
         type: draggedComponent.type,
         name: draggedComponent.name,
-        layout: draggedComponent.layout,
-        bgColor: draggedComponent.bgColor,
-        src: draggedComponent.src,
-        htmltag: draggedComponent.htmltag,
-
+        htmlTag: draggedComponent.htmlTag,
+        category: draggedComponent.category,
+        text: draggedComponent.text,
+        style: draggedComponent.style,
       }
       saveChanges(webSiteID, {
-        draggedComponent: componentToDb,
+        droppedComponent,
         sectionIndex,
         subsectionIndex,
       }).then((updatedContent) => {
@@ -69,10 +73,12 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
       ref={drop}
       style={{ ...style, backgroundColor }}
       className='sub-section'
+      
     >
       {subsection.components.length > 0 ? (
         <>
-          {subsection.components.map((comp, index) => {
+          {/* 
+            Option 1 - Create a Tag
             let htmlTag = comp.htmlTag;
             let elementProps = {
               key: comp._id,
@@ -80,8 +86,15 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
               onClick: () => getComponentInfo(comp),
               src: comp.src
             };
-            return React.createElement("img", elementProps);
-          })}
+            return React.createElement("img", elementProps); */}
+            {/* Option2 below - Render the same component with diferent props*/}
+          {subsection.components.map((component) => (
+            <Component
+              key={component._id}
+              component={component}
+              showSettings={handleShowSettingsSidebar}
+            />
+          ))}
         </>
       ) : (
         <div> You can drop an item here </div>

@@ -9,8 +9,8 @@ const Canvas = () => {
   const { contentSections } = useContext(CanvasContext)
 
   useEffect(() => {
-    
-  console.log('contentSections updated')
+  
+
     
   }, [contentSections])
   
@@ -22,7 +22,6 @@ const Canvas = () => {
           <Loading />
         ) : (
           contentSections.map((section) => {
-            console.log(section.numberOfColumns)
             return (
               <Section
                 key={section._id}

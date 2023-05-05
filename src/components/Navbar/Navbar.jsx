@@ -1,78 +1,66 @@
-import './Navbar.css'
-import { Link, useLocation, useParams } from 'react-router-dom'
-import { useContext, useEffect, useState } from 'react'
+import Container from 'react-bootstrap/Container'
+import Nav from 'react-bootstrap/Nav'
+import Navbar from 'react-bootstrap/Navbar'
+import './NavBar.css'
+import { Link } from 'react-router-dom'
+import { useContext } from 'react'
 import { AuthContext } from '../../context/auth.context'
-import canvasStoreService from '../../services/canvas-store.service'
-import { CanvasContext } from '../../context/canvas.context'
-
-function Navbar() {
-  // Subscribe to the AuthContext to gain access to
-  // the values from AuthContext.Provider's `value` prop
+import Button from 'react-bootstrap/Button'
+import './NavBar.css'
+const NavBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
-  const { navbarComponents, contentSections, footerComponents } =
-    useContext(CanvasContext)
-  const [websiteID, setWebsiteID] = useState('')
-  const location = useLocation()
-
-  const regex = /^.*\/websites\/edit\/(\w+)$/
-  const match = location.pathname.match(regex)
-
-  useEffect(() => {
-    if (match) {
-      const id = match[1]
-      setWebsiteID(id)
-    }
-  }, [match])
-
-  const saveChangesBTN = () => {
-
-    let siteData = {
-      id: websiteID,
-      navbarComponents,
-      contentSections,
-      footerComponents,
-    }
-    canvasStoreService
-      .saveChanges(siteData)
-      .then((res) => console.log(res.data))
-  }
-
-  const isEditPage = /^\/websites\/edit\/\w+$/.test(location.pathname)
 
   return (
-    <nav>
-      <Link to='/'>
-        <button>Home</button>
-      </Link>
+    <>
+      <Navbar
+        bg='dark'
+        variant='dark'
+        className='z-index-2'
+      >
+        <Container>
+          <Navbar.Brand href='/'>WeBuild</Navbar.Brand>
+          <Nav className='me-auto'>
+            <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
+            <Nav.Link href='#pricing'>Pricing</Nav.Link>
+          </Nav>
+          {isLoggedIn && (
+            <Nav className='ms-auto'>
+              <Navbar.Text className='me-2'>
+                Signed in as: <a href='/account'>{user.name}</a>
+              </Navbar.Text>
 
-      {isLoggedIn && (
-        <>
-          <button onClick={logOutUser}>Logout</button>
+              <Button
+                className='me-1'
+                variant='info'
+                onClick={logOutUser}
+              >
+                Log Out
+              </Button>
+              <Button
+                variant='light'
+                href='/premium'
+              >
+                Upgrade
+              </Button>
+            </Nav>
+          )}
 
-          <Link to='/dashboard'>
-            <button>Dashboard</button>
-            {/* <img src="https://picsum.photos/id/402/200/300" style={{ width: 50, height: 50, borderRadius: 25}} alt="profile" /> */}
-          </Link>
-
-          <span>{user && user.name}</span>
-        </>
-      )}
-
-      
-      {!isLoggedIn && (
-        <>
-          <Link to='/signup'>
-            {' '}
-            <button>Sign Up</button>{' '}
-          </Link>
-          <Link to='/login'>
-            {' '}
-            <button>Login</button>{' '}
-          </Link>
-        </>
-      )}
-    </nav>
+          {!isLoggedIn && (
+            <Nav className='ms-auto'>
+              <Nav.Link href='/signup'>Signup</Nav.Link>
+              <Nav.Link href='/login'>Login</Nav.Link>
+              <Button
+                variant='light'
+                href='/premium'
+              >
+                Upgrade
+              </Button>
+            </Nav>
+          )}
+        </Container>
+      </Navbar>
+    </>
   )
 }
 
-export default Navbar
+export default NavBar

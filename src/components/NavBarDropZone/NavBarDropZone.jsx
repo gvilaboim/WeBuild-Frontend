@@ -1,20 +1,36 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { CanvasContext } from '../../context/canvas.context'
 
 import './NavBarDropZone.css'
 import { useParams } from 'react-router-dom'
+import NavBarBS from '../Bootstrap/NavBarBS'
 
 const NavBarDropZone = () => {
-  const { webSiteID, navbarComponents, setNavbarComponents, saveChanges } =
+  const { navbarComponents, setNavbarComponents, saveChanges } =
     useContext(CanvasContext)
+  const { id } = useParams()
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.NAVBAR,
     drop: (item, monitor) => {
       const draggedComponent = monitor.getItem()
-      saveChanges(webSiteID, { draggedComponent }).then((updatedContent) => {
+
+      console.log(draggedComponent)
+      //removing the id
+      let droppedComponent = {
+        type: draggedComponent.type,
+        brand: draggedComponent.brand,
+        name: draggedComponent.name,
+        bgColor: draggedComponent.bgColor,
+        navLinks: draggedComponent.navLinks,
+      }
+
+      console.log(id)
+      saveChanges(id, {
+        droppedComponent,
+      }).then((updatedContent) => {
         setNavbarComponents(updatedContent.navbar)
       })
     },
@@ -32,16 +48,20 @@ const NavBarDropZone = () => {
     backgroundColor = 'darkkhaki'
   }
   const style = {}
-
   return (
     <div
       ref={drop}
       style={{ ...style, backgroundColor }}
-      className='navbar-drop-zone'
+      className={navbarComponents.length === 0 ? 'navbar-drop-zone' : ''}
     >
       {navbarComponents.length !== 0 ? (
         navbarComponents.map((component) => {
-          return <div key={component._id}>{component.name}</div>
+          return (
+            <NavBarBS
+              key={component._id}
+              component={component}
+            />
+          )
         })
       ) : (
         <div>Drag a Header Item here</div>

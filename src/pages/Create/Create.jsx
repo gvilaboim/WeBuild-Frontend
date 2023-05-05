@@ -2,10 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import CanvasStore from '../../components/CanvasStore/CanvasStore'
 import Canvas from '../../components/Canvas/Canvas'
 import './Create.css'
-import canvasStoreService from '../../services/canvas-store.service'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { CanvasContext } from '../../context/canvas.context'
-import SideBar from '../../components/SideBarSettings/SideBar'
+import RightSideBar from '../../components/RightSideBar/RightSideBar'
 
 const Create = () => {
   const [showSidebar, setShowSidebar] = useState(true)
@@ -28,7 +27,7 @@ const Create = () => {
       )}
       <Canvas />
 
-      <SideBar />
+      <RightSideBar />
     </div>
   )
 }

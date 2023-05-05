@@ -4,6 +4,11 @@ import Subsection from './SubSection'
 import Loading from '../Loading/Loading'
 import { CanvasContext } from '../../context/canvas.context'
 
+import Button from 'react-bootstrap/Button'
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import CloseButton from 'react-bootstrap/CloseButton'
+
 const Section = ({ section }) => {
   const [subsections, setSubSections] = useState(section.subsections)
   const [numberOfColumns, setNumberOfColumns] = useState(
@@ -11,6 +16,11 @@ const Section = ({ section }) => {
   )
 
   const { webSiteID, saveChanges, contentSections } = useContext(CanvasContext)
+
+  const [showButtons, setShowButtons] = useState(false)
+  const showButtonOptions = () => setShowButtons(true)
+  const hideButtonOptions = () => setShowButtons(false)
+
   useEffect(() => {
     setSubSections(section.subsections)
   }, [section])
@@ -39,22 +49,45 @@ const Section = ({ section }) => {
       .catch((err) => console.log(err))
   }
 
-  const style = { minHeight: '20%' }
+  const style = {}
   return (
     <div
       style={style}
       className='section'
+      onMouseEnter={showButtonOptions}
+      onMouseLeave={hideButtonOptions}
     >
-      <div className='button-wrapper'>
-        <button onClick={() => handleSplitSections(1)}>1</button>
-        <button onClick={() => handleSplitSections(2)}>2</button>
-        <button onClick={() => handleSplitSections(3)}>3</button>
-        <button>X</button>
-        <button>number of subsections: {numberOfColumns}</button>
-      </div>
+      {showButtons && (
+        <ButtonToolbar
+          className='button-wrapper'
+          aria-label='Toolbar with button groups'
+        >
+          <ButtonGroup aria-label='button-group'>
+            <Button
+              variant={numberOfColumns === 1 ? 'dark' : 'outline-dark'}
+              onClick={() => handleSplitSections(1)}
+            >
+              1
+            </Button>
+            <Button
+              variant={numberOfColumns === 2 ? 'dark' : 'outline-dark'}
+              onClick={() => handleSplitSections(2)}
+            >
+              2
+            </Button>
+            <Button
+              variant={numberOfColumns === 3 ? 'dark' : 'outline-dark'}
+              onClick={() => handleSplitSections(3)}
+            >
+              3
+            </Button>
+          </ButtonGroup>
+          <CloseButton />
+        </ButtonToolbar>
+      )}
       <div className='section-content'>
-        {subsections.length > 0 ? (
-          subsections.map((subsection, index) => {
+        {section.subsections.length > 0 ? (
+          section.subsections.map((subsection, index) => {
             return (
               <Subsection
                 key={subsection._id}

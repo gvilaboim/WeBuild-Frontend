@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState } from 'react'
 
 import canvasStoreService from '../services/canvas-store.service'
 
@@ -7,7 +7,7 @@ const CanvasContext = React.createContext()
 function CanvasProviderWrapper(props) {
   //DashBoard Websites created by user
   const [webSites, setWebSites] = useState([])
-  //fazer Website ID GLOBAL
+  
 
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
@@ -19,19 +19,25 @@ function CanvasProviderWrapper(props) {
   const [selectedComponent, setSelectedComponent] = useState({})
 
   const [webSiteID, setWebSiteID] = useState()
+  
+  const [showSettingsSidebar, setShowSettingsSidebar] = useState(false)
+
+  
+  // Helps have hrefs, forms etc to be active on one click
+  const [isSiteLive, setIsSiteLive] = useState(false)
 
   const saveChanges = async (id, siteData) => {
     try {
-      const response = await canvasStoreService.saveChanges(id, siteData);
+      const response = await canvasStoreService.saveChanges(id, siteData)
       console.log(response.data)
-      return response.data;
+      return response.data
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   const getComponentInfo = (component) => {
-    setSelectedComponent(component);
+    setSelectedComponent(component)
     console.log(component)
     return component
   }
@@ -85,8 +91,11 @@ function CanvasProviderWrapper(props) {
         webSiteID,
         saveChanges,
         selectedComponent,
-        setSelectedComponent
-
+        setSelectedComponent,
+        isSiteLive,
+        setIsSiteLive,
+        showSettingsSidebar,
+        setShowSettingsSidebar,
       }}
     >
       {props.children}
