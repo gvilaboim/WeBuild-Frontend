@@ -7,7 +7,6 @@ const CanvasContext = React.createContext()
 function CanvasProviderWrapper(props) {
   //DashBoard Websites created by user
   const [webSites, setWebSites] = useState([])
-  
 
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
@@ -19,17 +18,15 @@ function CanvasProviderWrapper(props) {
   const [selectedComponent, setSelectedComponent] = useState({})
 
   const [webSiteID, setWebSiteID] = useState()
-  
+
   const [showSettingsSidebar, setShowSettingsSidebar] = useState(false)
 
-  
   // Helps have hrefs, forms etc to be active on one click
   const [isSiteLive, setIsSiteLive] = useState(false)
 
   const saveChanges = async (id, siteData) => {
     try {
       const response = await canvasStoreService.saveChanges(id, siteData)
-      console.log(response.data)
       return response.data
     } catch (error) {
       console.log(error)
@@ -48,7 +45,7 @@ function CanvasProviderWrapper(props) {
       .then((response) => {
         setWebSites(response.data)
       })
-      .catch((err) => console.log('getAllWebsites err'))
+      .catch((err) => console.log(err))
   }
 
   const fetchStoreItems = () => {
@@ -57,7 +54,7 @@ function CanvasProviderWrapper(props) {
       .then((response) => {
         setStoreComponents(response.data)
       })
-      .catch((err) => console.log('getStoreItems err'))
+      .catch((err) => console.log(err))
   }
 
   const fetchOneWebsite = (websiteId) => {
@@ -68,32 +65,40 @@ function CanvasProviderWrapper(props) {
         setContentSections(response.data.sections)
         setFooterComponents(response.data.footer)
       })
-      .catch((err) => console.log('getOneWebsite err'))
+      .catch((err) => console.log(err))
   }
 
   return (
     <CanvasContext.Provider
       value={{
         storeComponents,
+
         navbarComponents,
         setNavbarComponents,
+
         footerComponents,
         setFooterComponents,
-        webSites,
-        setWebSites,
+
         contentSections,
         setContentSections,
+
+        webSites,
+        setWebSites,
+        webSiteID,
+        setWebSiteID,
+
         fetchAllWebsites,
         fetchStoreItems,
         fetchOneWebsite,
         getComponentInfo,
-        setWebSiteID,
-        webSiteID,
         saveChanges,
+
         selectedComponent,
         setSelectedComponent,
+
         isSiteLive,
         setIsSiteLive,
+
         showSettingsSidebar,
         setShowSettingsSidebar,
       }}

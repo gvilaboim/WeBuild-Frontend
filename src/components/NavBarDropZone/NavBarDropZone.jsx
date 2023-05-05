@@ -12,27 +12,28 @@ const NavBarDropZone = () => {
     useContext(CanvasContext)
   const { id } = useParams()
 
+  const handleDrop = (draggedComponent) => {
+    //removing the id
+    let droppedComponent = {
+      type: draggedComponent.type,
+      brand: draggedComponent.brand,
+      name: draggedComponent.name,
+      bgColor: draggedComponent.bgColor,
+      navLinks: draggedComponent.navLinks,
+    }
+
+    saveChanges(id, {
+      droppedComponent,
+    }).then((updatedContent) => {
+      setNavbarComponents(updatedContent.navbar)
+    })
+  }
+  
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.NAVBAR,
     drop: (item, monitor) => {
       const draggedComponent = monitor.getItem()
-
-      console.log(draggedComponent)
-      //removing the id
-      let droppedComponent = {
-        type: draggedComponent.type,
-        brand: draggedComponent.brand,
-        name: draggedComponent.name,
-        bgColor: draggedComponent.bgColor,
-        navLinks: draggedComponent.navLinks,
-      }
-
-      console.log(id)
-      saveChanges(id, {
-        droppedComponent,
-      }).then((updatedContent) => {
-        setNavbarComponents(updatedContent.navbar)
-      })
+      handleDrop(draggedComponent)
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

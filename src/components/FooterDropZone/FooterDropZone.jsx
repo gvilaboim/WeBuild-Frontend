@@ -11,25 +11,27 @@ const FooterDropZone = () => {
 
   const { id } = useParams()
 
+  const handleDrop = (draggedComponent) => {
+    //removing the id
+    let droppedComponent = {
+      type: draggedComponent.type,
+      name: draggedComponent.name,
+      layout: draggedComponent.layout,
+      bgColor: draggedComponent.bgColor,
+    }
+
+    saveChanges(id, {
+      droppedComponent,
+    }).then((updatedContent) => {
+      setFooterComponents(updatedContent.footer)
+    })
+  }
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.FOOTER,
     drop: (item, monitor) => {
       const draggedComponent = monitor.getItem()
-
-      //removing the id
-      let droppedComponent = {
-        type: draggedComponent.type,
-        name: draggedComponent.name,
-        layout: draggedComponent.layout,
-        bgColor: draggedComponent.bgColor,
-      }
-
-      console.log(id)
-      saveChanges(id, {
-        droppedComponent,
-      }).then((updatedContent) => {
-        setFooterComponents(updatedContent.footer)
-      })
+      handleDrop(draggedComponent)
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),

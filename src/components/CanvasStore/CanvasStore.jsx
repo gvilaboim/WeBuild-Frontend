@@ -42,7 +42,7 @@ const CanvasStore = ({ setShowSidebar }) => {
             storeComponents.map((component) => {
               return (
                 <DraggableComponent
-                  key={component.key}
+                  key={component._id}
                   component={component}
                   closeSidebar={handleClose}
                 />

@@ -8,12 +8,6 @@ import Loading from '../Loading/Loading'
 const Canvas = () => {
   const { contentSections } = useContext(CanvasContext)
 
-  useEffect(() => {
-  
-
-    
-  }, [contentSections])
-  
   return (
     <div className='canvas'>
       <NavBarDropZone />

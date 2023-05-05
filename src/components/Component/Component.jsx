@@ -3,8 +3,8 @@ import './Component.css'
 import Loading from '../Loading/Loading'
 const Component = ({ component: { style, text }, showSettings }) => {
   const [itemLoaded, setItemLoaded] = useState(false)
+  
   const hasFinishedLoading = (e) => {
-    console.log('has loaded')
     setItemLoaded(true)
   }
 

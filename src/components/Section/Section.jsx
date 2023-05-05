@@ -7,23 +7,18 @@ import { CanvasContext } from '../../context/canvas.context'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
-import CloseButton from 'react-bootstrap/CloseButton'
 
 const Section = ({ section }) => {
-  const [subsections, setSubSections] = useState(section.subsections)
   const [numberOfColumns, setNumberOfColumns] = useState(
     section.numberOfColumns
   )
 
-  const { webSiteID, saveChanges, contentSections } = useContext(CanvasContext)
+  const { webSiteID, saveChanges, contentSections, setContentSections } =
+    useContext(CanvasContext)
 
   const [showButtons, setShowButtons] = useState(false)
   const showButtonOptions = () => setShowButtons(true)
   const hideButtonOptions = () => setShowButtons(false)
-
-  useEffect(() => {
-    setSubSections(section.subsections)
-  }, [section])
 
   const handleSplitSections = async (numberOfSubsectionsClicked) => {
     const subsectionsIncrease = numberOfSubsectionsClicked - numberOfColumns
@@ -36,14 +31,10 @@ const Section = ({ section }) => {
       sectionIndex: sectionIndex,
     })
       .then((updatedContent) => {
-        setSubSections(updatedContent.sections[sectionIndex].subsections)
+        setContentSections(updatedContent.sections)
 
         setNumberOfColumns(
           (prevValue) => updatedContent.sections[sectionIndex].numberOfColumns
-        )
-        console.log(
-          updatedContent.sections[sectionIndex].numberOfColumns,
-          numberOfColumns
         )
       })
       .catch((err) => console.log(err))
@@ -82,12 +73,11 @@ const Section = ({ section }) => {
               3
             </Button>
           </ButtonGroup>
-          <CloseButton />
         </ButtonToolbar>
       )}
       <div className='section-content'>
         {section.subsections.length > 0 ? (
-          section.subsections.map((subsection, index) => {
+          section.subsections.map((subsection) => {
             return (
               <Subsection
                 key={subsection._id}
