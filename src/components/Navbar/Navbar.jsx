@@ -2,11 +2,10 @@ import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 
-import { Link } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/auth.context'
 import Button from 'react-bootstrap/Button'
-import './Navbar.css'
+import './NavBar.css'
 const NavBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
 

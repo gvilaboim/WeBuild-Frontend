@@ -24,6 +24,8 @@ function CanvasProviderWrapper(props) {
   // Helps have hrefs, forms etc to be active on one click
   const [isSiteLive, setIsSiteLive] = useState(false)
 
+  const [showHints, setShowHints] = useState(false)
+  const toggleHints = () => setShowHints(previousValue => !previousValue) 
   const saveChanges = async (id, siteData) => {
     try {
       const response = await canvasStoreService.saveChanges(id, siteData)
@@ -44,7 +46,17 @@ function CanvasProviderWrapper(props) {
       console.log(error)
     }
   }
-
+  const deleteSection = async (websiteId, sectionId) => {
+    try {
+      const response = await canvasStoreService.removeSection(
+        websiteId,
+        sectionId
+      )
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const getComponentInfo = (component) => {
     setSelectedComponent(component)
@@ -116,6 +128,10 @@ function CanvasProviderWrapper(props) {
         setShowSettingsSidebar,
 
         deleteSubsection,
+        deleteSection,
+
+        showHints,
+        toggleHints,
       }}
     >
       {props.children}

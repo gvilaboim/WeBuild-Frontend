@@ -53,8 +53,18 @@ class CanvasStoreService {
   }
 
   removeSubsection = async (websiteId, subsectionId, sectionId) => {
-    return this.api.put(`/api/websites/${websiteId}/delete-subsection`, { subsectionId, sectionId })
+    return this.api.put(`/api/websites/${websiteId}/delete-subsection`, {
+      subsectionId,
+      sectionId,
+    })
   }
+  removeSection = async (websiteId, sectionId) => {
+    return this.api.put(`/api/websites/${websiteId}/delete-section`, {
+      sectionId,
+    })
+  }
+
+  
   // DELETE /api/examples/:id
 
   deleteProject = async (id) => {

@@ -4,6 +4,11 @@ import { useDrop } from 'react-dnd'
 import { CanvasContext } from '../../context/canvas.context'
 import Component from '../Component/Component'
 import CloseButton from 'react-bootstrap/CloseButton'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/esm/Button'
+import Toast from 'react-bootstrap/Toast'
+import OverlayTrigger from 'react-bootstrap/esm/OverlayTrigger'
+import Tooltip from 'react-bootstrap/esm/Tooltip'
 
 const Subsection = ({
   sectionName,
@@ -11,8 +16,12 @@ const Subsection = ({
   subsectionName,
   subsection,
   handleDeleteSubsection,
+  toggleHints,
+  setShowToast,
+  showToast,
 }) => {
   const {
+    getComponentInfo,
     webSiteID,
     contentSections,
     setContentSections,
@@ -20,11 +29,24 @@ const Subsection = ({
     setShowSettingsSidebar,
   } = useContext(CanvasContext)
 
-  const [showDeleteBtn, setShowDeleteBtn] = useState(false)
-
   const handleShowSettingsSidebar = () => setShowSettingsSidebar(true)
+
+  const [showDeleteBtn, setShowDeleteBtn] = useState(false)
   const handleShowDeleteBtn = () => setShowDeleteBtn(true)
   const handleHideDeleteBtn = () => setShowDeleteBtn(false)
+
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false)
+  const handleShowDeleteConfirmation = () => {
+    //user tries to delete a subsection
+    // check if it is the last one
+    // and has content
+    if (contentSections.length === 2 || (subsection.length !== 1 && subsection.components.length === 0)) {
+      handleDeleteSubsection(webSiteID, subsection._id, sectionId)
+    } else {
+      setShowConfirmDelete(true)
+    }
+  }
+  const handleHideDeleteConfirmation = () => setShowConfirmDelete(false)
 
   const handleDrop = async (draggedComponent) => {
     // Find the section and subsection to modify
@@ -105,10 +127,10 @@ const Subsection = ({
               key={component._id}
               component={component}
               showSettings={handleShowSettingsSidebar}
-              getComponentInfo = {getComponentInfo}
-              componentInfo = {component}
-              setContentSections = {setContentSections}
-              contentSections = { contentSections}
+              getComponentInfo={getComponentInfo}
+              componentInfo={component}
+              setContentSections={setContentSections}
+              contentSections={contentSections}
             />
           ))}
         </>
@@ -116,15 +138,65 @@ const Subsection = ({
         <div> You can drop an item here </div>
       )}
       {showDeleteBtn && (
-        <div className='delete-subsection'>
-          <CloseButton
+        <>
+          <div className='delete-subsection'>
+            {showToast ? (
+              <OverlayTrigger
+                key={'right'}
+                placement={'right'}
+                overlay={
+                  <Tooltip>You should not have less than 2 Sections.</Tooltip>
+                }
+              >
+                <CloseButton
+                  onClick={handleShowDeleteConfirmation}
+                  variant='white'
+                />
+              </OverlayTrigger>
+            ) : (
+              <CloseButton
+                onClick={handleShowDeleteConfirmation}
+                variant='white'
+              />
+            )}
+          </div>
+        </>
+      )}
+      <Modal
+        show={showConfirmDelete}
+        onHide={handleHideDeleteConfirmation}
+        backdrop='static'
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Are you sure?</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          This module has content in it. If you continue, all data will be lost!
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant='secondary'
+            onClick={toggleHints}
+          >
+            Close
+          </Button>
+          <Button
+            variant='secondary'
+            onClick={handleHideDeleteConfirmation}
+          >
+            Close
+          </Button>
+          <Button
+            variant='primary'
             onClick={() =>
               handleDeleteSubsection(webSiteID, subsection._id, sectionId)
             }
-            variant='white'
-          />
-        </div>
-      )}
+          >
+            Understood
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }

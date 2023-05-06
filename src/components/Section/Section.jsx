@@ -7,6 +7,8 @@ import { CanvasContext } from '../../context/canvas.context'
 import Button from 'react-bootstrap/Button'
 import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 const Section = ({ section }) => {
   const {
@@ -15,6 +17,8 @@ const Section = ({ section }) => {
     contentSections,
     setContentSections,
     deleteSubsection,
+    deleteSection,
+    toggleHints,
   } = useContext(CanvasContext)
 
   const [showButtons, setShowButtons] = useState(false)
@@ -25,11 +29,14 @@ const Section = ({ section }) => {
   const [startY, setStartY] = useState(0)
   const [startHeight, setStartHeight] = useState(0)
 
+  const [showToast, setShowToast] = useState(false)
+
   const handleSplitSections = async (numberOfSubsectionsClicked) => {
     const subsectionsIncrease =
-      numberOfSubsectionsClicked - section.numberOfColumns
+      numberOfSubsectionsClicked - section.subsections.length
+    console.log(subsectionsIncrease)
     const sectionIndex = contentSections.findIndex(
-      (sectionToFind) => sectionToFind.name === section.name
+      (sectionToFind) => sectionToFind._id === section._id
     )
 
     saveChanges(webSiteID, {
@@ -46,26 +53,27 @@ const Section = ({ section }) => {
     setIsResizing(true)
     setStartY(e.pageY)
     setStartHeight(e.target.closest('.section').offsetHeight)
+    window.addEventListener('mouseup', handleMouseUp)
   }
 
   const handleMouseMove = (e) => {
     if (isResizing) {
       const deltaY = e.pageY - startY
 
-      if (deltaY > 0) {
-        const newHeight = startHeight + deltaY
-        const sectionElement = e.target.closest('.section')
-        sectionElement.style.height = `${newHeight}px`
-      }
+      const newHeight = startHeight + deltaY
+      const sectionElement = e.target.closest('.section')
+      sectionElement.style.height = `${newHeight}px`
     }
   }
 
   const handleMouseUp = (e) => {
-    console.log('mouse up')
     setIsResizing(false)
+    window.removeEventListener('mousemove', handleMouseMove)
+    window.removeEventListener('mouseup', handleMouseUp)
   }
 
   const handleDeleteSubsection = (webSiteID, subsectionId, sectionId) => {
+    //if it is the last subSection it will delete the whole section
     if (section.subsections.length !== 1) {
       deleteSubsection(webSiteID, subsectionId, sectionId).then(
         (updatedWebsite) => {
@@ -73,11 +81,17 @@ const Section = ({ section }) => {
         }
       )
     } else {
-      console.log(
-        'you need to keep at least one subsection, delete the whole section instead'
-      )
+      if (contentSections.length > 2) {
+        deleteSection(webSiteID, sectionId).then((updatedWebsite) =>
+          setContentSections(updatedWebsite.sections)
+        )
+      } else {
+        //must have at least 2 sections
+        setShowToast(true)
+      }
     }
   }
+
   const style = {}
   return (
     <div
@@ -87,31 +101,43 @@ const Section = ({ section }) => {
       onMouseLeave={hideButtonOptions}
     >
       {showButtons && (
-        <ButtonToolbar
-          className='button-wrapper'
-          aria-label='Toolbar with button groups'
+        <OverlayTrigger
+          key={'left'}
+          placement={'left'}
+          overlay={<Tooltip>Add more Sections</Tooltip>}
         >
-          <ButtonGroup aria-label='button-group'>
-            <Button
-              variant={section.numberOfColumns === 1 ? 'dark' : 'outline-dark'}
-              onClick={() => handleSplitSections(1)}
-            >
-              1
-            </Button>
-            <Button
-              variant={section.numberOfColumns === 2 ? 'dark' : 'outline-dark'}
-              onClick={() => handleSplitSections(2)}
-            >
-              2
-            </Button>
-            <Button
-              variant={section.numberOfColumns === 3 ? 'dark' : 'outline-dark'}
-              onClick={() => handleSplitSections(3)}
-            >
-              3
-            </Button>
-          </ButtonGroup>
-        </ButtonToolbar>
+          <ButtonToolbar
+            className='button-wrapper'
+            aria-label='Toolbar with button groups'
+          >
+            <ButtonGroup aria-label='button-group'>
+              <Button
+                variant={
+                  section.subsections.length === 1 ? 'dark' : 'outline-dark'
+                }
+                onClick={() => handleSplitSections(1)}
+              >
+                1
+              </Button>
+              <Button
+                variant={
+                  section.subsections.length === 2 ? 'dark' : 'outline-dark'
+                }
+                onClick={() => handleSplitSections(2)}
+              >
+                2
+              </Button>
+              <Button
+                variant={
+                  section.subsections.length === 3 ? 'dark' : 'outline-dark'
+                }
+                onClick={() => handleSplitSections(3)}
+              >
+                3
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+        </OverlayTrigger>
       )}
       <div className='section-content'>
         {section.subsections.length > 0 ? (
@@ -124,6 +150,8 @@ const Section = ({ section }) => {
                 subsection={subsection}
                 sectionId={section._id}
                 handleDeleteSubsection={handleDeleteSubsection}
+                setShowToast={setShowToast}
+                showToast={showToast}
               />
             )
           })
