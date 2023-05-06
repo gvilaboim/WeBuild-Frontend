@@ -11,6 +11,8 @@ import IsPrivate from './components/IsPrivate/IsPrivate'
 import IsAnon from './components/IsAnon/IsAnon'
 import Create from './pages/Create/Create'
 import CreateForm from './pages/Create/CreateForm'
+import AllPlans from './pages/Upgrade/AllPlans' 
+import SinglePlan from './pages/Upgrade/SinglePlan'
 
 function App() {
   return (
@@ -27,6 +29,23 @@ function App() {
           element={
             <IsPrivate>
               <Dashboard />
+            </IsPrivate>
+          }
+        />
+        
+        <Route
+          path='/upgrade'
+          element={
+            <IsPrivate>
+              <AllPlans />
+            </IsPrivate>
+          }
+        />
+         <Route
+          path='/upgrade/:id'
+          element={
+            <IsPrivate>
+              <SinglePlan />
             </IsPrivate>
           }
         />

@@ -41,7 +41,7 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
       style: draggedComponent.style,
     }
     saveChanges(webSiteID, {
-      droppedComponent,
+      draggedComponent: droppedComponent,
       sectionIndex,
       subsectionIndex,
     }).then((updatedContent) => {
@@ -112,7 +112,7 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
               getComponentInfo = {getComponentInfo}
               componentInfo = {component}
               setContentSections = {setContentSections}
-              contentSections = { contentSections}
+              contentSections = {contentSections}
             />
           ))}
         </>

@@ -8,11 +8,11 @@ const Component = ({ component: { style, text }, showSettings , getComponentInfo
     setItemLoaded(true)
   }
 
-
   const getinfo = (e) => {
     getComponentInfo(componentInfo)
     showSettings()
 }
+
   useEffect(() => {
     hasFinishedLoading()
   

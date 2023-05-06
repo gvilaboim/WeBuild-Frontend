@@ -58,6 +58,19 @@ class CanvasStoreService {
   deleteProject = async (id) => {
     return this.api.delete(`/api/examples/${id}`)
   }
+
+  getAllPlans = async () => {
+    return this.api.get('/api/plans/all')
+  }
+  getSinglePlan = async (id) => {
+    return this.api.get(`/api/plans/${id}`)
+  }
+
+
+  checkout = async (details) => {
+    return this.api.post(`/api/create-checkout-session`, {details})
+  }
+
 }
 
 // Create one instance of the service
