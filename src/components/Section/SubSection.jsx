@@ -100,15 +100,17 @@ const Subsection = ({
             };
             return React.createElement("img", elementProps); */}
           {/* Option2 below - Render the same component with diferent props*/}
-          {subsection.components.map((component) => {
-            return (
-              <Component
-                key={component._id}
-                component={component}
-                showSettings={handleShowSettingsSidebar}
-              />
-            )
-          })}
+          {subsection.components.map((component) => (
+            <Component
+              key={component._id}
+              component={component}
+              showSettings={handleShowSettingsSidebar}
+              getComponentInfo = {getComponentInfo}
+              componentInfo = {component}
+              setContentSections = {setContentSections}
+              contentSections = { contentSections}
+            />
+          ))}
         </>
       ) : (
         <div> You can drop an item here </div>

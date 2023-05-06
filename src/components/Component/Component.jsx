@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react'
 import './Component.css'
 import Loading from '../Loading/Loading'
-const Component = ({ component: { style, text }, showSettings }) => {
+const Component = ({ component: { style, text }, showSettings , getComponentInfo ,componentInfo}) => {
   const [itemLoaded, setItemLoaded] = useState(false)
   
   const hasFinishedLoading = (e) => {
     setItemLoaded(true)
   }
 
+
+  const getinfo = (e) => {
+    getComponentInfo(componentInfo)
+    showSettings()
+}
   useEffect(() => {
     hasFinishedLoading()
   
