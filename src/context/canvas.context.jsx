@@ -101,9 +101,8 @@ function CanvasProviderWrapper(props) {
         setIsSiteLive,
 
         showSettingsSidebar,
-        setShowSettingsSidebar,
+        setShowSettingsSidebar
 
-        deleteSubsection,
       }}
     >
       {props.children}
