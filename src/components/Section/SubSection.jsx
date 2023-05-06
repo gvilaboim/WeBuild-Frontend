@@ -109,6 +109,10 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
               key={component._id}
               component={component}
               showSettings={handleShowSettingsSidebar}
+              getComponentInfo = {getComponentInfo}
+              componentInfo = {component}
+              setContentSections = {setContentSections}
+              contentSections = { contentSections}
             />
           ))}
         </>

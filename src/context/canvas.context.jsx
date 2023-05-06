@@ -33,6 +33,7 @@ function CanvasProviderWrapper(props) {
     }
   }
 
+
   const getComponentInfo = (component) => {
     setSelectedComponent(component)
     console.log(component)
