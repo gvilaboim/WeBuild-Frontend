@@ -32,6 +32,18 @@ function CanvasProviderWrapper(props) {
       console.log(error)
     }
   }
+  const deleteSubsection = async (websiteId, subsectionId, sectionId) => {
+    try {
+      const response = await canvasStoreService.removeSubsection(
+        websiteId,
+        subsectionId,
+        sectionId
+      )
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const getComponentInfo = (component) => {
     setSelectedComponent(component)
@@ -101,6 +113,8 @@ function CanvasProviderWrapper(props) {
 
         showSettingsSidebar,
         setShowSettingsSidebar,
+
+        deleteSubsection,
       }}
     >
       {props.children}

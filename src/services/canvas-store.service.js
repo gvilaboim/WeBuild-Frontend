@@ -36,13 +36,12 @@ class CanvasStoreService {
     return this.api.get('/api/canvas-store')
   }
 
+  //UPDATE COMPONENT INFO
+
   //Add current website changes to DB
   saveChanges = async (id, siteData) => {
     return this.api.put(`/api/websites/${id}`, { siteData })
   }
-
-  //UPDATE COMPONENT INFO
-
   saveComponentChanges = async (componentData) => {
     return this.api.put(`/api/websites/components/edit/`, { componentData })
   }
@@ -53,8 +52,11 @@ class CanvasStoreService {
     return this.api.get('/api/websites/get-all')
   }
 
-
+  removeSubsection = async (websiteId, subsectionId, sectionId) => {
+    return this.api.put(`/api/websites/${websiteId}/delete-subsection`, { subsectionId, sectionId })
+  }
   // DELETE /api/examples/:id
+
   deleteProject = async (id) => {
     return this.api.delete(`/api/examples/${id}`)
   }
