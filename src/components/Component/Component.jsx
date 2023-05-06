@@ -22,7 +22,7 @@ const Component = ({ component: { style, text }, showSettings }) => {
 
       <div
         className='component'
-        onClick={showSettings}
+        onDoubleClick={showSettings}
         style={{
           ...style,
           display: itemLoaded ? 'flex' : 'none',

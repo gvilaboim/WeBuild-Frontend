@@ -20,6 +20,10 @@ const Section = ({ section }) => {
   const showButtonOptions = () => setShowButtons(true)
   const hideButtonOptions = () => setShowButtons(false)
 
+  const [isResizing, setIsResizing] = useState(false)
+  const [startY, setStartY] = useState(0)
+  const [startHeight, setStartHeight] = useState(0)
+
   const handleSplitSections = async (numberOfSubsectionsClicked) => {
     const subsectionsIncrease = numberOfSubsectionsClicked - numberOfColumns
     const sectionIndex = contentSections.findIndex(
@@ -38,6 +42,25 @@ const Section = ({ section }) => {
         )
       })
       .catch((err) => console.log(err))
+  }
+
+  const handleMouseDown = (e) => {
+    setIsResizing(true)
+    setStartY(e.pageY)
+    setStartHeight(e.target.closest('.section').offsetHeight)
+  }
+
+  const handleMouseMove = (e) => {
+    if (isResizing) {
+      const deltaY = e.pageY - startY
+      const newHeight = startHeight + deltaY
+      const sectionElement = e.target.closest('.section')
+      sectionElement.style.height = `${newHeight}px`
+    }
+  }
+
+  const handleMouseUp = (e) => {
+    setIsResizing(false)
   }
 
   const style = {}
@@ -91,6 +114,14 @@ const Section = ({ section }) => {
           <Loading />
         )}
       </div>
+      <>
+      <div
+          className='resize-handle'
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+        />
+      </>
     </div>
   )
 }
