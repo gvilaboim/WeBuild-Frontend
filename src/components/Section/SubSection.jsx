@@ -68,7 +68,7 @@ const Subsection = ({
       style: draggedComponent.style,
     }
     saveChanges(webSiteID, {
-      droppedComponent,
+      draggedComponent: droppedComponent,
       sectionIndex,
       subsectionIndex,
     }).then((updatedContent) => {

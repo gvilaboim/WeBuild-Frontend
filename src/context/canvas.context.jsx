@@ -25,7 +25,7 @@ function CanvasProviderWrapper(props) {
   const [isSiteLive, setIsSiteLive] = useState(false)
 
   const [showHints, setShowHints] = useState(false)
-  const toggleHints = () => setShowHints(previousValue => !previousValue) 
+  const toggleHints = () => setShowHints((previousValue) => !previousValue)
   const saveChanges = async (id, siteData) => {
     try {
       const response = await canvasStoreService.saveChanges(id, siteData)

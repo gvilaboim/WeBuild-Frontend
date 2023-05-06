@@ -20,7 +20,7 @@ const NavBar = () => {
           <Navbar.Brand href='/'>WeBuild</Navbar.Brand>
           <Nav className='me-auto'>
             <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
-            <Nav.Link href='#pricing'>Pricing</Nav.Link>
+            <Nav.Link href='/upgrade'>Pricing</Nav.Link>
           </Nav>
           {isLoggedIn && (
             <Nav className='ms-auto'>
@@ -37,7 +37,7 @@ const NavBar = () => {
               </Button>
               <Button
                 variant='light'
-                href='/premium'
+                href='/upgrade'
               >
                 Upgrade
               </Button>
