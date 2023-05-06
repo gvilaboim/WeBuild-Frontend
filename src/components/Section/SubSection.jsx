@@ -5,10 +5,15 @@ import { CanvasContext } from '../../context/canvas.context'
 import Component from '../Component/Component'
 import CloseButton from 'react-bootstrap/CloseButton'
 
-const Subsection = ({ sectionName, subsectionName, subsection }) => {
+const Subsection = ({
+  sectionName,
+  sectionId,
+  subsectionName,
+  subsection,
+  handleDeleteSubsection,
+}) => {
   const {
     webSiteID,
-    getComponentInfo,
     contentSections,
     setContentSections,
     saveChanges,
@@ -84,15 +89,6 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
     >
       {subsection.components.length > 0 ? (
         <>
-          {showDeleteBtn && (
-            <div className='delete-subsection'>
-              <CloseButton
-                variant='white'
-              
-              />
-            </div>
-          )}
-
           {/* 
             Option 1 - Create a Tag
             let htmlTag = comp.htmlTag;
@@ -118,6 +114,16 @@ const Subsection = ({ sectionName, subsectionName, subsection }) => {
         </>
       ) : (
         <div> You can drop an item here </div>
+      )}
+      {showDeleteBtn && (
+        <div className='delete-subsection'>
+          <CloseButton
+            onClick={() =>
+              handleDeleteSubsection(webSiteID, subsection._id, sectionId)
+            }
+            variant='white'
+          />
+        </div>
       )}
     </div>
   )

@@ -27,7 +27,7 @@ const Component = ({ component: { style, text }, showSettings , getComponentInfo
 
       <div
         className='component'
-        onClick={getinfo}
+        onDoubleClick={showSettings}
         style={{
           ...style,
           display: itemLoaded ? 'flex' : 'none',

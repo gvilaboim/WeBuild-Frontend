@@ -102,6 +102,8 @@ function CanvasProviderWrapper(props) {
 
         showSettingsSidebar,
         setShowSettingsSidebar,
+
+        deleteSubsection,
       }}
     >
       {props.children}
