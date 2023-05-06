@@ -1,6 +1,6 @@
 import './Section.css'
 import { useContext, useState } from 'react'
-import Subsection from './SubSection'
+import Subsection from './Subsection'
 import Loading from '../Loading/Loading'
 import { CanvasContext } from '../../context/canvas.context'
 
