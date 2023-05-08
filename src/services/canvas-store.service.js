@@ -36,12 +36,30 @@ class CanvasStoreService {
     return this.api.get('/api/canvas-store')
   }
 
-  //UPDATE COMPONENT INFO
-
+  // EDIT website
   //Add current website changes to DB
   saveChanges = async (id, siteData) => {
     return this.api.put(`/api/websites/${id}`, { siteData })
   }
+
+  removeSubsection = async (websiteId, subsectionId, sectionId) => {
+    return this.api.put(`/api/websites/${websiteId}/delete-subsection`, {
+      subsectionId,
+      sectionId,
+    })
+  }
+  addSection = async (websiteId, sectionId) => {
+    return this.api.put(`/api/websites/${websiteId}/add-section`, {
+      sectionId,
+    })
+  }
+  removeSection = async (websiteId, sectionId) => {
+    return this.api.put(`/api/websites/${websiteId}/delete-section`, {
+      sectionId,
+    })
+  }
+
+  //UPDATE COMPONENT INFO
   saveComponentChanges = async (componentData) => {
     return this.api.put(`/api/websites/components/edit/`, { componentData })
   }
@@ -52,19 +70,6 @@ class CanvasStoreService {
     return this.api.get('/api/websites/get-all')
   }
 
-  removeSubsection = async (websiteId, subsectionId, sectionId) => {
-    return this.api.put(`/api/websites/${websiteId}/delete-subsection`, {
-      subsectionId,
-      sectionId,
-    })
-  }
-  removeSection = async (websiteId, sectionId) => {
-    return this.api.put(`/api/websites/${websiteId}/delete-section`, {
-      sectionId,
-    })
-  }
-
-  
   // DELETE /api/examples/:id
 
   deleteProject = async (id) => {
@@ -78,11 +83,9 @@ class CanvasStoreService {
     return this.api.get(`/api/plans/${id}`)
   }
 
-
   checkout = async (details) => {
-    return this.api.post(`/api/create-checkout-session`, {details})
+    return this.api.post(`/api/create-checkout-session`, { details })
   }
-
 }
 
 // Create one instance of the service

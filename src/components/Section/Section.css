@@ -20,13 +20,13 @@
   border: 1px solid black;
 }
 
-.button-wrapper{
+.button-wrapper {
   align-self: flex-end;
   position: absolute;
   margin: 0.5em;
 }
 
-.delete-subsection{
+.delete-subsection {
   position: absolute;
   top: 0;
   margin: 0.8em;
@@ -41,4 +41,8 @@
   right: 0;
   height: 10px;
   cursor: ns-resize;
+}
+
+.add-section-button {
+  align-self: center;
 }

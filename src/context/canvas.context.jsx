@@ -16,6 +16,7 @@ function CanvasProviderWrapper(props) {
   const [contentSections, setContentSections] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
   const [selectedComponent, setSelectedComponent] = useState({})
+  const [websiteBg, setWebsiteBg] = useState("")
 
   const [webSiteID, setWebSiteID] = useState()
 
@@ -52,6 +53,15 @@ function CanvasProviderWrapper(props) {
         websiteId,
         sectionId
       )
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const addASection = async (websiteId, sectionId) => {
+    try {
+      const response = await canvasStoreService.addSection(websiteId, sectionId)
       return response.data
     } catch (error) {
       console.log(error)
@@ -130,8 +140,12 @@ function CanvasProviderWrapper(props) {
         deleteSubsection,
         deleteSection,
 
+        addASection,
+        
         showHints,
         toggleHints,
+
+
       }}
     >
       {props.children}

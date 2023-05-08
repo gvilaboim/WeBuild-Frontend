@@ -6,14 +6,13 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import SignupPage from './pages/SignupPage/SignupPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 
-import NavBar from './components/NavBar/NavBar' 
+import NavBar from './components/NavBar/NavBar'
 import IsPrivate from './components/IsPrivate/IsPrivate'
 import IsAnon from './components/IsAnon/IsAnon'
 import Create from './pages/Create/Create'
 import CreateForm from './pages/Create/CreateForm'
-import AllPlans from './pages/Upgrade/AllPlans' 
+import AllPlans from './pages/Upgrade/AllPlans'
 import SinglePlan from './pages/Upgrade/SinglePlan'
-
 function App() {
   return (
     <div className='App'>
@@ -32,7 +31,7 @@ function App() {
             </IsPrivate>
           }
         />
-        
+
         <Route
           path='/upgrade'
           element={
@@ -41,7 +40,7 @@ function App() {
             </IsPrivate>
           }
         />
-         <Route
+        <Route
           path='/upgrade/:id'
           element={
             <IsPrivate>

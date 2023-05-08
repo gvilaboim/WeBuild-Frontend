@@ -19,6 +19,7 @@ const Section = ({ section }) => {
     deleteSubsection,
     deleteSection,
     toggleHints,
+    addASection,
   } = useContext(CanvasContext)
 
   const [showButtons, setShowButtons] = useState(false)
@@ -34,7 +35,6 @@ const Section = ({ section }) => {
   const handleSplitSections = async (numberOfSubsectionsClicked) => {
     const subsectionsIncrease =
       numberOfSubsectionsClicked - section.subsections.length
-    console.log(subsectionsIncrease)
     const sectionIndex = contentSections.findIndex(
       (sectionToFind) => sectionToFind._id === section._id
     )
@@ -90,6 +90,12 @@ const Section = ({ section }) => {
         setShowToast(true)
       }
     }
+  }
+
+  const handleAddASection = (webSiteID, sectionId) => {
+    addASection(webSiteID, sectionId).then((updatedWebsite) =>
+      setContentSections(updatedWebsite.sections)
+    )
   }
 
   const style = {}
@@ -160,6 +166,13 @@ const Section = ({ section }) => {
         )}
       </div>
       <>
+        <Button
+          className='add-section-button'
+          variant={'dark'}
+          onClick={() => handleAddASection(webSiteID, section._id)}
+        >
+          Add a Section
+        </Button>
         <div
           className='resize-handle'
           onMouseDown={handleMouseDown}

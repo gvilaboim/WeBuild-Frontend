@@ -11,13 +11,10 @@ import OverlayTrigger from 'react-bootstrap/esm/OverlayTrigger'
 import Tooltip from 'react-bootstrap/esm/Tooltip'
 
 const Subsection = ({
-  sectionName,
   sectionId,
-  subsectionName,
   subsection,
   handleDeleteSubsection,
   toggleHints,
-  setShowToast,
   showToast,
 }) => {
   const {
@@ -54,11 +51,11 @@ const Subsection = ({
   const handleDrop = async (draggedComponent) => {
     // Find the section and subsection to modify
     const sectionIndex = contentSections.findIndex(
-      (section) => section.name === sectionName
+      (sectionFromDb) => sectionFromDb._id === sectionId
     )
 
     const subsectionIndex = contentSections[sectionIndex].subsections.findIndex(
-      (subsection) => subsection.name === subsectionName
+      (subsectionFromDb) => subsectionFromDb._id === subsection._id
     )
 
     //removing the id
@@ -182,7 +179,7 @@ const Subsection = ({
             variant='secondary'
             onClick={toggleHints}
           >
-            Close
+            Don't show this again
           </Button>
           <Button
             variant='secondary'
