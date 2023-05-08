@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import canvasStoreService from '../services/canvas-store.service'
+import { AuthContext } from './auth.context'
 
 const CanvasContext = React.createContext()
 
 function CanvasProviderWrapper(props) {
   //DashBoard Websites created by user
   const [webSites, setWebSites] = useState([])
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
 
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
@@ -16,6 +18,9 @@ function CanvasProviderWrapper(props) {
   const [contentSections, setContentSections] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
   const [selectedComponent, setSelectedComponent] = useState({})
+
+  const [userInfo, setUserInfo] = useState([])
+  const [userPlan, setUserPlan] = useState({})
 
   const [webSiteID, setWebSiteID] = useState()
 
@@ -93,6 +98,27 @@ function CanvasProviderWrapper(props) {
       .catch((err) => console.log(err))
   }
 
+  const fetchUserInfo = (id) => {
+    console.log("HERE")
+    console.log(id)
+ 
+    canvasStoreService.userInfo(id)
+      .then((response) => {
+      
+        setUserPlan(response.data.plan)
+      })
+      .catch((err) => console.log(err))
+  }
+
+
+  const updatePlan = (sessionId) => {
+    console.log("updatePlan ID", sessionId)
+    canvasStoreService.updatePlanFunction(sessionId).then(res => {
+      console.log(res.data)
+      fetchUserInfo(user._id)
+    })
+  };
+
   return (
     <CanvasContext.Provider
       value={{
@@ -132,6 +158,10 @@ function CanvasProviderWrapper(props) {
 
         showHints,
         toggleHints,
+        fetchUserInfo,
+        userInfo,
+        userPlan,
+        updatePlan
       }}
     >
       {props.children}

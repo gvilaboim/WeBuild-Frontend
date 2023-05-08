@@ -6,18 +6,18 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import SignupPage from './pages/SignupPage/SignupPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 
-import NavBar from './components/NavBar/NavBar' 
+import Navbar from './components/Navbar/Navbar' 
 import IsPrivate from './components/IsPrivate/IsPrivate'
 import IsAnon from './components/IsAnon/IsAnon'
 import Create from './pages/Create/Create'
 import CreateForm from './pages/Create/CreateForm'
 import AllPlans from './pages/Upgrade/AllPlans' 
 import SinglePlan from './pages/Upgrade/SinglePlan'
-
+import Success from './pages/Upgrade/Success'
 function App() {
   return (
     <div className='App'>
-      <NavBar />
+      <Navbar />
       <Routes>
         <Route
           path='/'
@@ -46,6 +46,14 @@ function App() {
           element={
             <IsPrivate>
               <SinglePlan />
+            </IsPrivate>
+          }
+        />
+          <Route
+          path='/success'
+          element={
+            <IsPrivate>
+              <Success />
             </IsPrivate>
           }
         />
