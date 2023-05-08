@@ -40,7 +40,10 @@ const Subsection = ({
     //user tries to delete a subsection
     // check if it is the last one
     // and has content
-    if (contentSections.length === 2 || (subsection.length !== 1 && subsection.components.length === 0)) {
+    if (
+      contentSections.length === 2 ||
+      (subsection.length !== 1 && subsection.components.length === 0)
+    ) {
       handleDeleteSubsection(webSiteID, subsection._id, sectionId)
     } else {
       setShowConfirmDelete(true)
@@ -68,7 +71,7 @@ const Subsection = ({
       style: draggedComponent.style,
     }
     saveChanges(webSiteID, {
-      draggedComponent: droppedComponent,
+      droppedComponent,
       sectionIndex,
       subsectionIndex,
     }).then((updatedContent) => {
