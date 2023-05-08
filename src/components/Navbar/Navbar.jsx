@@ -2,12 +2,24 @@ import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/auth.context'
 import Button from 'react-bootstrap/Button'
-import './NavBar.css'
+import './Navbar.css'
+import canvasStoreService from '../../services/canvas-store.service'
+import { CanvasContext } from '../../context/canvas.context'
 const NavBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
+  const { fetchUserInfo , userPlan} = useContext(CanvasContext)
+  useEffect(() => {
+    console.log(user)
+    if(user) 
+    {
+      fetchUserInfo(user._id)
+    } 
+   
+  }, [user])
+  
 
   return (
     <>
@@ -24,6 +36,11 @@ const NavBar = () => {
           </Nav>
           {isLoggedIn && (
             <Nav className='ms-auto'>
+              {userPlan && 
+               <Navbar.Text className='me-2'>
+                Plan: <a href='/account'>{userPlan.name}</a>
+              </Navbar.Text>
+            }
               <Navbar.Text className='me-2'>
                 Signed in as: <a href='/account'>{user.name}</a>
               </Navbar.Text>

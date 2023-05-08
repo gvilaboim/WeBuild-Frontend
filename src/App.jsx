@@ -48,6 +48,14 @@ function App() {
             </IsPrivate>
           }
         />
+          <Route
+          path='/success'
+          element={
+            <IsPrivate>
+              <Success />
+            </IsPrivate>
+          }
+        />
         <Route
           path='/websites'
           element={

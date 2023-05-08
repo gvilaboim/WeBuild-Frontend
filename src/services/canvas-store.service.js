@@ -83,9 +83,49 @@ class CanvasStoreService {
     return this.api.get(`/api/plans/${id}`)
   }
 
-  checkout = async (details) => {
-    return this.api.post(`/api/create-checkout-session`, { details })
+  updatePlan  = async (sessionId) => {
+    return this.api.post(`/api/update-user-plan`, {sessionId})
   }
+
+  checkout = async (plan,userInfo) => {
+    let details = {
+      plan,
+      userId : userInfo
+    }
+    return this.api.post(`/api/create-checkout-session`, {details})
+  }
+
+  
+  updatePlanFunction = async (sessionId) => {
+    console.log("HERE UPDATE PLAN sessionId : ", sessionId);
+  
+    try {
+      const response = await this.api.get(`/api/get-payment-details/${sessionId}`);
+      const paymentDetails = response.data;
+   
+      const { paymentId, planId, userId } = paymentDetails;
+  
+      console.log(`Payment ${paymentId} succeeded! Updating user ${userId} plan to ${planId}...`);
+  
+      const updateResponse = await this.api.post(`/api/update-user-plan`, { userId, planId });
+      const data = updateResponse.data;
+  
+      console.log("User plan updated successfully!", data);
+      
+      return data
+     // window.location.href = "/dashboard"; // Redirect to the dashboard after the plan is updated
+    } catch (error) {
+      console.error("Error updating user plan:", error);
+    }
+    
+  };
+
+
+  userInfo = async (id) => {
+    return this.api.get(`/api/user/${id}`)
+  }
+
+
 }
 
 // Create one instance of the service
