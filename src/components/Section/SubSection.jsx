@@ -6,7 +6,6 @@ import Component from '../Component/Component'
 import CloseButton from 'react-bootstrap/CloseButton'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/esm/Button'
-import Toast from 'react-bootstrap/Toast'
 import OverlayTrigger from 'react-bootstrap/esm/OverlayTrigger'
 import Tooltip from 'react-bootstrap/esm/Tooltip'
 
@@ -36,7 +35,7 @@ const Subsection = ({
   const handleShowDeleteConfirmation = () => {
     //user tries to delete a subsection
     // check if it is the last one
-    // and has content
+    // and has content and shows a confirmation message
     if (
       contentSections.length === 2 ||
       (subsection.length !== 1 && subsection.components.length === 0)
@@ -58,15 +57,9 @@ const Subsection = ({
       (subsectionFromDb) => subsectionFromDb._id === subsection._id
     )
 
-    //removing the id
-    let droppedComponent = {
-      type: draggedComponent.type,
-      name: draggedComponent.name,
-      htmlTag: draggedComponent.htmlTag,
-      category: draggedComponent.category,
-      text: draggedComponent.text,
-      style: draggedComponent.style,
-    }
+    //removing the id from the dropped component
+    const { _id, ...droppedComponent } = draggedComponent
+
     saveChanges(webSiteID, {
       droppedComponent,
       sectionIndex,
@@ -135,7 +128,9 @@ const Subsection = ({
           ))}
         </>
       ) : (
-        <div> You can drop an item here </div>
+        <div className='empty-section'>
+          <p>You can drop an item here</p>
+        </div>
       )}
       {showDeleteBtn && (
         <>

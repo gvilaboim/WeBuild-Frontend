@@ -13,12 +13,7 @@ const FooterDropZone = () => {
 
   const handleDrop = (draggedComponent) => {
     //removing the id
-    let droppedComponent = {
-      type: draggedComponent.type,
-      name: draggedComponent.name,
-      layout: draggedComponent.layout,
-      bgColor: draggedComponent.bgColor,
-    }
+    const { _id, ...droppedComponent } = draggedComponent
 
     saveChanges(id, {
       droppedComponent,

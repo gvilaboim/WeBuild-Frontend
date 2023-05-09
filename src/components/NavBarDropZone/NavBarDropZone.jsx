@@ -13,14 +13,9 @@ const NavBarDropZone = () => {
   const { id } = useParams()
 
   const handleDrop = (draggedComponent) => {
-    //removing the id
-    let droppedComponent = {
-      type: draggedComponent.type,
-      brand: draggedComponent.brand,
-      name: draggedComponent.name,
-      bgColor: draggedComponent.bgColor,
-      navLinks: draggedComponent.navLinks,
-    }
+
+    // removing the id
+    const { _id, ...droppedComponent } = draggedComponent
 
     saveChanges(id, {
       droppedComponent,

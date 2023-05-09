@@ -13,6 +13,8 @@ import Create from './pages/Create/Create'
 import CreateForm from './pages/Create/CreateForm'
 import AllPlans from './pages/Upgrade/AllPlans'
 import SinglePlan from './pages/Upgrade/SinglePlan'
+import Success from './pages/Upgrade/Success'
+
 function App() {
   return (
     <div className='App'>

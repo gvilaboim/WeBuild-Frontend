@@ -2,9 +2,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 600px;
-  resize: both;
+  resize: vertical;
 }
+
+
 .section-content {
   flex: 1;
   display: flex;
@@ -18,6 +19,14 @@
   justify-content: space-evenly;
   height: 100%;
   border: 1px solid black;
+  overflow-y: hidden;
+}
+
+.empty-section{
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .button-wrapper {
@@ -45,4 +54,7 @@
 
 .add-section-button {
   align-self: center;
+  position: absolute;
+  bottom: -18px;
+  z-index: 999;
 }

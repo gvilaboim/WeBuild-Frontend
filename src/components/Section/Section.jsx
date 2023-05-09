@@ -166,13 +166,6 @@ const Section = ({ section }) => {
         )}
       </div>
       <>
-        <Button
-          className='add-section-button'
-          variant={'dark'}
-          onClick={() => handleAddASection(webSiteID, section._id)}
-        >
-          Add a Section
-        </Button>
         <div
           className='resize-handle'
           onMouseDown={handleMouseDown}
@@ -180,6 +173,13 @@ const Section = ({ section }) => {
           onMouseUp={handleMouseUp}
         />
       </>
+        <Button
+          className='add-section-button'
+          variant={'dark'}
+          onClick={() => handleAddASection(webSiteID, section._id)}
+        >
+          Add a Section
+        </Button>
     </div>
   )
 }

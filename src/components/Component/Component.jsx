@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react'
 import './Component.css'
 import Loading from '../Loading/Loading'
-const Component = ({ component: { style, text }, showSettings , getComponentInfo ,componentInfo}) => {
+import Button from 'react-bootstrap/Button'
+const Component = ({
+  component: { style, items },
+  showSettings,
+  getComponentInfo,
+  componentInfo,
+}) => {
+  console.log(items)
   const [itemLoaded, setItemLoaded] = useState(false)
-  
+
   const hasFinishedLoading = (e) => {
     setItemLoaded(true)
   }
@@ -11,16 +18,16 @@ const Component = ({ component: { style, text }, showSettings , getComponentInfo
   const getinfo = (e) => {
     getComponentInfo(componentInfo)
     showSettings()
-}
+  }
 
   useEffect(() => {
     hasFinishedLoading()
-  
+
     return () => {
       setItemLoaded(false)
     }
   }, [])
-  
+
   return (
     <>
       {!itemLoaded && <Loading />}
@@ -31,19 +38,23 @@ const Component = ({ component: { style, text }, showSettings , getComponentInfo
         style={{
           ...style,
           display: itemLoaded ? 'flex' : 'none',
-          justifyContent: 'center',
-          alignItems: 'center',
           height: `${style.height}%`,
           width: `${style.width}%`,
           padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-          backgroundImage: `url(${style.backgroundImage})`,
-          backgroundPosition: 'center',
+          background: `no-repeat center/cover url(${style.backgroundImage})`,
           backgroundSize: 'cover',
-          backgroundRepeat: 'no-repeat',
           backgroundColor: `rgba(${style.backgroundColor.r}, ${style.backgroundColor.g},${style.backgroundColor.b},${style.backgroundColor.a})`,
         }}
       >
-        {text}
+        {items.map((item) => {
+          return (
+            <div style={{...item.style}}>
+              <div style={{marginBottom: "30px"}}>{item.title}</div>
+              <div>{item.subtitle}</div>
+              <Button variant='light'>{item.button}</Button>
+            </div>
+          )
+        })}
       </div>
     </>
   )
