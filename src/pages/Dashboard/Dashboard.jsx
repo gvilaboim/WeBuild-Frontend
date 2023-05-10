@@ -9,6 +9,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 
+
 function Dashboard() {
   const { webSites, fetchAllWebsites } = useContext(CanvasContext)
 
@@ -20,9 +21,11 @@ function Dashboard() {
 
   return (
     <>
+    <div> 
       <h1>Websites</h1>
-
+    
       <Container>
+      
       <Card>
         <Card.Body>
           <Card.Title>Create a Website</Card.Title>
@@ -56,6 +59,7 @@ function Dashboard() {
             })}
         </Row>
       </Container>
+      </div>
     </>
   )
 }

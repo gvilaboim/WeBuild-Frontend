@@ -31,6 +31,12 @@ class CanvasStoreService {
   getOneWebsite = async (id) => {
     return this.api.get(`/api/websites/${id}`)
   }
+
+  getPublicView = async (username,sitename) => {
+    return this.api.get(`/api/websites/publicview/${username}/${sitename}`)
+  }
+
+
   // GET /api/canvas-store
   getStoreItems = async () => {
     return this.api.get('/api/canvas-store')
@@ -123,6 +129,13 @@ class CanvasStoreService {
 
   userInfo = async (id) => {
     return this.api.get(`/api/user/${id}`)
+  }
+
+
+
+  updateUserInfo = async (userInfo) => {
+    console.log("store service",userInfo)
+    return this.api.put(`/api/settings/${userInfo._id}`,{userInfo})
   }
 
 
