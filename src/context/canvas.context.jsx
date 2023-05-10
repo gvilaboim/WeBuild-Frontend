@@ -33,6 +33,7 @@ function CanvasProviderWrapper(props) {
 
   const [showHints, setShowHints] = useState(false)
   const toggleHints = () => setShowHints((previousValue) => !previousValue)
+
   const saveChanges = async (id, siteData) => {
     try {
       const response = await canvasStoreService.saveChanges(id, siteData)
@@ -41,6 +42,7 @@ function CanvasProviderWrapper(props) {
       console.log(error)
     }
   }
+
   const deleteSubsection = async (websiteId, subsectionId, sectionId) => {
     try {
       const response = await canvasStoreService.removeSubsection(
@@ -53,6 +55,7 @@ function CanvasProviderWrapper(props) {
       console.log(error)
     }
   }
+
   const deleteSection = async (websiteId, sectionId) => {
     try {
       const response = await canvasStoreService.removeSection(

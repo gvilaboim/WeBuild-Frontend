@@ -26,6 +26,8 @@ const Subsection = ({
     setShowSettingsSidebar,
   } = useContext(CanvasContext)
 
+  
+
   const handleShowSettingsSidebar = () => setShowSettingsSidebar(true)
 
   const [showDeleteBtn, setShowDeleteBtn] = useState(false)
@@ -113,7 +115,7 @@ const Subsection = ({
             }
 
             switch (component.category) {
-              case 'landing-page':
+              case 'hero':
                 return <Hero {...compProps} />
               case 'pricing':
                 return <Pricing {...compProps} />
