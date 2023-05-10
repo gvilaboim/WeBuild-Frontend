@@ -18,7 +18,6 @@ const Section = ({ section }) => {
     setContentSections,
     deleteSubsection,
     deleteSection,
-    toggleHints,
     addASection,
   } = useContext(CanvasContext)
 

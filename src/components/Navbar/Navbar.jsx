@@ -12,7 +12,6 @@ const NavBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
   const { fetchUserInfo , userPlan} = useContext(CanvasContext)
   useEffect(() => {
-    console.log(user)
     if(user) 
     {
       fetchUserInfo(user._id)

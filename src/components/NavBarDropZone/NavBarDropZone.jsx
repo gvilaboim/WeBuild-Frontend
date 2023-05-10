@@ -3,9 +3,9 @@ import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { CanvasContext } from '../../context/canvas.context'
 
-import './NavBarDropZone.css'
 import { useParams } from 'react-router-dom'
 import NavBarBS from '../Bootstrap/NavBarBS'
+import './NavBarDropZone.css'
 
 const NavBarDropZone = () => {
   const { navbarComponents, setNavbarComponents, saveChanges } =

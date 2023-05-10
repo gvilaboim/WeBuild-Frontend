@@ -18,7 +18,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
-  border: 1px solid black;
+  border: 1px dashed black;
   overflow-y: hidden;
 }
 
