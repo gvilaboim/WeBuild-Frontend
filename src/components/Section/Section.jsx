@@ -51,6 +51,7 @@ const Section = ({ section }) => {
   const handleMouseDown = (e) => {
     setIsResizing(true)
     setStartY(e.pageY)
+    
     setStartHeight(e.target.closest('.section').offsetHeight)
     window.addEventListener('mouseup', handleMouseUp)
   }

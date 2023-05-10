@@ -50,6 +50,7 @@
   right: 0;
   height: 10px;
   cursor: ns-resize;
+  z-index: 999;
 }
 
 .add-section-button {

@@ -6,3 +6,8 @@
   align-items: center;
   border: 1px dashed black;
 }
+
+
+.empty-footer{
+  background-color: aliceblue;
+}

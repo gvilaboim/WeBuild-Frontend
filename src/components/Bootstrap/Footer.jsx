@@ -1,9 +1,14 @@
 import { useContext } from 'react'
-import { Container, Row, Col, Nav, Button } from 'react-bootstrap'
+import { Container, Row, Col, Nav } from 'react-bootstrap'
 import { CanvasContext } from '../../context/canvas.context'
 
 const Footer = ({ component }) => {
   const { websiteInfo, isSiteLive } = useContext(CanvasContext)
+
+  const year = new Date().getFullYear()
+
+  console.log(component)
+
   return (
     <Container>
       <Row className='border-top py-5 my-5 '>
@@ -14,148 +19,33 @@ const Footer = ({ component }) => {
           >
             <p>{websiteInfo.name}</p>
           </a>
-          <p className='text-body-secondary'>&copy; 2023</p>
+          <p className='text-body-secondary'>&copy; {year}</p>
         </Col>
 
         <Col mb={3}></Col>
 
-        <Col mb={3}>
-          <h5>Section</h5>
-          <Nav className='flex-column'>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Home
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Features
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Pricing
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                FAQs
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                About
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Col>
-
-        <Col mb={3}>
-          <h5>Section</h5>
-          <Nav className='flex-column'>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Home
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Features
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Pricing
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                FAQs
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                About
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Col>
-
-        <Col mb={3}>
-          <h5>Section</h5>
-          <Nav className='flex-column'>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Home
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Features
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                Pricing
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                FAQs
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className='mb-2'>
-              <Nav.Link
-                href='#'
-                className='nav-link p-0 text-body-secondary'
-              >
-                About
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Col>
+        {component.items.length > 0 &&
+          component.items.map((item) => {
+            return (
+              <>
+                <Col mb={3}>
+                  <h5>{item.header.text}</h5>
+                  <Nav className='flex-column'>
+                    <Nav.Item className='mb-2'>
+                      {item.links.map((link) => (
+                        <Nav.Link
+                          href={link.href}
+                          className='nav-link p-0 text-body-secondary'
+                        >
+                          {link.text}
+                        </Nav.Link>
+                      ))}
+                    </Nav.Item>
+                  </Nav>
+                </Col>
+              </>
+            )
+          })}
       </Row>
     </Container>
   )
