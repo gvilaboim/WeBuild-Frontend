@@ -20,7 +20,7 @@ function CanvasProviderWrapper(props) {
   const [selectedComponent, setSelectedComponent] = useState({})
   const [websiteBg, setWebsiteBg] = useState("")
 
-  const [userInfo, setUserInfo] = useState([])
+  const [userInfo, setUserInfo] = useState({})
   const [userPlan, setUserPlan] = useState({})
 
   const [webSiteID, setWebSiteID] = useState()
@@ -114,7 +114,7 @@ function CanvasProviderWrapper(props) {
  
     canvasStoreService.userInfo(id)
       .then((response) => {
-      
+        setUserInfo(response.data)
         setUserPlan(response.data.plan)
       })
       .catch((err) => console.log(err))
@@ -128,6 +128,32 @@ function CanvasProviderWrapper(props) {
       fetchUserInfo(user._id)
     })
   };
+
+  const LoadPublicView =  async (username, sitename) => {
+    console.log("LoadPublicView Function : ", username ,sitename )
+    try {
+    const response =  await canvasStoreService.getPublicView(username, sitename)
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+
+  }
+
+ 
+  const UpdateUserInfo =  async (userInfo) => {
+    console.log("UpdateUserInfo Function : ",userInfo )
+    try {
+    const response =  await canvasStoreService.updateUserInfo(userInfo)
+    console.log(response.data)
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+
+  }
+
 
   return (
     <CanvasContext.Provider
@@ -175,7 +201,11 @@ function CanvasProviderWrapper(props) {
         fetchUserInfo,
         userInfo,
         userPlan,
-        updatePlan
+        updatePlan,
+
+        LoadPublicView,
+        UpdateUserInfo,
+        setUserInfo
       }}
     >
       {props.children}

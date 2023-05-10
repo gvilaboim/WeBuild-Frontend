@@ -5,14 +5,12 @@ import Navbar from 'react-bootstrap/Navbar'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/auth.context'
 import Button from 'react-bootstrap/Button'
-import './NavBar.css'
 import canvasStoreService from '../../services/canvas-store.service'
 import { CanvasContext } from '../../context/canvas.context'
 const NavBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
   const { fetchUserInfo , userPlan} = useContext(CanvasContext)
   useEffect(() => {
-    console.log(user)
     if(user) 
     {
       fetchUserInfo(user._id)
@@ -33,6 +31,8 @@ const NavBar = () => {
           <Nav className='me-auto'>
             <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
             <Nav.Link href='/upgrade'>Pricing</Nav.Link>
+            <Nav.Link href='/settings'>Settings</Nav.Link>
+            <Nav.Link href='/'>WebSites Find</Nav.Link>
           </Nav>
           {isLoggedIn && (
             <Nav className='ms-auto'>
