@@ -1,10 +1,13 @@
 .footer-drop-zone {
-    background-color: antiquewhite;
-    min-height: 5%;
-    flex: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-  }
-  
+  min-height: 15vh;
+  flex: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed black;
+}
+
+
+.empty-footer{
+  background-color: aliceblue;
+}

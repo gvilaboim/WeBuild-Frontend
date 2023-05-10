@@ -8,6 +8,8 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/esm/Button'
 import OverlayTrigger from 'react-bootstrap/esm/OverlayTrigger'
 import Tooltip from 'react-bootstrap/esm/Tooltip'
+import Pricing from '../Bootstrap/Pricing'
+import Hero from '../Bootstrap/Hero'
 
 const Subsection = ({
   sectionId,
@@ -17,7 +19,6 @@ const Subsection = ({
   showToast,
 }) => {
   const {
-    getComponentInfo,
     webSiteID,
     contentSections,
     setContentSections,
@@ -104,28 +105,22 @@ const Subsection = ({
     >
       {subsection.components.length > 0 ? (
         <>
-          {/* 
-            Option 1 - Create a Tag
-            let htmlTag = comp.htmlTag;
-            let elementProps = {
-              key: comp._id,
-              className: 'sub-section-item',
-              onClick: () => getComponentInfo(comp),
-              src: comp.src
-            };
-            return React.createElement("img", elementProps); */}
-          {/* Option2 below - Render the same component with diferent props*/}
-          {subsection.components.map((component) => (
-            <Component
-              key={component._id}
-              component={component}
-              showSettings={handleShowSettingsSidebar}
-              getComponentInfo={getComponentInfo}
-              componentInfo={component}
-              setContentSections={setContentSections}
-              contentSections={contentSections}
-            />
-          ))}
+          {subsection.components.map((component) => {
+            let compProps = {
+              key: component._id,
+              component: component,
+              showSettings: handleShowSettingsSidebar,
+            }
+
+            switch (component.category) {
+              case 'landing-page':
+                return <Hero {...compProps} />
+              case 'pricing':
+                return <Pricing {...compProps} />
+              default:
+                return <Component {...compProps} />
+            }
+          })}
         </>
       ) : (
         <div className='empty-section'>

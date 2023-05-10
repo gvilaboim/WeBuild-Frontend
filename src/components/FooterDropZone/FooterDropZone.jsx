@@ -1,9 +1,10 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { CanvasContext } from '../../context/canvas.context'
-import './FooterDropZone.css'
 import { useParams } from 'react-router-dom'
+import Footer from '../Bootstrap/Footer'
+import './FooterDropZone.css'
 
 const FooterDropZone = () => {
   const { footerComponents, setFooterComponents, saveChanges } =
@@ -47,14 +48,23 @@ const FooterDropZone = () => {
     <div
       ref={drop}
       style={{ ...style, backgroundColor }}
-      className='footer-drop-zone'
+      className={footerComponents.length === 0 ? 'footer-drop-zone' : ''}
     >
       {footerComponents.length !== 0 ? (
-        footerComponents.map((component) => {
-          return <div key={component._id}>{component.name}</div>
-        })
+        <>
+          {footerComponents.map((component) => {
+            return (
+              <Footer
+                key={component._id}
+                component={component}
+              />
+            )
+          })}
+        </>
       ) : (
-        <div>Drag a Footer here</div>
+        <div className='empty-footer'>
+          <p>Drag a Footer here</p>
+        </div>
       )}
     </div>
   )

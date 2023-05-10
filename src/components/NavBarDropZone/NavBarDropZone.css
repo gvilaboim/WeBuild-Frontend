@@ -1,9 +1,8 @@
 .navbar-drop-zone {
-  background-color: antiquewhite;
-  min-height: 5%;
+  min-height: 15vh;
   flex: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+  border: 1px dashed black;
 }

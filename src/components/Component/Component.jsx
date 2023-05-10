@@ -1,25 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { CanvasContext } from '../../context/canvas.context'
+
 import './Component.css'
 import Loading from '../Loading/Loading'
 import Button from 'react-bootstrap/Button'
 const Component = ({
   component: { style, items },
   showSettings,
-  getComponentInfo,
-  componentInfo,
 }) => {
-  console.log(items)
+
+
   const [itemLoaded, setItemLoaded] = useState(false)
+  const {isSiteLive} = useContext(CanvasContext)
 
   const hasFinishedLoading = (e) => {
     setItemLoaded(true)
   }
 
-  const getinfo = (e) => {
-    getComponentInfo(componentInfo)
-    showSettings()
-  }
-
+ 
   useEffect(() => {
     hasFinishedLoading()
 
@@ -38,9 +36,9 @@ const Component = ({
         style={{
           ...style,
           display: itemLoaded ? 'flex' : 'none',
-          height: `${style.height}%`,
-          width: `${style.width}%`,
-          padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
+          height: `${style.heightPx}px`,
+          width: `${style.widthPercentage}%`,
+          // padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
           background: `no-repeat center/cover url(${style.backgroundImage})`,
           backgroundSize: 'cover',
           backgroundColor: `rgba(${style.backgroundColor.r}, ${style.backgroundColor.g},${style.backgroundColor.b},${style.backgroundColor.a})`,
@@ -51,7 +49,7 @@ const Component = ({
             <div style={{...item.style}}>
               <div style={{marginBottom: "30px"}}>{item.title}</div>
               <div>{item.subtitle}</div>
-              <Button variant='light'>{item.button}</Button>
+              <Button variant='light' href={isSiteLive ? item.button.href : "#"}>{item.button.text}</Button>
             </div>
           )
         })}

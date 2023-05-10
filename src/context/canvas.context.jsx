@@ -13,17 +13,18 @@ function CanvasProviderWrapper(props) {
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
 
+  const [webSiteID, setWebSiteID] = useState()
+  const [websiteInfo, setWebsiteInfo] = useState({ name: '', category: '' })
+
   // components rendered in the canvas
   const [navbarComponents, setNavbarComponents] = useState([])
   const [contentSections, setContentSections] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
   const [selectedComponent, setSelectedComponent] = useState({})
-  const [websiteBg, setWebsiteBg] = useState("")
+  const [websiteBg, setWebsiteBg] = useState('')
 
   const [userInfo, setUserInfo] = useState({})
   const [userPlan, setUserPlan] = useState({})
-
-  const [webSiteID, setWebSiteID] = useState()
 
   const [showSettingsSidebar, setShowSettingsSidebar] = useState(false)
 
@@ -101,6 +102,10 @@ function CanvasProviderWrapper(props) {
     canvasStoreService
       .getOneWebsite(websiteId)
       .then((response) => {
+        setWebsiteInfo({
+          name: response.data.name,
+          category: response.data.category,
+        })
         setNavbarComponents(response.data.navbar)
         setContentSections(response.data.sections)
         setFooterComponents(response.data.footer)
@@ -109,10 +114,8 @@ function CanvasProviderWrapper(props) {
   }
 
   const fetchUserInfo = (id) => {
-    console.log("HERE")
-    console.log(id)
- 
-    canvasStoreService.userInfo(id)
+    canvasStoreService
+      .userInfo(id)
       .then((response) => {
         setUserInfo(response.data)
         setUserPlan(response.data.plan)
@@ -120,14 +123,13 @@ function CanvasProviderWrapper(props) {
       .catch((err) => console.log(err))
   }
 
-
   const updatePlan = (sessionId) => {
-    console.log("updatePlan ID", sessionId)
-    canvasStoreService.updatePlanFunction(sessionId).then(res => {
+    console.log('updatePlan ID', sessionId)
+    canvasStoreService.updatePlanFunction(sessionId).then((res) => {
       console.log(res.data)
       fetchUserInfo(user._id)
     })
-  };
+  }
 
   const LoadPublicView =  async (username, sitename) => {
     console.log("LoadPublicView Function : ", username ,sitename )
@@ -173,6 +175,8 @@ function CanvasProviderWrapper(props) {
         setWebSites,
         webSiteID,
         setWebSiteID,
+        websiteInfo,
+        setWebsiteInfo,
 
         fetchAllWebsites,
         fetchStoreItems,
@@ -193,10 +197,9 @@ function CanvasProviderWrapper(props) {
         deleteSection,
 
         addASection,
-        
+
         showHints,
         toggleHints,
-
 
         fetchUserInfo,
         userInfo,

@@ -18,7 +18,7 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
-  border: 1px solid black;
+  border: 1px dashed black;
   overflow-y: hidden;
 }
 
@@ -50,6 +50,7 @@
   right: 0;
   height: 10px;
   cursor: ns-resize;
+  z-index: 999;
 }
 
 .add-section-button {

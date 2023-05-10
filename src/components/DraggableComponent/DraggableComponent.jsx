@@ -15,7 +15,6 @@ const DraggableComponent = ({ component, closeSidebar }) => {
   }))
 
   const style = {
-    border: '1px solid black',
     backgroundColor: 'white',
     cursor: 'move',
   }
