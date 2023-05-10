@@ -5,8 +5,8 @@ import Navbar from 'react-bootstrap/Navbar'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from '../../context/auth.context'
 import Button from 'react-bootstrap/Button'
-import canvasStoreService from '../../services/canvas-store.service'
 import { CanvasContext } from '../../context/canvas.context'
+
 const NavBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
   const { fetchUserInfo , userPlan} = useContext(CanvasContext)
