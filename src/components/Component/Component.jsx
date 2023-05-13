@@ -4,20 +4,15 @@ import { CanvasContext } from '../../context/canvas.context'
 import './Component.css'
 import Loading from '../Loading/Loading'
 import Button from 'react-bootstrap/Button'
-const Component = ({
-  component: { style, items },
-  showSettings,
-}) => {
 
-
+const Component = ({ component: { style, items }, showSettings }) => {
   const [itemLoaded, setItemLoaded] = useState(false)
-  const {isSiteLive} = useContext(CanvasContext)
+  const { isSiteLive } = useContext(CanvasContext)
 
   const hasFinishedLoading = (e) => {
     setItemLoaded(true)
   }
 
- 
   useEffect(() => {
     hasFinishedLoading()
 
@@ -46,10 +41,15 @@ const Component = ({
       >
         {items.map((item) => {
           return (
-            <div style={{...item.style}}>
-              <div style={{marginBottom: "30px"}}>{item.title}</div>
+            <div style={{ ...item.style }}>
+              <div style={{ marginBottom: '30px' }}>{item.title}</div>
               <div>{item.subtitle}</div>
-              <Button variant='light' href={isSiteLive ? item.button.href : "#"}>{item.button.text}</Button>
+              <Button
+                variant='light'
+                href={isSiteLive ? item.button.href : '#'}
+              >
+                {item.button.text}
+              </Button>
             </div>
           )
         })}

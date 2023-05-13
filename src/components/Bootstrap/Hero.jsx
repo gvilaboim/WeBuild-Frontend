@@ -5,11 +5,13 @@ import { CanvasContext } from '../../context/canvas.context'
 
 const Hero = ({ component }) => {
   const { saveChanges, setContentSections } = useContext(CanvasContext)
-
   const { id } = useParams()
 
+  //needed to detect clicks outside
   const wrapperRef = useRef(null)
   const [isEditing, setIsEditing] = useState(false)
+
+  // saves a local copy to update and send to db laster
   const [componentData, setComponentData] = useState({
     title: component.items[0].content.title,
     subtitle: component.items[0].content.subtitle,
@@ -18,42 +20,20 @@ const Hero = ({ component }) => {
   })
 
   const [clickedOutside, setClickedOutside] = useState(false)
+
   const handleClickOutside = async (event) => {
     if (wrapperRef.current === event.target.parentNode.parentNode) {
       setIsEditing(false)
-
-      // Check if any value in componentData is an empty string
-      if (Object.values(componentData).includes('')) {
-        // Create a new object with default values
-        const defaultData = {
-          title: component.items[0].content.title,
-          subtitle: component.items[0].content.subtitle,
-          primaryButton: component.items[0].content.primaryButton,
-          secondaryButton: component.items[0].content.secondaryButton,
-        }
-
-        // Update any empty string values with default values
-        Object.keys(componentData).forEach((key) => {
-          if (componentData[key] === '') {
-            setComponentData((prevValue) => ({
-              ...prevValue,
-              [key]: defaultData[key],
-            }))
-          }
-        })
-      }
       setClickedOutside(true)
     }
   }
 
   useEffect(() => {
     if (clickedOutside) {
-      console.log(id)
       saveChanges(id, {
         componentToEdit: { data: componentData, id: component._id },
       })
         .then((updatedWebsite) => {
-          console.log(updatedWebsite.sections)
           setContentSections(updatedWebsite.sections)
           setClickedOutside(false)
         })
