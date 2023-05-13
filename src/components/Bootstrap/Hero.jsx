@@ -1,8 +1,9 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Container, Row, Col, Button } from 'react-bootstrap'
+import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import { CanvasContext } from '../../context/canvas.context'
 
+import './Bootstrap-override.css'
 const Hero = ({ component, showSettings }) => {
   const { saveChanges, setContentSections } = useContext(CanvasContext)
   const { id } = useParams()
@@ -22,7 +23,10 @@ const Hero = ({ component, showSettings }) => {
   const [clickedOutside, setClickedOutside] = useState(false)
 
   const handleClickOutside = async (event) => {
-    if (wrapperRef.current === event.target.parentNode.parentNode) {
+    if (
+      wrapperRef.current &&
+      !wrapperRef.current.contains(event.target.parentNode)
+    ) {
       setIsEditing(false)
       setClickedOutside(true)
     }
@@ -57,15 +61,43 @@ const Hero = ({ component, showSettings }) => {
 
     // If the name is primaryButton or secondaryButton,
     // update the corresponding button text value
-    if (name === 'primaryButton') {
+    if (name === 'titleText') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        title: { ...prevValue.title, text: value },
+      }))
+    } else if (name === 'titleColor') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        title: { ...prevValue.title, style: { color: value } },
+      }))
+    } else if (name === 'subtitleText') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        subtitle: { ...prevValue.subtitle, text: value },
+      }))
+    } else if (name === 'primaryButton') {
       setComponentData((prevValue) => ({
         ...prevValue,
         primaryButton: { ...prevValue.primaryButton, text: value },
+      }))
+    } else if (name === 'primaryButtonColor') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        primaryButton: { ...prevValue.primaryButton, backgroundColor: value },
       }))
     } else if (name === 'secondaryButton') {
       setComponentData((prevValue) => ({
         ...prevValue,
         secondaryButton: { ...prevValue.secondaryButton, text: value },
+      }))
+    } else if (name === 'secondaryButtonColor') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        secondaryButton: {
+          ...prevValue.secondaryButton,
+          backgroundColor: value,
+        },
       }))
     } else {
       // Otherwise, update the regular component data
@@ -108,51 +140,106 @@ const Hero = ({ component, showSettings }) => {
 
           <Col lg={6}>
             {isEditing ? (
-              <input
-                onChange={handleChange}
-                className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                type='text'
-                value={componentData.title}
-                name='title'
-              />
+              <>
+                <Form.Group className='mb-3'>
+                  <Form.Control
+                    name='titleText'
+                    as='textarea'
+                    style={{ height: '150px' }}
+                    value={componentData.title.text}
+                    onChange={handleChange}
+                    className='input-title fw-bold lh-1 mb-3  bg-transparent'
+                  />
+                </Form.Group>
+                <Form.Group className='mb-3'>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Form.Label>Text Color:</Form.Label>
+                    <Form.Control
+                      name='titleColor'
+                      type='color'
+                      value={componentData.title.style.color}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </Form.Group>
+              </>
             ) : (
               <h1
                 name='title-h1'
                 onDoubleClick={(e) => handleDoubleClick(e)}
                 className='display-5 fw-bold text-body-emphasis lh-1 mb-3'
               >
-                {componentData.title}
+                {componentData.title.text}
               </h1>
             )}
             {isEditing ? (
-              <input
-                type='text'
-                value={componentData.subtitle}
-                name='subtitle'
-                className='lead p-5'
-                onChange={handleChange}
-              />
+              <>
+                <Form.Group
+                  className='mb-3'
+                  controlId='formBasicBackgroundImage'
+                >
+                  <Form.Control
+                    name='subtitleText'
+                    as='textarea'
+                    style={{ height: '100px' }}
+                    value={componentData.subtitle.text}
+                    onChange={handleChange}
+                    className='input-subtitle lead bg-transparent'
+                  />
+                </Form.Group>
+                <Form.Group className='mb-3'>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <Form.Label>Text Color:</Form.Label>
+                    <Form.Control
+                      name='subtitleColor'
+                      type='color'
+                      value={componentData.subtitle.style.color}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </Form.Group>
+              </>
             ) : (
               <p
                 onDoubleClick={(e) => handleDoubleClick(e)}
                 className='lead'
               >
-                {componentData.subtitle}
+                {componentData.subtitle.text}
               </p>
             )}
             <div className='d-grid gap-2 d-md-flex justify-content-md-start'>
               {isEditing ? (
-                <input
-                  type='text'
-                  value={componentData.primaryButton.text}
-                  name='primaryButton'
-                  className='px-4 me-md-2'
-                  onChange={handleChange}
-                />
+                <>
+                  <Form.Group className='mb-3'>
+                    <Form.Control
+                      name='primaryButton'
+                      value={componentData.primaryButton.text}
+                      onChange={handleChange}
+                      className='input-subtitle lead bg-transparent'
+                    />
+                  </Form.Group>
+                  <Form.Group className='mb-3'>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Form.Label>Button Color:</Form.Label>
+                      <Form.Control
+                        name='primaryButtonColor'
+                        type='color'
+                        style={{
+                          backgroundColor:
+                            componentData.primaryButton.backgroundColor,
+                        }}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </Form.Group>
+                </>
               ) : (
                 <Button
                   onDoubleClick={(e) => handleDoubleClick(e)}
-                  variant={component.items[0].content.primaryButton.variant}
+                  style={{
+                    backgroundColor:
+                      componentData.primaryButton.backgroundColor,
+                  }}
                   size='lg'
                   className='px-4 me-md-2'
                 >
@@ -160,17 +247,37 @@ const Hero = ({ component, showSettings }) => {
                 </Button>
               )}
               {isEditing ? (
-                <input
-                  type='text'
-                  value={componentData.secondaryButton.text}
-                  name='secondaryButton'
-                  className='px-4 me-md-2'
-                  onChange={handleChange}
-                />
+                <>
+                  <Form.Group className='mb-3'>
+                    <Form.Control
+                      name='secondaryButton'
+                      value={componentData.secondaryButton.text}
+                      onChange={handleChange}
+                      className='input-subtitle lead bg-transparent'
+                    />
+                  </Form.Group>
+                  <Form.Group className='mb-3'>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <Form.Label>Button Color:</Form.Label>
+                      <Form.Control
+                        name='secondaryButtonColor'
+                        type='color'
+                        style={{
+                          backgroundColor:
+                            componentData.secondaryButton.backgroundColor,
+                        }}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </Form.Group>
+                </>
               ) : (
                 <Button
                   onDoubleClick={(e) => handleDoubleClick(e)}
-                  variant={component.items[0].content.secondaryButton.variant}
+                  style={{
+                    backgroundColor:
+                      componentData.secondaryButton.backgroundColor,
+                  }}
                   size='lg'
                   className='px-4'
                 >

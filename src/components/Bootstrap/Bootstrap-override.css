@@ -1,0 +1,7 @@
+.input-title {
+  font-size: 3rem;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
