@@ -137,7 +137,7 @@ const Hero = ({ component, showSettings }) => {
                 onDoubleClick={(e) => handleDoubleClick(e)}
                 className='lead'
               >
-                {componentData.subtitle}
+                {cmponentData.subtitle}
               </p>
             )}
             <div className='d-grid gap-2 d-md-flex justify-content-md-start'>
@@ -145,7 +145,7 @@ const Hero = ({ component, showSettings }) => {
                 <input
                   type='text'
                   value={componentData.primaryButton.text}
-                  name='primaryButton'
+                  namoe='primaryButton'
                   className='px-4 me-md-2'
                   onChange={handleChange}
                 />
