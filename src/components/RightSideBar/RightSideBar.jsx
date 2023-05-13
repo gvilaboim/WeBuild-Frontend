@@ -23,11 +23,12 @@ const RightSideBar = () => {
 
   useEffect(() => {
     setComponentData(selectedComponent)
-    console.log(componentData)
   }, [selectedComponent])
 
   const handleChange = (e) => {
     const { name, value } = e.target
+
+    
     setComponentData((prevState) => set({ ...prevState }, name, value))
   }
 
@@ -62,6 +63,8 @@ const RightSideBar = () => {
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
+
+          <Button></Button>
             <Form onSubmit={handleSubmit}>
               <Form.Group
                 className='mb-3'
