@@ -76,6 +76,11 @@ const Hero = ({ component, showSettings }) => {
         ...prevValue,
         subtitle: { ...prevValue.subtitle, text: value },
       }))
+    } else if (name === 'subtitleColor') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        subtitle: { ...prevValue.subtitle, style: { color: value } },
+      }))
     } else if (name === 'primaryButton') {
       setComponentData((prevValue) => ({
         ...prevValue,
@@ -168,6 +173,7 @@ const Hero = ({ component, showSettings }) => {
                 name='title-h1'
                 onDoubleClick={(e) => handleDoubleClick(e)}
                 className='display-5 fw-bold text-body-emphasis lh-1 mb-3'
+                style={{ color: componentData.title.style.color }}
               >
                 {componentData.title.text}
               </h1>
@@ -203,6 +209,7 @@ const Hero = ({ component, showSettings }) => {
               <p
                 onDoubleClick={(e) => handleDoubleClick(e)}
                 className='lead'
+                style={{ color: componentData.subtitle.style.color }}
               >
                 {componentData.subtitle.text}
               </p>
