@@ -21,6 +21,7 @@ function CanvasProviderWrapper(props) {
   const [contentSections, setContentSections] = useState([])
   const [footerComponents, setFooterComponents] = useState([])
   const [selectedComponent, setSelectedComponent] = useState({})
+
   const [websiteBg, setWebsiteBg] = useState('')
 
   const [userInfo, setUserInfo] = useState({})
@@ -134,31 +135,30 @@ function CanvasProviderWrapper(props) {
     })
   }
 
-  const LoadPublicView =  async (username, sitename) => {
-    console.log("LoadPublicView Function : ", username ,sitename )
+  const LoadPublicView = async (username, sitename) => {
+    console.log('LoadPublicView Function : ', username, sitename)
     try {
-    const response =  await canvasStoreService.getPublicView(username, sitename)
-    console.log(response.data)
-    return response.data
-  } catch (error) {
-    console.log(error)
+      const response = await canvasStoreService.getPublicView(
+        username,
+        sitename
+      )
+      console.log(response.data)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  }
-
- 
-  const UpdateUserInfo =  async (userInfo) => {
-    console.log("UpdateUserInfo Function : ",userInfo )
+  const UpdateUserInfo = async (userInfo) => {
+    console.log('UpdateUserInfo Function : ', userInfo)
     try {
-    const response =  await canvasStoreService.updateUserInfo(userInfo)
-    console.log(response.data)
-    return response.data
-  } catch (error) {
-    console.log(error)
+      const response = await canvasStoreService.updateUserInfo(userInfo)
+      console.log(response.data)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
   }
-
-  }
-
 
   return (
     <CanvasContext.Provider
@@ -211,7 +211,7 @@ function CanvasProviderWrapper(props) {
 
         LoadPublicView,
         UpdateUserInfo,
-        setUserInfo
+        setUserInfo,
       }}
     >
       {props.children}

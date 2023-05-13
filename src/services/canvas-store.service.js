@@ -32,10 +32,9 @@ class CanvasStoreService {
     return this.api.get(`/api/websites/${id}`)
   }
 
-  getPublicView = async (username,sitename) => {
+  getPublicView = async (username, sitename) => {
     return this.api.get(`/api/websites/publicview/${username}/${sitename}`)
   }
-
 
   // GET /api/canvas-store
   getStoreItems = async () => {
@@ -66,8 +65,10 @@ class CanvasStoreService {
   }
 
   //UPDATE COMPONENT INFO
-  saveComponentChanges = async (componentData) => {
-    return this.api.put(`/api/websites/components/edit/`, { componentData })
+  saveComponentChanges = async (websiteId, componentData) => {
+    return this.api.put(`/api/websites/${websiteId}/components/edit/`, {
+      componentData,
+    })
   }
 
   // DASHBOARD
@@ -89,56 +90,56 @@ class CanvasStoreService {
     return this.api.get(`/api/plans/${id}`)
   }
 
-  updatePlan  = async (sessionId) => {
-    return this.api.post(`/api/update-user-plan`, {sessionId})
+  updatePlan = async (sessionId) => {
+    return this.api.post(`/api/update-user-plan`, { sessionId })
   }
 
-  checkout = async (plan,userInfo) => {
+  checkout = async (plan, userInfo) => {
     let details = {
       plan,
-      userId : userInfo
+      userId: userInfo,
     }
-    return this.api.post(`/api/create-checkout-session`, {details})
+    return this.api.post(`/api/create-checkout-session`, { details })
   }
 
-  
   updatePlanFunction = async (sessionId) => {
-    console.log("HERE UPDATE PLAN sessionId : ", sessionId);
-  
-    try {
-      const response = await this.api.get(`/api/get-payment-details/${sessionId}`);
-      const paymentDetails = response.data;
-   
-      const { paymentId, planId, userId } = paymentDetails;
-  
-      console.log(`Payment ${paymentId} succeeded! Updating user ${userId} plan to ${planId}...`);
-  
-      const updateResponse = await this.api.post(`/api/update-user-plan`, { userId, planId });
-      const data = updateResponse.data;
-  
-      console.log("User plan updated successfully!", data);
-      
-      return data
-     // window.location.href = "/dashboard"; // Redirect to the dashboard after the plan is updated
-    } catch (error) {
-      console.error("Error updating user plan:", error);
-    }
-    
-  };
+    console.log('HERE UPDATE PLAN sessionId : ', sessionId)
 
+    try {
+      const response = await this.api.get(
+        `/api/get-payment-details/${sessionId}`
+      )
+      const paymentDetails = response.data
+
+      const { paymentId, planId, userId } = paymentDetails
+
+      console.log(
+        `Payment ${paymentId} succeeded! Updating user ${userId} plan to ${planId}...`
+      )
+
+      const updateResponse = await this.api.post(`/api/update-user-plan`, {
+        userId,
+        planId,
+      })
+      const data = updateResponse.data
+
+      console.log('User plan updated successfully!', data)
+
+      return data
+      // window.location.href = "/dashboard"; // Redirect to the dashboard after the plan is updated
+    } catch (error) {
+      console.error('Error updating user plan:', error)
+    }
+  }
 
   userInfo = async (id) => {
     return this.api.get(`/api/user/${id}`)
   }
 
-
-
   updateUserInfo = async (userInfo) => {
-    console.log("store service",userInfo)
-    return this.api.put(`/api/settings/${userInfo._id}`,{userInfo})
+    console.log('store service', userInfo)
+    return this.api.put(`/api/settings/${userInfo._id}`, { userInfo })
   }
-
-
 }
 
 // Create one instance of the service

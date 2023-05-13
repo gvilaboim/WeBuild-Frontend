@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { CanvasContext } from '../../context/canvas.context'
 
-const Hero = ({ component }) => {
+const Hero = ({ component, showSettings }) => {
   const { saveChanges, setContentSections } = useContext(CanvasContext)
   const { id } = useParams()
 
@@ -73,8 +73,20 @@ const Hero = ({ component }) => {
     }
   }
 
+  const style = component.style
   return (
-    <div ref={wrapperRef}>
+    <div
+      ref={wrapperRef}
+      onClick={() => showSettings(component)}
+      style={{
+        ...style,
+        height: `${style.height}px`,
+        width: `${style.width}%`,
+        backgroundColor: `${style.backgroundColor}`,
+        background: `no-repeat  center/cover url(${style.backgroundImage})`,
+        padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
+      }}
+    >
       <Container
         fluid='xxl'
         className='px-4 py-5'

@@ -29,15 +29,17 @@ const Subsection = ({
     setContentSections,
     saveChanges,
     setShowSettingsSidebar,
+    setSelectedComponent,
   } = useContext(CanvasContext)
 
+  const handleShowSettingsSidebar = (componentToEdit) => {
+    setSelectedComponent(componentToEdit)
+    setShowSettingsSidebar(true)
+  }
 
-
-  const handleShowSettingsSidebar = () => setShowSettingsSidebar(true)
-
-  const [showDeleteBtn, setShowDeleteBtn] = useState(false)
-  const handleShowDeleteBtn = () => setShowDeleteBtn(true)
-  const handleHideDeleteBtn = () => setShowDeleteBtn(false)
+  const [showComponentBtns, setShowComponentBtns] = useState(false)
+  const handleShowBtns = () => setShowComponentBtns(true)
+  const handleHideBtns = () => setShowComponentBtns(false)
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
   const handleShowDeleteConfirmation = () => {
@@ -107,8 +109,8 @@ const Subsection = ({
       ref={drop}
       style={{ ...style, backgroundColor }}
       className='sub-section'
-      onMouseLeave={handleHideDeleteBtn}
-      onMouseEnter={handleShowDeleteBtn}
+      onMouseLeave={handleHideBtns}
+      onMouseEnter={handleShowBtns}
     >
       {subsection.components.length > 0 ? (
         <>
@@ -132,8 +134,8 @@ const Subsection = ({
                 return <FeaturesB {...compProps} />
               case 'imageRight':
                 return <ImageRight {...compProps} />
-                case 'imageLeft':
-                  return <ImageLeft {...compProps} />
+              case 'imageLeft':
+                return <ImageLeft {...compProps} />
               default:
                 return <Component {...compProps} />
             }
@@ -144,9 +146,10 @@ const Subsection = ({
           <p>You can drop an item here</p>
         </div>
       )}
-      {showDeleteBtn && (
+
+      {showComponentBtns && (
         <>
-          <div className='delete-subsection'>
+          <div className='component-buttons'>
             {showToast ? (
               <OverlayTrigger
                 key={'right'}
@@ -155,16 +158,28 @@ const Subsection = ({
                   <Tooltip>You should not have less than 2 Sections.</Tooltip>
                 }
               >
-                <CloseButton
+                <Button
+                  variant='dark'
                   onClick={handleShowDeleteConfirmation}
-                  variant='white'
-                />
+                >
+                  X
+                </Button>
               </OverlayTrigger>
             ) : (
-              <CloseButton
-                onClick={handleShowDeleteConfirmation}
-                variant='white'
-              />
+              <>
+                <Button
+                  variant='dark'
+                  onClick={handleShowDeleteConfirmation}
+                >
+                  X
+                </Button>
+                <Button
+                  onClick={() => handleShowSettingsSidebar(subsection._id)}
+                  variant='outline-dark'
+                >
+                  Edit
+                </Button>
+              </>
             )}
           </div>
         </>
