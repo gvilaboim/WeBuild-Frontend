@@ -15,6 +15,7 @@ import FeaturesA from '../Bootstrap/FeaturesA'
 import FeaturesB from '../Bootstrap/FeaturesB'
 import ImageRight from '../Bootstrap/ImageRight'
 import ImageLeft from '../Bootstrap/ImageLeft'
+import { useParams } from 'react-router-dom'
 
 const Subsection = ({
   sectionId,
@@ -31,6 +32,8 @@ const Subsection = ({
     setShowSettingsSidebar,
     setSelectedComponent,
   } = useContext(CanvasContext)
+
+  const { id } = useParams()
 
   const handleShowSettingsSidebar = (componentToEdit) => {
     setSelectedComponent(componentToEdit)
@@ -69,8 +72,7 @@ const Subsection = ({
 
     //removing the id from the dropped component
     const { _id, ...droppedComponent } = draggedComponent
-
-    saveChanges(webSiteID, {
+    saveChanges(id, {
       droppedComponent,
       sectionIndex,
       subsectionIndex,

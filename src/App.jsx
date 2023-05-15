@@ -20,7 +20,7 @@ import UserSettings from './pages/Settings/UserSettings'
 function App() {
   return (
     <div className='App'>
-      <NavBar/> 
+      <NavBar />
       <Routes>
         <Route
           path='/'
@@ -35,7 +35,7 @@ function App() {
             </IsPrivate>
           }
         />
-    <Route
+        <Route
           path='/settings'
           element={
             <IsPrivate>
@@ -59,7 +59,7 @@ function App() {
             </IsPrivate>
           }
         />
-          <Route
+        <Route
           path='/success'
           element={
             <IsPrivate>
@@ -101,15 +101,10 @@ function App() {
           }
         />
 
-            <Route
+        <Route
           path='/webuild/:username/:sitename'
-          element={
-            <IsPrivate>
-              <PublicView />
-              </IsPrivate>
-          }
+          element={<PublicView />}
         />
-
       </Routes>
     </div>
   )

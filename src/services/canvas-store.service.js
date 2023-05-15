@@ -32,8 +32,10 @@ class CanvasStoreService {
     return this.api.get(`/api/websites/${id}`)
   }
 
+  // Get website from DB - deployed version
+  // GET /api/websites/public/:username/:sitename
   getPublicView = async (username, sitename) => {
-    return this.api.get(`/api/websites/publicview/${username}/${sitename}`)
+    return this.api.get(`/api/websites/public/${username}/${sitename}`)
   }
 
   // GET /api/canvas-store
@@ -43,6 +45,11 @@ class CanvasStoreService {
 
   // EDIT website
   //Add current website changes to DB
+
+  publishSite = async (id) => {
+    return this.api.put(`/api/websites/publish/${id}`, {})
+  }
+
   saveChanges = async (id, siteData) => {
     return this.api.put(`/api/websites/${id}`, { siteData })
   }
