@@ -1,34 +1,29 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import { CanvasContext } from '../../context/canvas.context';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { cloneElement, useContext, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const FeaturesA = ({ component, showSettings }) => {
   const { saveChanges, setContentSections } = useContext(CanvasContext);
   const { id } = useParams();
-  const { items } = component;
-  const { title, sections } = items[0];
   const wrapperRef = useRef(null);
   const [isEditing, setIsEditing] = useState(false);
-
-  const [componentData, setComponentData] = useState({
-    title: component.items[0]?.sections[0]?.title?.text,
-    
-    card1_title_text: component.items[0]?.sections[0]?.cards[0]?.title?.text,
-    card1_description_text: component.items[0]?.sections[0]?.cards[0]?.description?.text,
-    card1_button_text: component.items[0]?.sections[0]?.cards[0]?.button?.text,
-
-    card2_title_text: component.items[0]?.sections[0]?.cards[1]?.title?.text,
-    card2_description_text: component.items[0]?.sections[0]?.cards[1]?.description?.text,
-    card2_button_text: component.items[0]?.sections[0]?.cards[1]?.button?.text,
-
-    card3_title_text: component.items[0]?.sections[0]?.cards[2]?.title?.text,
-    card3_description_text: component.items[0]?.sections[0]?.cards[2]?.description?.text,
-    card3_button_text: component.items[0]?.sections[0]?.cards[2]?.button?.text,
-
-  });
-
   
+
+  const [componentData, setComponentData] =  useState({
+    title: component.items[0]?.content[0]?.title?.text,
+    card1_title_text: component.items[0]?.content[0]?.cards[0]?.title?.text,
+    card1_description_text: component.items[0]?.content[0]?.cards[0]?.description?.text,
+    card1_button_text: component.items[0]?.content[0]?.cards[0]?.button?.text,
+    card2_title_text: component.items[0]?.content[0]?.cards[1]?.title?.text,
+    card2_description_text: component.items[0]?.content[0]?.cards[1]?.description?.text,
+    card2_button_text: component.items[0]?.content[0]?.cards[1]?.button?.text,
+    card3_title_text: component.items[0]?.content[0]?.cards[2]?.title?.text,
+    card3_description_text: component.items[0]?.content[0]?.cards[2]?.description?.text,
+    card3_button_text: component.items[0]?.content[0]?.cards[2]?.button?.text,
+  } );
+
+  //corrigir erro aqui
 
  
   const [clickedOutside, setClickedOutside] = useState(false);
@@ -42,24 +37,24 @@ const FeaturesA = ({ component, showSettings }) => {
 
   useEffect(() => {
     if (clickedOutside) {
+      console.log(component.content)
       const NewComponent = component;
-      NewComponent.items[0].sections[0].title.text = componentData.title
+      NewComponent.items[0].content[0].title.text = componentData.title
+      NewComponent.items[0].content[0].cards[0].title.text = componentData.card1_title_text
+      NewComponent.items[0].content[0].cards[0].description.text = componentData.card1_description_text
+      NewComponent.items[0].content[0].cards[0].button.text = componentData.card1_button_text
     
-      NewComponent.items[0].sections[0].cards[0].title.text = componentData.card1_title_text
-      NewComponent.items[0].sections[0].cards[0].description.text = componentData.card1_description_text
-      NewComponent.items[0].sections[0].cards[0].button.text = componentData.card1_button_text
+      NewComponent.items[0].content[0].cards[1].title.text = componentData.card2_title_text
+      NewComponent.items[0].content[0].cards[1].description.text =  componentData.card2_description_text
+      NewComponent.items[0].content[0].cards[1].button.text =  componentData.card2_button_text
     
-      NewComponent.items[0].sections[0].cards[1].title.text = componentData.card2_title_text
-      NewComponent.items[0].sections[0].cards[1].description.text =  componentData.card2_description_text
-      NewComponent.items[0].sections[0].cards[1].button.text =  componentData.card2_button_text
-    
-      NewComponent.items[0].sections[0].cards[2].title.text =  componentData.card3_title_text
-      NewComponent.items[0].sections[0].cards[2].description.text =  componentData.card3_description_text
-      NewComponent.items[0].sections[0].cards[2].button.text =  componentData.card3_button_text
+      NewComponent.items[0].content[0].cards[2].title.text =  componentData.card3_title_text
+      NewComponent.items[0].content[0].cards[2].description.text =  componentData.card3_description_text
+      NewComponent.items[0].content[0].cards[2].button.text =  componentData.card3_button_text
 
-      console.log(NewComponent.items[0].sections[0])
+      console.log(NewComponent.items[0].content[0])
       saveChanges(id, {
-        componentToEdit: { data: NewComponent, id: component._id },
+        componentToEdit: { data: NewComponent.items[0].content[0] , id: component._id },
       })
         .then((updatedWebsite) => {
           setContentSections(updatedWebsite.sections);
@@ -82,23 +77,8 @@ const FeaturesA = ({ component, showSettings }) => {
 
   const handleChange = (e) => {
     const { value, name } = e.target;
-
-    // If the name is primaryButton or secondaryButton,
-    // update the corresponding button text value
-    if (name === 'primaryButton') {
-      setComponentData((prevValue) => ({
-        ...prevValue,
-        primaryButton: { ...prevValue.primaryButton, text: value },
-      }));
-    } else if (name === 'secondaryButton') {
-      setComponentData((prevValue) => ({
-        ...prevValue,
-        secondaryButton: { ...prevValue.secondaryButton, text: value },
-      }));
-    } else {
-      // Otherwise, update the regular component data
-      setComponentData((prevValue) => ({ ...prevValue, [name]: value }));
-    }
+    setComponentData((prevValue) => ({ ...prevValue, [name]: value }));
+    
   };
 
   const style = component.style;

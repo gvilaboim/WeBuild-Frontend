@@ -204,24 +204,11 @@ const Hero = ({ component, showSettings }) => {
                 onDoubleClick={(e) => handleDoubleClick(e)}
                 className='lead'
               >
-<<<<<<< HEAD
-                {cmponentData.subtitle}
-=======
                 {componentData.subtitle.text}
->>>>>>> 9bb8c9366593f69aefece56ff16ee5ed1ee1e2ca
               </p>
             )}
             <div className='d-grid gap-2 d-md-flex justify-content-md-start'>
               {isEditing ? (
-<<<<<<< HEAD
-                <input
-                  type='text'
-                  value={componentData.primaryButton.text}
-                  namoe='primaryButton'
-                  className='px-4 me-md-2'
-                  onChange={handleChange}
-                />
-=======
                 <>
                   <Form.Group className='mb-3'>
                     <Form.Control
@@ -246,7 +233,6 @@ const Hero = ({ component, showSettings }) => {
                     </div>
                   </Form.Group>
                 </>
->>>>>>> 9bb8c9366593f69aefece56ff16ee5ed1ee1e2ca
               ) : (
                 <Button
                   onDoubleClick={(e) => handleDoubleClick(e)}
