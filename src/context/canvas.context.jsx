@@ -8,7 +8,8 @@ const CanvasContext = React.createContext()
 function CanvasProviderWrapper(props) {
   //DashBoard Websites created by user
   const [webSites, setWebSites] = useState([])
-  const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
+  
+  const { user } = useContext(AuthContext)
 
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
@@ -22,18 +23,22 @@ function CanvasProviderWrapper(props) {
   const [footerComponents, setFooterComponents] = useState([])
   const [selectedComponent, setSelectedComponent] = useState({})
 
-  const [websiteBg, setWebsiteBg] = useState('')
-
   const [userInfo, setUserInfo] = useState({})
   const [userPlan, setUserPlan] = useState({})
 
   const [showSettingsSidebar, setShowSettingsSidebar] = useState(false)
 
-  // Helps have hrefs, forms etc to be active on one click
-  const [isSiteLive, setIsSiteLive] = useState(false)
-
   const [showHints, setShowHints] = useState(false)
   const toggleHints = () => setShowHints((previousValue) => !previousValue)
+
+  const publishWebsite = async (websiteId) => {
+    try {
+      const response = await canvasStoreService.publishSite(websiteId)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const saveChanges = async (id, siteData) => {
     try {
@@ -135,8 +140,7 @@ function CanvasProviderWrapper(props) {
     })
   }
 
-  const LoadPublicView = async (username, sitename) => {
-    console.log('LoadPublicView Function : ', username, sitename)
+  const loadPublicView = async (username, sitename) => {
     try {
       const response = await canvasStoreService.getPublicView(
         username,
@@ -190,9 +194,6 @@ function CanvasProviderWrapper(props) {
         selectedComponent,
         setSelectedComponent,
 
-        isSiteLive,
-        setIsSiteLive,
-
         showSettingsSidebar,
         setShowSettingsSidebar,
 
@@ -209,9 +210,11 @@ function CanvasProviderWrapper(props) {
         userPlan,
         updatePlan,
 
-        LoadPublicView,
+        loadPublicView,
         UpdateUserInfo,
         setUserInfo,
+
+        publishWebsite,
       }}
     >
       {props.children}
