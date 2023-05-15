@@ -10,7 +10,6 @@ import OverlayTrigger from 'react-bootstrap/esm/OverlayTrigger'
 import Tooltip from 'react-bootstrap/esm/Tooltip'
 import Pricing from '../Bootstrap/Pricing'
 import Hero from '../Bootstrap/Hero'
-import Blog from '../Bootstrap/Blog'
 import FeaturesA from '../Bootstrap/FeaturesA'
 import FeaturesB from '../Bootstrap/FeaturesB'
 import ImageRight from '../Bootstrap/ImageRight'
@@ -128,8 +127,7 @@ const Subsection = ({
                 return <Hero {...compProps} />
               case 'pricing':
                 return <Pricing {...compProps} />
-              case 'blog':
-                return <Blog {...compProps} />
+
               case 'featuresA':
                 return <FeaturesA {...compProps} />
               case 'featuresB':

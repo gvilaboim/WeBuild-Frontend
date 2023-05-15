@@ -35,7 +35,9 @@ const FeaturesA = ({ component, showSettings }) => {
     }
   };
 
+
   useEffect(() => {
+
     if (clickedOutside) {
       console.log(component.content)
       const NewComponent = component;
@@ -53,8 +55,11 @@ const FeaturesA = ({ component, showSettings }) => {
       NewComponent.items[0].content[0].cards[2].button.text =  componentData.card3_button_text
 
       console.log(NewComponent.items[0].content[0])
+     
+      const contentArray = [NewComponent.items[0].content[0]];
+      console.log(contentArray)
       saveChanges(id, {
-        componentToEdit: { data: NewComponent.items[0].content[0] , id: component._id },
+        componentToEdit: { data: contentArray , id: component._id },
       })
         .then((updatedWebsite) => {
           setContentSections(updatedWebsite.sections);
@@ -65,6 +70,7 @@ const FeaturesA = ({ component, showSettings }) => {
   }, [clickedOutside]);
 
   useEffect(() => {
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
