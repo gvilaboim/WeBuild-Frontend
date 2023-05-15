@@ -5,7 +5,8 @@ import { CanvasContext } from '../../context/canvas.context'
 
 import './Bootstrap-override.css'
 const Hero = ({ component, showSettings }) => {
-  const { saveChanges, setContentSections } = useContext(CanvasContext)
+  const { saveChanges, setContentSections, publicView } =
+    useContext(CanvasContext)
   const { id } = useParams()
 
   //needed to detect clicks outside
@@ -23,12 +24,14 @@ const Hero = ({ component, showSettings }) => {
   const [clickedOutside, setClickedOutside] = useState(false)
 
   const handleClickOutside = async (event) => {
-    if (
-      wrapperRef.current &&
-      !wrapperRef.current.contains(event.target.parentNode)
-    ) {
-      setIsEditing(false)
-      setClickedOutside(true)
+    if (!publicView) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target.parentNode)
+      ) {
+        setIsEditing(false)
+        setClickedOutside(true)
+      }
     }
   }
 
@@ -53,7 +56,7 @@ const Hero = ({ component, showSettings }) => {
   }, [])
 
   const handleDoubleClick = (e) => {
-    setIsEditing(true)
+    if (!publicView) setIsEditing(true)
   }
 
   const handleChange = (e) => {

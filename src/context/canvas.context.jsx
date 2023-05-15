@@ -15,7 +15,9 @@ function CanvasProviderWrapper(props) {
   const [storeComponents, setStoreComponents] = useState([])
 
   const [webSiteID, setWebSiteID] = useState()
-  const [websiteInfo, setWebsiteInfo] = useState({ name: '', category: '' })
+  const [websiteInfo, setWebsiteInfo] = useState({ name: '', category: '', id: '' })
+  const [publicView, setPublicView] = useState(false)
+
 
   // components rendered in the canvas
   const [navbarComponents, setNavbarComponents] = useState([])
@@ -146,7 +148,6 @@ function CanvasProviderWrapper(props) {
         username,
         sitename
       )
-      console.log(response.data)
       return response.data
     } catch (error) {
       console.log(error)
@@ -215,6 +216,8 @@ function CanvasProviderWrapper(props) {
         setUserInfo,
 
         publishWebsite,
+        publicView,
+        setPublicView, 
       }}
     >
       {props.children}

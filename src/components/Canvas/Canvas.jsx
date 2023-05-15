@@ -8,8 +8,9 @@ import Loading from '../Loading/Loading'
 import { Button } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context'
-const Canvas = () => {
-  const { contentSections, publishWebsite, websiteInfo, fetchOneWebsite } =
+
+const Canvas = ({ website }) => {
+  const { contentSections, publishWebsite, websiteInfo, fetchOneWebsite, publicView } =
     useContext(CanvasContext)
   const { user } = useContext(AuthContext)
   const { id } = useParams()
@@ -21,25 +22,44 @@ const Canvas = () => {
   }
 
   useEffect(() => {
-    fetchOneWebsite(id)
+    if (!publicView) {
+      fetchOneWebsite(id)
+    } else{
+      // id is not part of params in public view
+      fetchOneWebsite(website._id)
+    }
+
     // get website data to render
-    console.log(websiteInfo)
   }, [id])
 
+  const style = publicView
+    ? {margin: '0%'}
+    : { border: '1px solid black', margin: '6% 23%' }
+
   return (
-    <div className='canvas'>
-      <Button
-        onClick={() => handlePublishWebsite(id)}
-        variant='success'
-      >
-        Publish
-      </Button>
-      <Button
-        onClick={() => navigate(`/webuild/${user.name}/${websiteInfo.name}`)}
-        variant='info'
-      >
-        Go to Website
-      </Button>
+    <div
+      style={style}
+      className='canvas'
+    >
+      {!publicView && (
+        <>
+          <Button
+            onClick={() => handlePublishWebsite(id)}
+            variant='success'
+          >
+            Publish
+          </Button>
+          <Button
+            onClick={() =>
+              navigate(`/webuild/${user.name}/${websiteInfo.name}`)
+            }
+            variant='info'
+          >
+            Go to Website
+          </Button>
+        </>
+      )}
+
       <NavBarDropZone />
       <div className='website-body'>
         {contentSections.length === 0 ? (

@@ -31,13 +31,16 @@ const Subsection = ({
     saveChanges,
     setShowSettingsSidebar,
     setSelectedComponent,
+    publicView,
   } = useContext(CanvasContext)
 
   const { id } = useParams()
 
   const handleShowSettingsSidebar = (componentToEdit) => {
-    setSelectedComponent(componentToEdit)
-    setShowSettingsSidebar(true)
+    if (!publicView) {
+      setSelectedComponent(componentToEdit)
+      setShowSettingsSidebar(true)
+    }
   }
 
   const [showComponentBtns, setShowComponentBtns] = useState(false)
@@ -105,7 +108,7 @@ const Subsection = ({
     backgroundColor = 'darkkhaki'
   }
 
-  const style = {}
+  const style = publicView ? {} : { border: '1px dashed black' }
   return (
     <div
       ref={drop}
@@ -144,46 +147,52 @@ const Subsection = ({
           })}
         </>
       ) : (
-        <div className='empty-section'>
-          <p>You can drop an item here</p>
-        </div>
+        <>
+          {!publicView && (
+            <div className='empty-section'>
+              <p>You can drop an item here</p>
+            </div>
+          )}
+        </>
       )}
 
       {showComponentBtns && (
         <>
-          <div className='component-buttons'>
-            {showToast ? (
-              <OverlayTrigger
-                key={'right'}
-                placement={'right'}
-                overlay={
-                  <Tooltip>You should not have less than 2 Sections.</Tooltip>
-                }
-              >
-                <Button
-                  variant='dark'
-                  onClick={handleShowDeleteConfirmation}
+          {!publicView && (
+            <div className='component-buttons'>
+              {showToast ? (
+                <OverlayTrigger
+                  key={'right'}
+                  placement={'right'}
+                  overlay={
+                    <Tooltip>You should not have less than 2 Sections.</Tooltip>
+                  }
                 >
-                  X
-                </Button>
-              </OverlayTrigger>
-            ) : (
-              <>
-                <Button
-                  variant='dark'
-                  onClick={handleShowDeleteConfirmation}
-                >
-                  X
-                </Button>
-                <Button
-                  onClick={() => handleShowSettingsSidebar(subsection._id)}
-                  variant='outline-dark'
-                >
-                  Edit
-                </Button>
-              </>
-            )}
-          </div>
+                  <Button
+                    variant='dark'
+                    onClick={handleShowDeleteConfirmation}
+                  >
+                    X
+                  </Button>
+                </OverlayTrigger>
+              ) : (
+                <>
+                  <Button
+                    variant='dark'
+                    onClick={handleShowDeleteConfirmation}
+                  >
+                    X
+                  </Button>
+                  <Button
+                    onClick={() => handleShowSettingsSidebar(subsection._id)}
+                    variant='outline-dark'
+                  >
+                    Edit
+                  </Button>
+                </>
+              )}
+            </div>
+          )}
         </>
       )}
       <Modal

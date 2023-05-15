@@ -15,7 +15,7 @@ const Create = () => {
       ) : (
         <button onClick={() => setShowSidebar(true)}>Show Sidebar</button>
       )}
-      <Canvas />
+      <Canvas publicView={false}/>
 
       <RightSideBar />
     </div>

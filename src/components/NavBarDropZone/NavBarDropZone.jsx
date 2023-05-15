@@ -8,12 +8,11 @@ import NavBarBS from '../Bootstrap/NavBarBS'
 import './NavBarDropZone.css'
 
 const NavBarDropZone = () => {
-  const { navbarComponents, setNavbarComponents, saveChanges } =
+  const { navbarComponents, setNavbarComponents, saveChanges, publicView } =
     useContext(CanvasContext)
   const { id } = useParams()
 
   const handleDrop = (draggedComponent) => {
-
     // removing the id
     const { _id, ...droppedComponent } = draggedComponent
 
@@ -23,7 +22,7 @@ const NavBarDropZone = () => {
       setNavbarComponents(updatedContent.navbar)
     })
   }
-  
+
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.NAVBAR,
     drop: (item, monitor) => {
@@ -43,7 +42,7 @@ const NavBarDropZone = () => {
   } else if (canDrop) {
     backgroundColor = 'darkkhaki'
   }
-  const style = {}
+  const style = publicView ? {} : { border: '1px dashed black' }
   return (
     <div
       ref={drop}
@@ -60,7 +59,7 @@ const NavBarDropZone = () => {
           )
         })
       ) : (
-        <div>Drag a Header Item here</div>
+        <>{!publicView && <div>Drag a Header Item here</div>}</>
       )}
     </div>
   )

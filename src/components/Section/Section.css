@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   resize: vertical;
+  margin-bottom: 4em;
 }
-
 
 .section-content {
   flex: 1;
@@ -18,11 +18,10 @@
   flex-direction: column;
   justify-content: space-evenly;
   height: 100%;
-  border: 1px dashed black;
   overflow-y: hidden;
 }
 
-.empty-section{
+.empty-section {
   height: 600px;
   display: flex;
   flex-direction: column;

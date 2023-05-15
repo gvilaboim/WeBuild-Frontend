@@ -7,7 +7,7 @@ import Footer from '../Bootstrap/Footer'
 import './FooterDropZone.css'
 
 const FooterDropZone = () => {
-  const { footerComponents, setFooterComponents, saveChanges } =
+  const { footerComponents, setFooterComponents, saveChanges, publicView } =
     useContext(CanvasContext)
 
   const { id } = useParams()
@@ -42,7 +42,7 @@ const FooterDropZone = () => {
   } else if (canDrop) {
     backgroundColor = 'darkkhaki'
   }
-  const style = {}
+  const style = publicView ? {} : { border: '1px dashed black' }
 
   return (
     <div
@@ -62,9 +62,13 @@ const FooterDropZone = () => {
           })}
         </>
       ) : (
-        <div className='empty-footer'>
-          <p>Drag a Footer here</p>
-        </div>
+        <>
+          {!publicView && (
+            <div className='empty-footer'>
+              <p>Drag a Footer here</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   )

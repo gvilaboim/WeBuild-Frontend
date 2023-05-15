@@ -19,6 +19,7 @@ const Section = ({ section }) => {
     deleteSubsection,
     deleteSection,
     addASection,
+    publicView,
   } = useContext(CanvasContext)
 
   const [showButtons, setShowButtons] = useState(false)
@@ -51,7 +52,7 @@ const Section = ({ section }) => {
   const handleMouseDown = (e) => {
     setIsResizing(true)
     setStartY(e.pageY)
-    
+
     setStartHeight(e.target.closest('.section').offsetHeight)
     window.addEventListener('mouseup', handleMouseUp)
   }
@@ -98,7 +99,7 @@ const Section = ({ section }) => {
     )
   }
 
-  const style = {}
+  const style = {margin: "2%"}
   return (
     <div
       style={style}
@@ -106,7 +107,7 @@ const Section = ({ section }) => {
       onMouseEnter={showButtonOptions}
       onMouseLeave={hideButtonOptions}
     >
-      {showButtons && (
+      {!publicView && showButtons && (
         <OverlayTrigger
           key={'left'}
           placement={'left'}
@@ -166,20 +167,25 @@ const Section = ({ section }) => {
         )}
       </div>
       <>
-        <div
-          className='resize-handle'
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-        />
+        {!publicView && (
+          <div
+            className='resize-handle'
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+          />
+        )}
       </>
-        <Button
-          className='add-section-button'
-          variant={'dark'}
-          onClick={() => handleAddASection(webSiteID, section._id)}
-        >
-          Add a Section
-        </Button>
+      {!publicView && (
+
+      <Button
+        className='add-section-button'
+        variant={'dark'}
+        onClick={() => handleAddASection(webSiteID, section._id)}
+      >
+        Add a Section
+      </Button>
+      )}
     </div>
   )
 }
