@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import SignupPage from './pages/SignupPage/SignupPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 
-import NavBar from './components/NavBar/NavBar'
+import NavBar from './components/Navbar/Navbar'
 import IsPrivate from './components/IsPrivate/IsPrivate'
 import IsAnon from './components/IsAnon/IsAnon'
 import Create from './pages/Create/Create'

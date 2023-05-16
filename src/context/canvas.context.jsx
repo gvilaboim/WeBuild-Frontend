@@ -165,6 +165,24 @@ function CanvasProviderWrapper(props) {
     }
   }
 
+
+  const UpdateStatistics = async (StatisticsObject) => {
+
+    console.log('StatisticsArray', StatisticsObject)
+
+    try {
+      const response = await canvasStoreService.updateWebsiteStatistics(StatisticsObject)
+      console.log(response.data)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+
+
+
+  }
+
+
   return (
     <CanvasContext.Provider
       value={{
@@ -218,6 +236,7 @@ function CanvasProviderWrapper(props) {
         publishWebsite,
         publicView,
         setPublicView, 
+        UpdateStatistics
       }}
     >
       {props.children}
