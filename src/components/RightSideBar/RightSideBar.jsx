@@ -64,7 +64,6 @@ const RightSideBar = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
 
-          <Button></Button>
             <Form onSubmit={handleSubmit}>
               <Form.Group
                 className='mb-3'

@@ -9,6 +9,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup'
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
+import { useParams } from 'react-router-dom'
 
 const Section = ({ section }) => {
   const {
@@ -21,6 +22,8 @@ const Section = ({ section }) => {
     addASection,
     publicView,
   } = useContext(CanvasContext)
+
+  const {id} = useParams()
 
   const [showButtons, setShowButtons] = useState(false)
   const showButtonOptions = () => setShowButtons(true)
@@ -39,7 +42,7 @@ const Section = ({ section }) => {
       (sectionToFind) => sectionToFind._id === section._id
     )
 
-    saveChanges(webSiteID, {
+    saveChanges(id, {
       subsectionsIncrease: subsectionsIncrease,
       sectionIndex: sectionIndex,
     })
@@ -73,17 +76,17 @@ const Section = ({ section }) => {
     window.removeEventListener('mouseup', handleMouseUp)
   }
 
-  const handleDeleteSubsection = (webSiteID, subsectionId, sectionId) => {
+  const handleDeleteSubsection = (id, subsectionId, sectionId) => {
     //if it is the last subSection it will delete the whole section
     if (section.subsections.length !== 1) {
-      deleteSubsection(webSiteID, subsectionId, sectionId).then(
+      deleteSubsection(id, subsectionId, sectionId).then(
         (updatedWebsite) => {
           setContentSections(updatedWebsite.sections)
         }
       )
     } else {
       if (contentSections.length > 2) {
-        deleteSection(webSiteID, sectionId).then((updatedWebsite) =>
+        deleteSection(id, sectionId).then((updatedWebsite) =>
           setContentSections(updatedWebsite.sections)
         )
       } else {
@@ -93,8 +96,8 @@ const Section = ({ section }) => {
     }
   }
 
-  const handleAddASection = (webSiteID, sectionId) => {
-    addASection(webSiteID, sectionId).then((updatedWebsite) =>
+  const handleAddASection = (id, sectionId) => {
+    addASection(id, sectionId).then((updatedWebsite) =>
       setContentSections(updatedWebsite.sections)
     )
   }
@@ -181,7 +184,7 @@ const Section = ({ section }) => {
       <Button
         className='add-section-button'
         variant={'dark'}
-        onClick={() => handleAddASection(webSiteID, section._id)}
+        onClick={() => handleAddASection(id, section._id)}
       >
         Add a Section
       </Button>
