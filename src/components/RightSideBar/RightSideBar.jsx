@@ -6,16 +6,18 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 import './RightSideBar.css'
 import Form from 'react-bootstrap/Form'
 import set from 'lodash/set'
+import { useParams } from 'react-router-dom'
 
 const RightSideBar = () => {
   const {
-    webSiteID,
     selectedComponent,
     setShowSettingsSidebar,
     showSettingsSidebar,
     setContentSections,
     setSelectedComponent,
   } = useContext(CanvasContext)
+
+  const { id } = useParams()
 
   const [componentData, setComponentData] = useState({})
   //React Bootstrap
@@ -28,7 +30,6 @@ const RightSideBar = () => {
   const handleChange = (e) => {
     const { name, value } = e.target
 
-    
     setComponentData((prevState) => set({ ...prevState }, name, value))
   }
 
@@ -36,7 +37,7 @@ const RightSideBar = () => {
     e.preventDefault()
     try {
       const response = await canvasStoreService.saveComponentChanges(
-        webSiteID,
+        id,
         componentData
       )
 
@@ -63,8 +64,6 @@ const RightSideBar = () => {
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-
-          <Button></Button>
             <Form onSubmit={handleSubmit}>
               <Form.Group
                 className='mb-3'

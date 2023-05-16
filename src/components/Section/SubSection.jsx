@@ -23,11 +23,11 @@ const Subsection = ({
   showToast,
 }) => {
   const {
-    webSiteID,
     contentSections,
     setContentSections,
     saveChanges,
     setShowSettingsSidebar,
+    
     setSelectedComponent,
     publicView,
   } = useContext(CanvasContext)
@@ -50,11 +50,12 @@ const Subsection = ({
     //user tries to delete a subsection
     // check if it is the last one
     // and has content and shows a confirmation message
+
     if (
       contentSections.length === 2 ||
       (subsection.length !== 1 && subsection.components.length === 0)
     ) {
-      handleDeleteSubsection(webSiteID, subsection._id, sectionId)
+      handleDeleteSubsection(id, subsection._id, sectionId)
     } else {
       setShowConfirmDelete(true)
     }
@@ -180,12 +181,6 @@ const Subsection = ({
                   >
                     X
                   </Button>
-                  <Button
-                    onClick={() => handleShowSettingsSidebar(subsection._id)}
-                    variant='outline-dark'
-                  >
-                    Edit
-                  </Button>
                 </>
               )}
             </div>
@@ -220,7 +215,7 @@ const Subsection = ({
           <Button
             variant='primary'
             onClick={() =>
-              handleDeleteSubsection(webSiteID, subsection._id, sectionId)
+              handleDeleteSubsection(id, subsection._id, sectionId)
             }
           >
             Understood

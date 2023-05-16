@@ -22,7 +22,7 @@
 }
 
 .empty-section {
-  height: 600px;
+  min-height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;

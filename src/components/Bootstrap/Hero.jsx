@@ -120,7 +120,7 @@ const Hero = ({ component, showSettings }) => {
       onClick={() => showSettings(component)}
       style={{
         ...style,
-        height: `${style.height}px`,
+        minHeight: `${style.height}px`,
         width: `${style.width}%`,
         backgroundColor: `${style.backgroundColor}`,
         background: `no-repeat  center/cover url(${style.backgroundImage})`,

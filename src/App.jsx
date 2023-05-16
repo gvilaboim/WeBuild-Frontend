@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import SignupPage from './pages/SignupPage/SignupPage'
 import LoginPage from './pages/LoginPage/LoginPage'
 
-import NavBar from './components/Navbar/Navbar'
+import NavigationBar from './components/NavigationBar/NavigationBar'
 import IsPrivate from './components/IsPrivate/IsPrivate'
 import IsAnon from './components/IsAnon/IsAnon'
 import Create from './pages/Create/Create'
@@ -20,7 +20,7 @@ import UserSettings from './pages/Settings/UserSettings'
 function App() {
   return (
     <div className='App'>
-      <NavBar />
+      <NavigationBar />
       <Routes>
         <Route
           path='/'
