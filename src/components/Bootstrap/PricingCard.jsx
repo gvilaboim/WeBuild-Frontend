@@ -2,8 +2,6 @@ import React from 'react'
 import { Button, Card, Col, Form } from 'react-bootstrap'
 
 const PricingCard = ({ card, onChange, handleDoubleClick, isEditing }) => {
-
-
   return (
     <Col md='4'>
       <Card className='mb-4 box-shadow'>
@@ -16,10 +14,11 @@ const PricingCard = ({ card, onChange, handleDoubleClick, isEditing }) => {
                 <div className='d-flex'>
                   <Form.Group className='mb-3'>
                     <Form.Control
+                      style={{ color: card.header.color }}
                       id={card.id}
                       name={`${card.id}.header.text`}
-                      type='text'
                       value={card.header.text}
+                      type='text'
                       onChange={onChange}
                       className='my-0 font-weight-normal bg-transparent'
                     />
@@ -29,7 +28,7 @@ const PricingCard = ({ card, onChange, handleDoubleClick, isEditing }) => {
                       <Form.Label>Text Color:</Form.Label>
                       <Form.Control
                         id={card.id}
-                        name='cardHeaderColor'
+                        name={`${card.id}.header.color`}
                         type='color'
                         value={card.header.color}
                         onChange={onChange}
@@ -40,6 +39,7 @@ const PricingCard = ({ card, onChange, handleDoubleClick, isEditing }) => {
               </>
             ) : (
               <h4
+                style={{ color: card.header.color }}
                 className='my-0 font-weight-normal'
                 onDoubleClick={(e) => handleDoubleClick(e)}
               >
@@ -60,8 +60,8 @@ const PricingCard = ({ card, onChange, handleDoubleClick, isEditing }) => {
               >
                 <div className='d-flex'>
                   <Form.Control
-                    name='cardPriceCurrency'
                     type='text'
+                    name={`${card.id}.body.price.currency`}
                     value={card.body.price.currency}
                     onChange={onChange}
                     className='bg-transparent'

@@ -13,7 +13,7 @@ import { useParams } from 'react-router-dom'
 
 const Section = ({ section }) => {
   const {
-    webSiteID,
+    
     saveChanges,
     contentSections,
     setContentSections,

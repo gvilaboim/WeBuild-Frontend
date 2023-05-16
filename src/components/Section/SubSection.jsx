@@ -27,6 +27,7 @@ const Subsection = ({
     setContentSections,
     saveChanges,
     setShowSettingsSidebar,
+    
     setSelectedComponent,
     publicView,
   } = useContext(CanvasContext)
@@ -179,12 +180,6 @@ const Subsection = ({
                     onClick={handleShowDeleteConfirmation}
                   >
                     X
-                  </Button>
-                  <Button
-                    onClick={() => handleShowSettingsSidebar(subsection._id)}
-                    variant='outline-dark'
-                  >
-                    Edit
                   </Button>
                 </>
               )}

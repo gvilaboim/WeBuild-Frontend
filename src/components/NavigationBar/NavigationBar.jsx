@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/auth.context'
 import Button from 'react-bootstrap/Button'
 import { CanvasContext } from '../../context/canvas.context'
 
-const NavBar = () => {
+const NavigationBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
   const { fetchUserInfo , userPlan} = useContext(CanvasContext)
   useEffect(() => {
@@ -79,4 +79,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default NavigationBar

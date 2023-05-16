@@ -5,17 +5,21 @@ import { CanvasContext } from '../../context/canvas.context'
 import PricingCard from './PricingCard'
 
 const Pricing = ({ component, showSettings }) => {
-  const { saveChanges, setContentSections, publicView } =
-    useContext(CanvasContext)
+  const {
+    saveChanges,
+    setContentSections,
+    publicView,
+    setShowSettingsSidebar,
+  } = useContext(CanvasContext)
   const { id } = useParams()
 
   const wrapperRef = useRef(null)
   const [isEditing, setIsEditing] = useState(false)
 
   const [componentData, setComponentData] = useState({
-    title: component.items[0].title,
-    subtitle: component.items[0].subtitle,
-    cards: component.items[0].cards,
+    title: component.items[0].content.title,
+    subtitle: component.items[0].content.subtitle,
+    cards: component.items[0].content.cards,
   })
 
   const [clickedOutside, setClickedOutside] = useState(false)
@@ -40,6 +44,7 @@ const Pricing = ({ component, showSettings }) => {
         .then((updatedWebsite) => {
           setContentSections(updatedWebsite.sections)
           setClickedOutside(false)
+          setShowSettingsSidebar(false)
         })
         .catch((err) => console.log(err))
     }
@@ -54,24 +59,21 @@ const Pricing = ({ component, showSettings }) => {
 
   const handleDoubleClick = (e) => {
     if (!publicView) setIsEditing(true)
+    setShowSettingsSidebar(false)
   }
 
-  const handleChange = (e) => {
-
-
+  // changes to values within the cards
+  const handleCardChanges = (e) => {
     const { name, value } = e.target
-    const [index, propName] = name.split('.')
-    
-    
-    const updatedCards = componentData.cards.map((card) => {
-      
-      if (card.id === parseInt(cardId)) {
-        
+    const [cardIndex, propName1, propName2, propName3] = name.split('.')
+
+    const updatedCards = componentData.cards.map((card, index) => {
+      if (index === parseInt(cardIndex)) {
         return {
           ...card,
-          [propName]: {
-            ...card[propName],
-            [propValue]: value,
+          [propName1]: {
+            ...card[propName1],
+            [propName2]: value,
           },
         }
       }
@@ -80,42 +82,46 @@ const Pricing = ({ component, showSettings }) => {
     setComponentData((prevValue) => ({ ...prevValue, cards: updatedCards }))
   }
 
-  // const handleChange = (e, id) => {
-  //   const { value, name } = e.target
+  // changes to the top variables (not nested in the Card)
+  const handleChange = (e, id) => {
+    const { value, name } = e.target
 
-  //   if (name === 'titleText') {
-  //     setComponentData((prevValue) => ({
-  //       ...prevValue,
-  //       title: { ...prevValue.title, text: value },
-  //     }))
-  //   } else if (name === 'titleColor') {
-  //     setComponentData((prevValue) => ({
-  //       ...prevValue,
-  //       title: { ...prevValue.title, color: value },
-  //     }))
-  //   } else if (name === 'subtitleText') {
-  //     setComponentData((prevValue) => ({
-  //       ...prevValue,
-  //       subtitle: { ...prevValue.subtitle, text: value },
-  //     }))
-  //   } else if (name === 'subtitleColor') {
-  //     setComponentData((prevValue) => ({
-  //       ...prevValue,
-  //       subtitle: { ...prevValue.subtitle, color: value },
-  //     }))
-  //   } else {
-  //     console.log(name, value)
-  //     // Otherwise, update the regular component data
-  //     setComponentData((prevValue) => ({ ...prevValue, [name]: value }))
-  //   }
-  // }
+    if (name === 'titleText') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        title: { ...prevValue.title, text: value },
+      }))
+    } else if (name === 'titleColor') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        title: { ...prevValue.title, color: value },
+      }))
+    } else if (name === 'subtitleText') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        subtitle: { ...prevValue.subtitle, text: value },
+      }))
+    } else if (name === 'subtitleColor') {
+      setComponentData((prevValue) => ({
+        ...prevValue,
+        subtitle: { ...prevValue.subtitle, color: value },
+      }))
+    } else {
+      console.log(name, value)
+      // Otherwise, update the regular component data
+      setComponentData((prevValue) => ({ ...prevValue, [name]: value }))
+    }
+  }
 
+  const toggleSidebar = () => {
+    if (!isEditing) showSettings(component)
+  }
   const style = component.style
 
   return (
     <div
       ref={wrapperRef}
-      onClick={() => showSettings(component)}
+      onClick={toggleSidebar}
       style={{
         ...style,
         minHeight: `${style.height}px`,
@@ -217,7 +223,7 @@ const Pricing = ({ component, showSettings }) => {
                 isEditing={isEditing}
                 setIsEditing={setIsEditing}
                 handleDoubleClick={handleDoubleClick}
-                onChange={handleChange}
+                onChange={handleCardChanges}
               />
             )
           })}
