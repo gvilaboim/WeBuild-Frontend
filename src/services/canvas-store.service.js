@@ -147,6 +147,11 @@ class CanvasStoreService {
     console.log('store service', userInfo)
     return this.api.put(`/api/settings/${userInfo._id}`, { userInfo })
   }
+
+  updateWebsiteStatistics = async (StatisticsObject) => {
+    console.log('store service', StatisticsObject)
+    return this.api.put(`/api/dashboard/statistics`, { StatisticsObject }) 
+  }
 }
 
 // Create one instance of the service
