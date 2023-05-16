@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import './Dashboard.css'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { CanvasContext } from '../../context/canvas.context'
 import ListGroup from 'react-bootstrap/ListGroup'
 import ListGroupItem from 'react-bootstrap/ListGroupItem'
@@ -9,16 +9,24 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import Statistics from './Statistics'
+import Button from 'react-bootstrap/Button'
 
 
 function Dashboard() {
-  const { webSites, fetchAllWebsites } = useContext(CanvasContext)
+  const { webSites, fetchAllWebsites ,GetStatistics} = useContext(CanvasContext)
+  const [id, setId] = useState(0)
 
+  const [skip, setSkip] = useState(false)
   useEffect(() => {
     fetchAllWebsites()
   }, [])
 
-  // Later Add all the graphs and stats of all the websitres the user has created already
+
+  const ViewtStatistics = async (id) =>{
+    setId(id)
+    setSkip(true)
+  }
+
 
   return (
     <>
@@ -50,7 +58,7 @@ function Dashboard() {
                     <Card.Subtitle className='mb-2 text-muted'>
                       {element.category}
                     </Card.Subtitle>
-
+                    <Button onClick={() => ViewtStatistics(element._id) }> Insights</Button>
                     <Card.Body style={{ width: '100%', height: '100%' }}>
                       <Link to={`/websites/edit/${element._id}`}>Visit</Link>
                     </Card.Body>
@@ -60,8 +68,10 @@ function Dashboard() {
             })}
         </Row>
       </Container>
-      <Statistics/>
-      
+       <Statistics GetStatistics={GetStatistics} id={id} />
+
+     
+
       </div>
     </>
   )

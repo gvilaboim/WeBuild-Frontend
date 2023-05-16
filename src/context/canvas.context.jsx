@@ -177,11 +177,21 @@ function CanvasProviderWrapper(props) {
     } catch (error) {
       console.log(error)
     }
-
-
-
   }
 
+
+  const GetStatistics = async (id) => {
+
+    console.log('StatisticsArray', id)
+
+    try {
+      const response = await canvasStoreService.getStatistics(id)
+      console.log(response.data)
+      return response.data
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <CanvasContext.Provider
@@ -236,7 +246,8 @@ function CanvasProviderWrapper(props) {
         publishWebsite,
         publicView,
         setPublicView, 
-        UpdateStatistics
+        UpdateStatistics,
+        GetStatistics
       }}
     >
       {props.children}

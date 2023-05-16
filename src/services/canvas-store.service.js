@@ -152,7 +152,14 @@ class CanvasStoreService {
     console.log('store service', StatisticsObject)
     return this.api.put(`/api/dashboard/statistics`, { StatisticsObject }) 
   }
+  
+  getStatistics = async (id) => {
+    return this.api.get(`/api/dashboard/statistics/${id}`)
+  }
+  
 }
+
+
 
 // Create one instance of the service
 const canvasStoreService = new CanvasStoreService()
