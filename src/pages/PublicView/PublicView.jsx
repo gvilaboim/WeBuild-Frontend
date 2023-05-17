@@ -7,12 +7,12 @@ import axios from 'axios'
 
 const PublicView = () => {
   let { username, sitename } = useParams()
-  const { loadPublicView, setPublicView, publicView ,UpdateStatistics} =
+  const { loadPublicView, setPublicView, UpdateStatistics } =
     useContext(CanvasContext)
   let [website, setWebsite] = useState({})
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [locationName, setLocationName] = useState(null);
+  const [latitude, setLatitude] = useState(null)
+  const [longitude, setLongitude] = useState(null)
+  const [locationName, setLocationName] = useState(null)
 
   useEffect(() => {
     loadPublicView(username, sitename)
@@ -26,48 +26,45 @@ const PublicView = () => {
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        position => {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude); // Set the longitude state variable
+        (position) => {
+          setLatitude(position.coords.latitude)
+          setLongitude(position.coords.longitude) // Set the longitude state variable
         },
-        error => {
-          console.log(error);
+        (error) => {
+          console.log(error)
         }
-      );
+      )
     } else {
-      console.log('Geolocation is not supported by this browser.');
+      console.log('Geolocation is not supported by this browser.')
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     if (latitude && longitude) {
-      const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`;
+      const url = `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
 
-      axios.get(url)
-        .then(response => {
-          setLocationName( response.data);
-        
+      axios
+        .get(url)
+        .then((response) => {
+          setLocationName(response.data)
         })
-        .catch(error => {
-          console.log(error);
-        });
+        .catch((error) => {
+          console.log(error)
+        })
     }
-  }, [latitude, longitude]);
+  }, [latitude, longitude])
 
   useEffect(() => {
+    if (locationName && website) {
+      const StatisticsObject = {
+        _id: website._id,
+        location: locationName,
+        views: 1,
+      }
 
-    if(locationName && website) {
-    
-    const StatisticsObject = {
-      _id: website._id,
-      location : locationName,
-      views : 1
+      UpdateStatistics(StatisticsObject)
     }
-
-    UpdateStatistics(StatisticsObject)
-  }
-  }, [website , locationName ])
-  
+  }, [website, locationName])
 
   return (
     <div>
@@ -78,9 +75,7 @@ const PublicView = () => {
       ) : (
         <h1>Website not found</h1>
       )}
-      <div>
-   
-      </div>
+      <div></div>
     </div>
   )
 }

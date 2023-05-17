@@ -105,8 +105,6 @@ function CanvasProviderWrapper(props) {
   const fetchUserWebsites = async (id) => {
     const foundUserWebsites = await canvasStoreService.getUserWebsites(id)
     setUserWebsites(foundUserWebsites.data)
-
-    console.log(userWebsites)
   }
 
   const fetchStoreItems = () => {
@@ -175,7 +173,6 @@ function CanvasProviderWrapper(props) {
   }
 
   const UpdateStatistics = async (StatisticsObject) => {
-    console.log('StatisticsArray', StatisticsObject)
 
     try {
       const response = await canvasStoreService.updateWebsiteStatistics(
