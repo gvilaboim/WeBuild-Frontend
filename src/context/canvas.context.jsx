@@ -7,17 +7,23 @@ const CanvasContext = React.createContext()
 
 function CanvasProviderWrapper(props) {
   //DashBoard Websites created by user
-  const [webSites, setWebSites] = useState([])
-  
+  const [userWebsites, setUserWebsites] = useState([])
+
+  //DashBoard Websites created by the community
+  const [communityWebsites, setCommunityWebsites] = useState([])
+
   const { user } = useContext(AuthContext)
 
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
 
   const [webSiteID, setWebSiteID] = useState()
-  const [websiteInfo, setWebsiteInfo] = useState({ name: '', category: '', id: '' })
+  const [websiteInfo, setWebsiteInfo] = useState({
+    name: '',
+    category: '',
+    id: '',
+  })
   const [publicView, setPublicView] = useState(false)
-
 
   // components rendered in the canvas
   const [navbarComponents, setNavbarComponents] = useState([])
@@ -91,13 +97,16 @@ function CanvasProviderWrapper(props) {
     return component
   }
 
-  const fetchAllWebsites = () => {
-    canvasStoreService
-      .getAllWebsites()
-      .then((response) => {
-        setWebSites(response.data)
-      })
-      .catch((err) => console.log(err))
+  const fetchCommunityWebsites = async () => {
+    const foundCommunityWebsites =
+      await canvasStoreService.getCommunityWebsites()
+    setCommunityWebsites(foundCommunityWebsites.data)
+  }
+  const fetchUserWebsites = async (id) => {
+    const foundUserWebsites = await canvasStoreService.getUserWebsites(id)
+    setUserWebsites(foundUserWebsites.data)
+
+    console.log(userWebsites)
   }
 
   const fetchStoreItems = () => {
@@ -165,13 +174,13 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-
   const UpdateStatistics = async (StatisticsObject) => {
-
     console.log('StatisticsArray', StatisticsObject)
 
     try {
-      const response = await canvasStoreService.updateWebsiteStatistics(StatisticsObject)
+      const response = await canvasStoreService.updateWebsiteStatistics(
+        StatisticsObject
+      )
       console.log(response.data)
       return response.data
     } catch (error) {
@@ -179,13 +188,11 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-
-  const GetStatistics = async (id) => {
-
+  const getStatistics = async (id) => {
     console.log('StatisticsArray', id)
 
     try {
-      const response = await canvasStoreService.getStatistics(id)
+      const response = await canvasStoreService.getStats(id)
       console.log(response.data)
       return response.data
     } catch (error) {
@@ -207,14 +214,19 @@ function CanvasProviderWrapper(props) {
         contentSections,
         setContentSections,
 
-        webSites,
-        setWebSites,
+        communityWebsites,
+        setCommunityWebsites,
+
+        userWebsites,
+        setUserWebsites,
+
         webSiteID,
         setWebSiteID,
         websiteInfo,
         setWebsiteInfo,
 
-        fetchAllWebsites,
+        fetchUserWebsites,
+        fetchCommunityWebsites,
         fetchStoreItems,
         fetchOneWebsite,
         getComponentInfo,
@@ -245,9 +257,9 @@ function CanvasProviderWrapper(props) {
 
         publishWebsite,
         publicView,
-        setPublicView, 
+        setPublicView,
         UpdateStatistics,
-        GetStatistics
+        getStatistics,
       }}
     >
       {props.children}
