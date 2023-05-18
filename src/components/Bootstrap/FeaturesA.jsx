@@ -1,4 +1,4 @@
-import { Container, Row, Col, Form } from 'react-bootstrap'
+import { Container, Row, Form } from 'react-bootstrap'
 import { CanvasContext } from '../../context/canvas.context'
 import { useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'

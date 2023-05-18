@@ -2,7 +2,13 @@ import React, { useContext } from 'react'
 import { Col, Form } from 'react-bootstrap'
 import { CanvasContext } from '../../context/canvas.context'
 
-const FeaturesCard = ({ card, featureName, onChange, handleDoubleClick, isEditing }) => {
+const FeaturesCard = ({
+  card,
+  featureName,
+  onChange,
+  handleDoubleClick,
+  isEditing,
+}) => {
   const { publicView } = useContext(CanvasContext)
   return (
     <Col

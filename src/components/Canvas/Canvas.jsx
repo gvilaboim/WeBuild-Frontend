@@ -45,7 +45,7 @@ const Canvas = ({ website }) => {
           </Button>}
           <Button
             onClick={() =>
-              navigate(`/webuild/${user.name}/${website.name}`)
+              navigate(`/webuild/${user.name}/${website.name}/${website._id}`)
             }
             variant='dark'
           >

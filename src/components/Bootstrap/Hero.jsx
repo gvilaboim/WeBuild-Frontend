@@ -7,7 +7,6 @@ import './Bootstrap-override.css'
 const Hero = ({ component, showSettings }) => {
   const {
     setWebsite,
-    website,
     saveChanges,
     publicView,
     setShowSettingsSidebar,

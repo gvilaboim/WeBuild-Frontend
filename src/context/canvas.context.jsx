@@ -6,37 +6,42 @@ import { AuthContext } from './auth.context'
 const CanvasContext = React.createContext()
 
 function CanvasProviderWrapper(props) {
-  //DashBoard Websites created by user
-  const [userWebsites, setUserWebsites] = useState([])
-
-  //DashBoard Websites created by the community
-  const [communityWebsites, setCommunityWebsites] = useState([])
-
   const { user } = useContext(AuthContext)
 
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
 
-  const [webSiteID, setWebSiteID] = useState()
-  const [websiteInfo, setWebsiteInfo] = useState({
-    name: '',
-    category: '',
-    id: '',
-  })
-  const [publicView, setPublicView] = useState(false)
-
-  // components rendered in the canvas
   const [website, setWebsite] = useState({})
-
-  const [selectedComponent, setSelectedComponent] = useState({})
+  const [publicView, setPublicView] = useState(false)
 
   const [userInfo, setUserInfo] = useState({})
   const [userPlan, setUserPlan] = useState({})
 
+  //TBD
+  const [showHints, setShowHints] = useState(true)
+  const toggleHints = () => setShowHints((previousValue) => !previousValue)
+
+  //what is sent to the sidebar when the user clicks any component
+  const [selectedComponent, setSelectedComponent] = useState({})
   const [showSettingsSidebar, setShowSettingsSidebar] = useState(false)
 
-  const [showHints, setShowHints] = useState(false)
-  const toggleHints = () => setShowHints((previousValue) => !previousValue)
+  //populates the sidebar
+  const fetchStoreItems = () => {
+    canvasStoreService
+      .getStoreItems()
+      .then((response) => {
+        setStoreComponents(response.data)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  //returns the whole website obj to render
+  // works for public or private views
+  const fetchOneWebsite = async (websiteId) => {
+    const response = await canvasStoreService.getOneWebsite(websiteId)
+
+    setWebsite(response.data)
+  }
 
   const publishWebsite = async (websiteId) => {
     try {
@@ -47,6 +52,8 @@ function CanvasProviderWrapper(props) {
     }
   }
 
+  // used for every component update, also for right sidebar
+  // returns the whole website
   const saveChanges = async (id, siteData) => {
     try {
       const response = await canvasStoreService.saveChanges(id, siteData)
@@ -90,35 +97,19 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const getComponentInfo = (component) => {
-    setSelectedComponent(component)
-    console.log(component)
-    return component
-  }
-
+  // fetch community websites rendered in the dashboard
+  const [communityWebsites, setCommunityWebsites] = useState([])
   const fetchCommunityWebsites = async () => {
     const foundCommunityWebsites =
       await canvasStoreService.getCommunityWebsites()
     setCommunityWebsites(foundCommunityWebsites.data)
   }
+
+  // fetch user websites rendered in the dashboard
+  const [userWebsites, setUserWebsites] = useState([])
   const fetchUserWebsites = async (id) => {
     const foundUserWebsites = await canvasStoreService.getUserWebsites(id)
     setUserWebsites(foundUserWebsites.data)
-  }
-
-  const fetchStoreItems = () => {
-    canvasStoreService
-      .getStoreItems()
-      .then((response) => {
-        setStoreComponents(response.data)
-      })
-      .catch((err) => console.log(err))
-  }
-
-  const fetchOneWebsite = async (websiteId) => {
-    const response = await canvasStoreService.getOneWebsite(websiteId)
-
-    setWebsite(response.data)
   }
 
   const fetchUserInfo = (id) => {
@@ -131,23 +122,12 @@ function CanvasProviderWrapper(props) {
       .catch((err) => console.log(err))
   }
 
+  // Stripe/Pricing Plans
   const updatePlan = (sessionId) => {
     console.log('updatePlan ID', sessionId)
     canvasStoreService.updatePlanFunction(sessionId).then((res) => {
       fetchUserInfo(user._id)
     })
-  }
-
-  const loadPublicView = async (username, sitename) => {
-    try {
-      const response = await canvasStoreService.getPublicView(
-        username,
-        sitename
-      )
-      return response.data
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   const UpdateUserInfo = async (userInfo) => {
@@ -195,20 +175,14 @@ function CanvasProviderWrapper(props) {
 
         communityWebsites,
         setCommunityWebsites,
-
         userWebsites,
         setUserWebsites,
-
-        webSiteID,
-        setWebSiteID,
-        websiteInfo,
-        setWebsiteInfo,
 
         fetchUserWebsites,
         fetchCommunityWebsites,
         fetchStoreItems,
         fetchOneWebsite,
-        getComponentInfo,
+
         saveChanges,
 
         selectedComponent,
@@ -222,6 +196,10 @@ function CanvasProviderWrapper(props) {
 
         addASection,
 
+        publishWebsite,
+        publicView,
+        setPublicView,
+
         showHints,
         toggleHints,
 
@@ -230,13 +208,9 @@ function CanvasProviderWrapper(props) {
         userPlan,
         updatePlan,
 
-        loadPublicView,
         UpdateUserInfo,
         setUserInfo,
 
-        publishWebsite,
-        publicView,
-        setPublicView,
         UpdateStatistics,
         getStatistics,
       }}
