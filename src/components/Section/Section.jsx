@@ -1,6 +1,6 @@
 import './Section.css'
 import { useContext, useState } from 'react'
-import Subsection from './Subsection'
+import SubsectionFile from './SubsectionFile'
 import Loading from '../Loading/Loading'
 import { CanvasContext } from '../../context/canvas.context'
 
@@ -153,7 +153,7 @@ const Section = ({ section }) => {
         {section.subsections.length > 0 ? (
           section.subsections.map((subsection) => {
             return (
-              <Subsection
+              <SubsectionFile
                 key={subsection._id}
                 sectionName={section.name}
                 subsectionName={subsection.name}

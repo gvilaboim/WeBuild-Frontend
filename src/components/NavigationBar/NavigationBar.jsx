@@ -9,7 +9,7 @@ import { CanvasContext } from '../../context/canvas.context'
 
 const NavigationBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
-  const { fetchUserInfo , userPlan} = useContext(CanvasContext)
+  const { fetchUserInfo , userPlan } = useContext(CanvasContext)
   useEffect(() => {
     if(user) 
     {

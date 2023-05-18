@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
@@ -6,19 +6,25 @@ import Navbar from 'react-bootstrap/Navbar'
 import { CanvasContext } from '../../context/canvas.context'
 import { NavLink } from 'react-router-dom'
 
-const NavBarBS = ({ component: { brand, navLinks } }) => {
-  const { publicView } = useContext(CanvasContext)
+const NavBarBS = ({ showSettings,  component: { brand, navLinks }  , component}) => {
+  const { publicView , websiteInfo } = useContext(CanvasContext)
+  const [isEditing, setIsEditing] = useState(false)
 
+  const toggleSidebar = () => {
+    if (!isEditing) showSettings(component)
+  }
+  
   return (
     <>
       <Navbar
         bg='light'
         expand='lg'
         className='mb-3'
+        onClick={toggleSidebar}
       >
         <Container>
           <Navbar.Brand href={publicView ? '/home' : ''}>
-            {brand.text}
+            {websiteInfo.name}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
