@@ -5,12 +5,8 @@ import { CanvasContext } from '../../context/canvas.context'
 import PricingCard from './PricingCard'
 import { set } from 'lodash'
 const Pricing = ({ component, showSettings }) => {
-  const {
-    saveChanges,
-    setContentSections,
-    publicView,
-    setShowSettingsSidebar,
-  } = useContext(CanvasContext)
+  const { setWebsite, saveChanges, publicView, setShowSettingsSidebar } =
+    useContext(CanvasContext)
   const { id } = useParams()
 
   const wrapperRef = useRef(null)
@@ -43,7 +39,7 @@ const Pricing = ({ component, showSettings }) => {
         componentToEdit: { data: componentData, id: component._id },
       })
         .then((updatedWebsite) => {
-          setContentSections(updatedWebsite.sections)
+          setWebsite(updatedWebsite)
           setClickedOutside(false)
           setHasChanges(false)
         })
@@ -97,6 +93,7 @@ const Pricing = ({ component, showSettings }) => {
     }
   }
 
+  // changes to the listed variables in the Card Body
   const handleListItemChange = (event, index, cardIndex) => {
     const { name, value } = event.target
 
@@ -126,8 +123,8 @@ const Pricing = ({ component, showSettings }) => {
       ],
     })
   }
-  // changes to the top variables (not nested in the Card)
 
+  // changes to the top variables (not nested in the Card)
   const handleChange = (e, id) => {
     const { value, name } = e.target
 

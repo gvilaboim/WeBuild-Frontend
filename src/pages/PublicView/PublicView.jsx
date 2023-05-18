@@ -1,27 +1,23 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 import { CanvasContext } from '../../context/canvas.context'
-import PublicSection from './PublicSection'
 import Canvas from '../../components/Canvas/Canvas'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 const PublicView = () => {
-  let { username, sitename } = useParams()
-  const { loadPublicView, setPublicView, UpdateStatistics } =
+  const { UpdateStatistics, website, fetchOneWebsite, setPublicView } =
     useContext(CanvasContext)
-  let [website, setWebsite] = useState({})
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
   const [locationName, setLocationName] = useState(null)
 
+  const { id } = useParams()
   useEffect(() => {
-    loadPublicView(username, sitename)
-      .then((foundWebsite) => {
-        setWebsite(foundWebsite)
-        setPublicView(true)
-      })
-      .catch((err) => console.log(err))
-  }, [username, sitename])
+    fetchOneWebsite(id)
+    setPublicView(true)
+
+    console.log(website)
+  }, [])
 
   useEffect(() => {
     if (navigator.geolocation) {

@@ -102,7 +102,7 @@ function App() {
         />
 
         <Route
-          path='/webuild/:username/:sitename'
+          path='/webuild/:username/:sitename/:id'
           element={<PublicView />}
         />
       </Routes>

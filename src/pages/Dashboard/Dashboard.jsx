@@ -2,8 +2,7 @@ import { Link } from 'react-router-dom'
 import './Dashboard.css'
 import { useContext, useEffect, useState } from 'react'
 import { CanvasContext } from '../../context/canvas.context'
-import ListGroup from 'react-bootstrap/ListGroup'
-import ListGroupItem from 'react-bootstrap/ListGroupItem'
+
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -28,13 +27,14 @@ function Dashboard() {
   useEffect(() => {
     fetchUserWebsites(user._id)
     fetchCommunityWebsites()
-    console.log(communityWebsites)
   }, [])
 
   const viewStatistics = async (id) => {
     setId(id)
     setSkip(true)
   }
+
+
 
   return (
     <>
@@ -99,9 +99,9 @@ function Dashboard() {
 
                       <Card.Body style={{ width: '100%', height: '100%' }}>
                         <Link
-                          to={`/webuild/${website.user.name}/${website.name}`}
+                          to={`/webuild/${website.user.name}/${website.name}/${website._id}`}
                         >
-                          Visit 
+                          Visit
                         </Link>
                       </Card.Body>
                     </Card>

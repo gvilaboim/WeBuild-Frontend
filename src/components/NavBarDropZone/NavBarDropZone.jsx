@@ -8,7 +8,7 @@ import NavBarBS from '../Bootstrap/NavBarBS'
 import './NavBarDropZone.css'
 
 const NavBarDropZone = () => {
-  const { navbarComponents, setNavbarComponents, saveChanges, publicView } =
+  const { website, setWebsite, saveChanges, publicView } =
     useContext(CanvasContext)
   const { id } = useParams()
 
@@ -19,7 +19,7 @@ const NavBarDropZone = () => {
     saveChanges(id, {
       droppedComponent,
     }).then((updatedContent) => {
-      setNavbarComponents(updatedContent.navbar)
+      setWebsite(updatedContent)
     })
   }
 
@@ -43,24 +43,29 @@ const NavBarDropZone = () => {
     backgroundColor = 'darkkhaki'
   }
   const style = publicView ? {} : { border: '1px dashed black' }
+
+  const className =
+    website && website.navbar && website.navbar.length === 0
+      ? 'navbar-drop-zone'
+      : ''
   return (
     <div
       ref={drop}
       style={{ ...style, backgroundColor }}
-      className={navbarComponents.length === 0 ? 'navbar-drop-zone' : ''}
+      className={className}
     >
-      {navbarComponents.length !== 0 ? (
-        navbarComponents.map((component) => {
-          return (
-            <NavBarBS
-              key={component._id}
-              component={component}
-            />
-          )
-        })
-      ) : (
-        <>{!publicView && <div>Drag a Header Item here</div>}</>
-      )}
+      {website &&
+        website.navbar &&
+        website.navbar.map((component) => (
+          <NavBarBS
+            key={component._id}
+            component={component}
+          />
+        ))}
+      {website &&
+        website.navbar &&
+        website.navbar.length === 0 &&
+        !publicView && <div>Drag a Header Item here</div>}
     </div>
   )
 }

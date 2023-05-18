@@ -6,8 +6,9 @@ import { CanvasContext } from '../../context/canvas.context'
 import './Bootstrap-override.css'
 const Hero = ({ component, showSettings }) => {
   const {
+    setWebsite,
+    website,
     saveChanges,
-    setContentSections,
     publicView,
     setShowSettingsSidebar,
   } = useContext(CanvasContext)
@@ -46,7 +47,7 @@ const Hero = ({ component, showSettings }) => {
         componentToEdit: { data: componentData, id: component._id },
       })
         .then((updatedWebsite) => {
-          setContentSections(updatedWebsite.sections)
+          setWebsite(updatedWebsite)
           setClickedOutside(false)
           setHasChanges(false)
         })

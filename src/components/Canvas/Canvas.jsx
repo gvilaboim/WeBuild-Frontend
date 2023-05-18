@@ -10,30 +10,18 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context'
 
 const Canvas = ({ website }) => {
-  const { contentSections, publishWebsite, websiteInfo, fetchOneWebsite, publicView } =
-    useContext(CanvasContext)
+  const { publishWebsite, publicView } = useContext(CanvasContext)
   const { user } = useContext(AuthContext)
   const { id } = useParams()
 
   const navigate = useNavigate()
 
   const handlePublishWebsite = async (websiteId) => {
-    const publishedWebsite = await publishWebsite(websiteId)
+    await publishWebsite(websiteId)
   }
 
-  useEffect(() => {
-    if (!publicView) {
-      fetchOneWebsite(id)
-    } else{
-      // id is not part of params in public view
-      fetchOneWebsite(website._id)
-    }
-
-    // get website data to render
-  }, [id])
-
   const style = publicView
-    ? {margin: '0%'}
+    ? { margin: '0%' }
     : { border: '1px solid black', margin: '6% 23%' }
 
   return (
@@ -41,42 +29,50 @@ const Canvas = ({ website }) => {
       style={style}
       className='canvas'
     >
-      {!publicView && (
-        <>
-          <Button
+      {!website && <Loading />}
+
+      {!publicView && website && (
+        <div className='p-2'>
+          {website.isPublished ? <Button
+            variant='warning'
+          >
+            Published
+          </Button> : <Button
             onClick={() => handlePublishWebsite(id)}
             variant='success'
           >
             Publish
-          </Button>
+          </Button>}
           <Button
             onClick={() =>
-              navigate(`/webuild/${user.name}/${websiteInfo.name}`)
+              navigate(`/webuild/${user.name}/${website.name}`)
             }
-            variant='info'
+            variant='dark'
           >
             Go to Website
           </Button>
-        </>
+        </div>
       )}
 
-      <NavBarDropZone />
-      <div className='website-body'>
-        {contentSections.length === 0 ? (
-          <Loading />
-        ) : (
-          contentSections.map((section) => {
-            return (
-              <Section
-                key={section._id}
-                section={section}
-              />
-            )
-          })
-        )}
-      </div>
-
-      <FooterDropZone />
+      {website && (
+        <>
+          <NavBarDropZone />
+          <div className='website-body'>
+            {website &&
+              website.sections &&
+              website.sections.length > 0 &&
+              website.sections.map((section) => {
+                return (
+                  <Section
+                    key={section._id}
+                    section={section}
+                  />
+                )
+              })}
+          </div>
+          <FooterDropZone />
+        </>
+      )}
     </div>
   )
 }

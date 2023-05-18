@@ -26,9 +26,8 @@ function CanvasProviderWrapper(props) {
   const [publicView, setPublicView] = useState(false)
 
   // components rendered in the canvas
-  const [navbarComponents, setNavbarComponents] = useState([])
-  const [contentSections, setContentSections] = useState([])
-  const [footerComponents, setFooterComponents] = useState([])
+  const [website, setWebsite] = useState({})
+
   const [selectedComponent, setSelectedComponent] = useState({})
 
   const [userInfo, setUserInfo] = useState({})
@@ -116,19 +115,10 @@ function CanvasProviderWrapper(props) {
       .catch((err) => console.log(err))
   }
 
-  const fetchOneWebsite = (websiteId) => {
-    canvasStoreService
-      .getOneWebsite(websiteId)
-      .then((response) => {
-        setWebsiteInfo({
-          name: response.data.name,
-          category: response.data.category,
-        })
-        setNavbarComponents(response.data.navbar)
-        setContentSections(response.data.sections)
-        setFooterComponents(response.data.footer)
-      })
-      .catch((err) => console.log(err))
+  const fetchOneWebsite = async (websiteId) => {
+    const response = await canvasStoreService.getOneWebsite(websiteId)
+
+    setWebsite(response.data)
   }
 
   const fetchUserInfo = (id) => {
@@ -144,7 +134,6 @@ function CanvasProviderWrapper(props) {
   const updatePlan = (sessionId) => {
     console.log('updatePlan ID', sessionId)
     canvasStoreService.updatePlanFunction(sessionId).then((res) => {
-      console.log(res.data)
       fetchUserInfo(user._id)
     })
   }
@@ -173,7 +162,6 @@ function CanvasProviderWrapper(props) {
   }
 
   const UpdateStatistics = async (StatisticsObject) => {
-
     try {
       const response = await canvasStoreService.updateWebsiteStatistics(
         StatisticsObject
@@ -202,14 +190,8 @@ function CanvasProviderWrapper(props) {
       value={{
         storeComponents,
 
-        navbarComponents,
-        setNavbarComponents,
-
-        footerComponents,
-        setFooterComponents,
-
-        contentSections,
-        setContentSections,
+        website,
+        setWebsite,
 
         communityWebsites,
         setCommunityWebsites,
