@@ -46,7 +46,6 @@ const NavBarDropZone = () => {
     backgroundColor = 'darkkhaki'
   }
   const style = publicView ? {} : { border: '1px dashed black' }
-
   const className =
     website && website.navbar && website.navbar.length === 0
       ? 'navbar-drop-zone'
@@ -57,25 +56,15 @@ const NavBarDropZone = () => {
       style={{ ...style, backgroundColor }}
       className={className}
     >
-      {navbarComponents.length !== 0 ? (
-        navbarComponents.map((component) => {
-          return (
-            <NavBarBS
-              key={component._id}
-              component={component}
-              showSettings={handleShowSettingsSidebar}
-            />
-          )
-        })
-      ) : (
-        <>{!publicView && <div>Drag a Header Item here</div>}</>
-      )}
+  
       {website &&
         website.navbar &&
         website.navbar.map((component) => (
           <NavBarBS
             key={component._id}
             component={component}
+            showSettings={setShowSettingsSidebar}
+
           />
         ))}
       {website &&

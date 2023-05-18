@@ -7,7 +7,7 @@ import { CanvasContext } from '../../context/canvas.context'
 import { NavLink } from 'react-router-dom'
 
 const NavBarBS = ({ showSettings,  component: { brand, navLinks }  , component}) => {
-  const { publicView , websiteInfo } = useContext(CanvasContext)
+  const { publicView , website } = useContext(CanvasContext)
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleSidebar = () => {
@@ -24,7 +24,7 @@ const NavBarBS = ({ showSettings,  component: { brand, navLinks }  , component})
       >
         <Container>
           <Navbar.Brand href={publicView ? '/home' : ''}>
-            {websiteInfo.name}
+            {website.name}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
