@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ItemTypes } from '../../itemTypes/ItemTypes'
 import { useDrop } from 'react-dnd'
 import { CanvasContext } from '../../context/canvas.context'
@@ -8,12 +8,15 @@ import NavBarBS from '../Bootstrap/NavBarBS'
 import './NavBarDropZone.css'
 
 const NavBarDropZone = () => {
-  const { website , setWebsite , navbarComponents, setNavbarComponents, saveChanges, publicView ,    setShowSettingsSidebar,
-    setSelectedComponent } =    useContext(CanvasContext)
+  const {
+    website,
+    setWebsite,
+    saveChanges,
+    publicView,
+    setShowSettingsSidebar,
+  } = useContext(CanvasContext)
 
   const { id } = useParams()
-  const [isEditing, setIsEditing] = useState(false)
-
 
   const handleDrop = (draggedComponent) => {
     // removing the id
@@ -56,7 +59,6 @@ const NavBarDropZone = () => {
       style={{ ...style, backgroundColor }}
       className={className}
     >
-  
       {website &&
         website.navbar &&
         website.navbar.map((component) => (
@@ -64,7 +66,6 @@ const NavBarDropZone = () => {
             key={component._id}
             component={component}
             showSettings={setShowSettingsSidebar}
-
           />
         ))}
       {website &&

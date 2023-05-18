@@ -118,7 +118,7 @@ const FeaturesB = ({ component, showSettings }) => {
         height: `${style.height}px`,
         width: `${style.width}%`,
         backgroundColor: `${style.backgroundColor}`,
-        background: `no-repeat  center/cover url(${style.backgroundImage})`,
+        background: `no-repeat center/cover url(${style.backgroundImage})`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
       }}
     >

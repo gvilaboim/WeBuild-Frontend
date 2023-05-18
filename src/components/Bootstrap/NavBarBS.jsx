@@ -21,6 +21,7 @@ const NavBarBS = ({ showSettings,  component: { brand, navLinks }  , component})
         expand='lg'
         className='mb-3'
         onClick={toggleSidebar}
+        onDoubleClick={() => setIsEditing(true)}
       >
         <Container>
           <Navbar.Brand href={publicView ? '/home' : ''}>

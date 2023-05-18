@@ -1,6 +1,15 @@
 body {
   margin: 0;
   user-select: none;
+  background-color: #f8f9fa;
 }
 
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}

@@ -27,7 +27,6 @@ const Subsection = ({
     setWebsite,
     saveChanges,
     setShowSettingsSidebar,
-
     setSelectedComponent,
     publicView,
   } = useContext(CanvasContext)
