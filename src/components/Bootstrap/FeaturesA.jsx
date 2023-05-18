@@ -1,100 +1,126 @@
-import { Container, Row, Col } from 'react-bootstrap';
-import { CanvasContext } from '../../context/canvas.context';
-import { cloneElement, useContext, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Container, Row, Form } from 'react-bootstrap'
+import { CanvasContext } from '../../context/canvas.context'
+import { useContext, useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { set } from 'lodash'
+import FeaturesCard from './FeaturesCard'
 
 const FeaturesA = ({ component, showSettings }) => {
-  const { saveChanges, setContentSections } = useContext(CanvasContext);
-  const { id } = useParams();
-  const wrapperRef = useRef(null);
-  const [isEditing, setIsEditing] = useState(false);
-  
+  const { saveChanges, setWebsite, publicView, setShowSettingsSidebar } =
+    useContext(CanvasContext)
+  const { id } = useParams()
+  const wrapperRef = useRef(null)
 
-  const [componentData, setComponentData] =  useState({
-    title: component.items[0]?.content[0]?.title?.text,
-    card1_title_text: component.items[0]?.content[0]?.cards[0]?.title?.text,
-    card1_description_text: component.items[0]?.content[0]?.cards[0]?.description?.text,
-    card1_button_text: component.items[0]?.content[0]?.cards[0]?.button?.text,
-    card2_title_text: component.items[0]?.content[0]?.cards[1]?.title?.text,
-    card2_description_text: component.items[0]?.content[0]?.cards[1]?.description?.text,
-    card2_button_text: component.items[0]?.content[0]?.cards[1]?.button?.text,
-    card3_title_text: component.items[0]?.content[0]?.cards[2]?.title?.text,
-    card3_description_text: component.items[0]?.content[0]?.cards[2]?.description?.text,
-    card3_button_text: component.items[0]?.content[0]?.cards[2]?.button?.text,
-  } );
+  const [isEditing, setIsEditing] = useState(false)
+  const [hasChanges, setHasChanges] = useState(false)
+  const [clickedOutside, setClickedOutside] = useState(false)
 
-  //corrigir erro aqui
-
- 
-  const [clickedOutside, setClickedOutside] = useState(false);
+  const [componentData, setComponentData] = useState({
+    title: component.items[0].content.title,
+    icon: component.items[0].content.icon,
+    cards: component.items[0].content.cards,
+  })
 
   const handleClickOutside = async (event) => {
-    if (wrapperRef.current === event.target.parentNode.parentNode) {
-      setIsEditing(false);
-      setClickedOutside(true);
+    if (!publicView) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(event.target.parentNode)
+      ) {
+        setIsEditing(false)
+        setClickedOutside(true)
+      }
     }
-  };
-
+  }
 
   useEffect(() => {
-
-    if (clickedOutside) {
-      console.log(component.content)
-      const NewComponent = component;
-      NewComponent.items[0].content[0].title.text = componentData.title
-      NewComponent.items[0].content[0].cards[0].title.text = componentData.card1_title_text
-      NewComponent.items[0].content[0].cards[0].description.text = componentData.card1_description_text
-      NewComponent.items[0].content[0].cards[0].button.text = componentData.card1_button_text
-    
-      NewComponent.items[0].content[0].cards[1].title.text = componentData.card2_title_text
-      NewComponent.items[0].content[0].cards[1].description.text =  componentData.card2_description_text
-      NewComponent.items[0].content[0].cards[1].button.text =  componentData.card2_button_text
-    
-      NewComponent.items[0].content[0].cards[2].title.text =  componentData.card3_title_text
-      NewComponent.items[0].content[0].cards[2].description.text =  componentData.card3_description_text
-      NewComponent.items[0].content[0].cards[2].button.text =  componentData.card3_button_text
-
-      console.log(NewComponent.items[0].content[0])
-     
-      const contentArray = [NewComponent.items[0].content[0]];
-      console.log(contentArray)
+    if (clickedOutside && hasChanges) {
       saveChanges(id, {
-        componentToEdit: { data: contentArray , id: component._id },
+        componentToEdit: { data: componentData, id: component._id },
       })
         .then((updatedWebsite) => {
-          setContentSections(updatedWebsite.sections);
-          setClickedOutside(false);
+          setWebsite(updatedWebsite)
+          setClickedOutside(false)
+          setHasChanges(false)
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
     }
-  }, [clickedOutside]);
+  }, [clickedOutside])
 
   useEffect(() => {
-
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   const handleDoubleClick = (e) => {
-    setIsEditing(true);
-  };
+    if (!publicView) {
+      setIsEditing(true)
+      setShowSettingsSidebar(false)
+    }
+  }
 
-  const handleChange = (e) => {
-    const { value, name } = e.target;
-    setComponentData((prevValue) => ({ ...prevValue, [name]: value }));
-    
-  };
+  // changes to the top variables (not nested in the Card)
+  const handleChange = (e, id) => {
+    const { value, name } = e.target
 
-  const style = component.style;
+    setHasChanges(true)
+
+    if (name.startsWith('title')) {
+      setComponentData((prevValue) =>
+        set({ ...prevValue }, `title.${name.split('.')[1]}`, value)
+      )
+    } else {
+      // Otherwise, update the regular component data
+      setComponentData((prevValue) => set({ ...prevValue }, name, value))
+    }
+  }
+
+  const handleCardChanges = (e) => {
+    const { name, value } = e.target
+    const [cardIndex, propName1, propName2, propName3] = name.split('.')
+
+    setHasChanges(true)
+
+    if (!propName3) {
+      const updatedCards = componentData.cards.map((card, index) => {
+        if (index === parseInt(cardIndex)) {
+          const updatedCard = { ...card }
+          set(updatedCard, `${propName1}.${propName2}`, value)
+
+          return updatedCard
+        }
+        return card
+      })
+      setComponentData((prevValue) => ({ ...prevValue, cards: updatedCards }))
+    } else {
+      const updatedCards = componentData.cards.map((card, index) => {
+        if (index === parseInt(cardIndex)) {
+          const updatedCard = { ...card }
+          set(updatedCard, `${propName1}.${propName2}.${propName3}`, value)
+
+          return updatedCard
+        }
+        return card
+      })
+      setComponentData((prevValue) => ({ ...prevValue, cards: updatedCards }))
+    }
+  }
+
+  const toggleSidebar = () => {
+    if (!isEditing) showSettings(component)
+  }
+
+  const style = component.style
 
   return (
     <div
       ref={wrapperRef}
-      onClick={() => showSettings(component)}
+      onClick={toggleSidebar}
       style={{
         ...style,
+        textAlign: 'left',
         height: `${style.height}px`,
         width: `${style.width}%`,
         backgroundColor: `${style.backgroundColor}`,
@@ -103,224 +129,69 @@ const FeaturesA = ({ component, showSettings }) => {
       }}
     >
       <Container fluid>
-        <Container className="px-4 py-5" id={`featured-0`}>
+        <Container
+          className='px-4 py-5'
+          id={`featured-0`}
+        >
           {isEditing ? (
-            <input
-              onChange={handleChange}
-              className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-              type='text'
-              value={componentData.title}
-              name='title'
-            />
+            <>
+              <Form.Group className='mb-3'>
+                <Form.Control
+                  name='title.text'
+                  value={componentData.title.text}
+                  onChange={handleChange}
+                  style={{ color: componentData.title.color }}
+                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3'
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Form.Label className='fs-5'>Text Color:</Form.Label>
+                  <Form.Control
+                    name='title.color'
+                    type='color'
+                    value={componentData.title.color}
+                    onChange={handleChange}
+                  />
+                </div>
+              </Form.Group>
+            </>
           ) : (
             <h2
               name='title-h1'
               onDoubleClick={(e) => handleDoubleClick(e)}
-              className="pb-2 border-bottom"
+              className='pb-2 border-bottom'
+              style={{ color: componentData.title.color }}
             >
-              {componentData.title}
+              {componentData.title.text}
             </h2>
           )}
 
-
-          <Row className="g-4 py-5 row-cols-1 row-cols-lg-3">
-            <Col className="feature">
-              <div className="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                <svg className="bi" width="1em" height="1em">
-                  <use xlinkHref="#collection" />
-                </svg>
-              </div>
-              {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card1_title_text}
-                  name='card1_title_text'
+          <Row className='g-4 py-5 row-cols-1 row-cols-lg-3'>
+            {componentData.cards.map((card) => {
+              return (
+                <FeaturesCard
+                  key={card.id}
+                  card={card}
+                  featureName={component.name}
+                  isEditing={isEditing}
+                  setIsEditing={setIsEditing}
+                  handleDoubleClick={handleDoubleClick}
+                  onChange={handleCardChanges}
                 />
-              ) : (
-                <h3
-                  name='card1_title_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                  className="fs-2"
-                >
-                  {componentData.card1_title_text}
-                </h3>
-              )}
-
-
-              {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card1_description_text}
-                  name='card1_description_text'
-                />
-              ) : (
-                <p
-                  name='card1_description_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                >
-                  {componentData.card1_description_text}
-                </p>
-              )}
-
-
-              {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card1_button_text}
-                  name='card1_button_text'
-                />
-              ) : (
-                <a
-                  href="#"
-                  className="icon-link"
-                  name='card1_button_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                >
-                  {componentData.card1_button_text}
-                  <svg className="bi">
-                    <use xlinkHref="#chevron-right" />
-                  </svg>
-                </a>
-              )}
-
-
-            </Col>
-            <Col className="feature">
-              <div className="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                <svg className="bi" width="1em" height="1em">
-                  <use xlinkHref="#collection" />
-                </svg>
-              </div>
-              {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card2_title_text}
-                  name='card2_title_text'
-                />
-              ) : (
-                <h3
-                  name='card2_title_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                  className="fs-2"
-                >
-                  {componentData.card2_title_text}
-                </h3>
-              )}
-              {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card2_description_text}
-                  name='card2_description_text'
-                />
-              ) : (
-                <p
-                  name='card2_description_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                >
-                  {componentData.card2_description_text}
-                </p>
-              )}
-
-
-              {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card2_button_text}
-                  name='card2_button_text'
-                />
-              ) : (
-                <a
-                  href="#"
-                  className="icon-link"
-                  name='card2_button_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                >
-                  {componentData.card2_button_text}
-                  <svg className="bi">
-                    <use xlinkHref="#chevron-right" />
-                  </svg>
-                </a>
-              )}
-            </Col>
-            <Col className="feature">
-              <div className="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
-                <svg className="bi" width="1em" height="1em">
-                  <use xlinkHref="#collection" />
-                </svg>
-              </div>
-              {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card3_title_text}
-                  name='card3_title_text'
-                />
-              ) : (
-                <h3
-                  name='card3_title_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                  className="fs-2"
-                >
-                  {componentData.card3_title_text}
-                </h3>
-              )}
-              {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card3_description_text}
-                  name='card3_description_text'
-                />
-              ) : (
-                <p
-                  name='card3_description_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                >
-                  {componentData.card3_description_text}
-                </p>
-              )}
-             
-             {isEditing ? (
-                <input
-                  onChange={handleChange}
-                  className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                  type='text'
-                  value={componentData.card3_button_text}
-                  name='card3_button_text'
-                />
-              ) : (
-                <a
-                  href="#"
-                  className="icon-link"
-                  name='card3_button_text'
-                  onDoubleClick={(e) => handleDoubleClick(e)}
-                >
-                  {componentData.card3_button_text}
-                  <svg className="bi">
-                    <use xlinkHref="#chevron-right" />
-                  </svg>
-                </a>
-              )}
-            </Col>
+              )
+            })}
           </Row>
         </Container>
       </Container>
     </div>
-  );
-};
+  )
+}
 
-export default FeaturesA;
+export default FeaturesA

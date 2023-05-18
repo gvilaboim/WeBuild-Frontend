@@ -7,7 +7,7 @@ import Footer from '../Bootstrap/Footer'
 import './FooterDropZone.css'
 
 const FooterDropZone = () => {
-  const { footerComponents, setFooterComponents, saveChanges, publicView } =
+  const { website, setWebsite, saveChanges, publicView } =
     useContext(CanvasContext)
 
   const { id } = useParams()
@@ -19,7 +19,7 @@ const FooterDropZone = () => {
     saveChanges(id, {
       droppedComponent,
     }).then((updatedContent) => {
-      setFooterComponents(updatedContent.footer)
+      setWebsite(updatedContent)
     })
   }
 
@@ -43,33 +43,29 @@ const FooterDropZone = () => {
     backgroundColor = 'darkkhaki'
   }
   const style = publicView ? {} : { border: '1px dashed black' }
-
+  const className =
+    website && website.footer && website.footer.length === 0
+      ? 'footer-drop-zone'
+      : ''
   return (
     <div
       ref={drop}
       style={{ ...style, backgroundColor }}
-      className={footerComponents.length === 0 ? 'footer-drop-zone' : ''}
+      className={className}
     >
-      {footerComponents.length !== 0 ? (
-        <>
-          {footerComponents.map((component) => {
-            return (
-              <Footer
-                key={component._id}
-                component={component}
-              />
-            )
-          })}
-        </>
-      ) : (
-        <>
-          {!publicView && (
-            <div className='empty-footer'>
-              <p>Drag a Footer here</p>
-            </div>
-          )}
-        </>
-      )}
+      {website &&
+        website.footer &&
+        website.footer.map((component) => (
+          <Footer
+            key={component._id}
+            component={component}
+          />
+        ))}
+
+      {website &&
+        website.footer &&
+        website.footer.length === 0 &&
+        !publicView && <div>Drag a Footer Item here</div>}
     </div>
   )
 }

@@ -11,7 +11,7 @@ import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 
-function Statistics({ GetStatistics , id }) {
+function Statistics({ getStatistics , id }) {
   const { webSites, fetchAllWebsites } = useContext(CanvasContext);
   const [statistics, setStatistics] = useState({});
   const [skip, setSkip] = useState(false);
@@ -21,7 +21,7 @@ function Statistics({ GetStatistics , id }) {
     if (id !== 0) {
       const fetchData = async () => {
         try {
-          const stats = await GetStatistics(id);
+          const stats = await getStatistics(id);
           setStatistics(stats);
           setSkip(true);
         } catch (error) {
@@ -53,13 +53,7 @@ function Statistics({ GetStatistics , id }) {
         <Container>
           <Card>
             <Card.Body>
-              <Card.Title>
-                <h1>Statistics</h1>
-              </Card.Title>
-              <Card.Text>
-                Use your Imagination and our tools to create the page of your
-                dreams
-              </Card.Text>
+              
 
               {skip ? (
                 <>

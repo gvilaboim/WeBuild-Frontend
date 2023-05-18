@@ -5,13 +5,20 @@ import { CanvasContext } from '../../context/canvas.context'
 
 import './Bootstrap-override.css'
 const Hero = ({ component, showSettings }) => {
-  const { saveChanges, setContentSections, publicView } =
-    useContext(CanvasContext)
+  const {
+    setWebsite,
+    saveChanges,
+    publicView,
+    setShowSettingsSidebar,
+  } = useContext(CanvasContext)
   const { id } = useParams()
 
   //needed to detect clicks outside
   const wrapperRef = useRef(null)
+
   const [isEditing, setIsEditing] = useState(false)
+  const [hasChanges, setHasChanges] = useState(false)
+  const [clickedOutside, setClickedOutside] = useState(false)
 
   // saves a local copy to update and send to db laster
   const [componentData, setComponentData] = useState({
@@ -20,8 +27,6 @@ const Hero = ({ component, showSettings }) => {
     primaryButton: component.items[0].content.primaryButton,
     secondaryButton: component.items[0].content.secondaryButton,
   })
-
-  const [clickedOutside, setClickedOutside] = useState(false)
 
   const handleClickOutside = async (event) => {
     if (!publicView) {
@@ -36,13 +41,14 @@ const Hero = ({ component, showSettings }) => {
   }
 
   useEffect(() => {
-    if (clickedOutside) {
+    if (clickedOutside && hasChanges) {
       saveChanges(id, {
         componentToEdit: { data: componentData, id: component._id },
       })
         .then((updatedWebsite) => {
-          setContentSections(updatedWebsite.sections)
+          setWebsite(updatedWebsite)
           setClickedOutside(false)
+          setHasChanges(false)
         })
         .catch((err) => console.log(err))
     }
@@ -56,12 +62,15 @@ const Hero = ({ component, showSettings }) => {
   }, [])
 
   const handleDoubleClick = (e) => {
-    if (!publicView) setIsEditing(true)
+    if (!publicView) {
+      setIsEditing(true)
+      setShowSettingsSidebar(false)
+    }
   }
 
   const handleChange = (e) => {
     const { value, name } = e.target
-
+    setHasChanges(true)
     // If the name is primaryButton or secondaryButton,
     // update the corresponding button text value
     if (name === 'titleText') {
@@ -113,11 +122,26 @@ const Hero = ({ component, showSettings }) => {
     }
   }
 
+  useEffect(() => {
+    console.log(
+      'isEditing:',
+      isEditing,
+      'hasChanges',
+      hasChanges,
+      'clicked',
+      clickedOutside
+    )
+  }, [isEditing, hasChanges, clickedOutside])
+
+  const toggleSidebar = () => {
+    if (!isEditing) showSettings(component)
+  }
+
   const style = component.style
   return (
     <div
       ref={wrapperRef}
-      onClick={() => showSettings(component)}
+      onClick={toggleSidebar}
       style={{
         ...style,
         minHeight: `${style.height}px`,
@@ -153,7 +177,7 @@ const Hero = ({ component, showSettings }) => {
                   <Form.Control
                     name='titleText'
                     as='textarea'
-                    style={{ height: '150px' }}
+                    style={{ color: componentData.title.style.color }}
                     value={componentData.title.text}
                     onChange={handleChange}
                     className='input-title fw-bold lh-1 mb-3  bg-transparent'
@@ -190,7 +214,7 @@ const Hero = ({ component, showSettings }) => {
                   <Form.Control
                     name='subtitleText'
                     as='textarea'
-                    style={{ height: '100px' }}
+                    style={{ color: componentData.subtitle.style.color }}
                     value={componentData.subtitle.text}
                     onChange={handleChange}
                     className='input-subtitle lead bg-transparent'
@@ -223,9 +247,13 @@ const Hero = ({ component, showSettings }) => {
                   <Form.Group className='mb-3'>
                     <Form.Control
                       name='primaryButton'
+                      style={{
+                        backgroundColor:
+                          componentData.primaryButton.backgroundColor,
+                      }}
                       value={componentData.primaryButton.text}
                       onChange={handleChange}
-                      className='input-subtitle lead bg-transparent'
+                      className='input-subtitle lead'
                     />
                   </Form.Group>
                   <Form.Group className='mb-3'>
@@ -238,6 +266,7 @@ const Hero = ({ component, showSettings }) => {
                           backgroundColor:
                             componentData.primaryButton.backgroundColor,
                         }}
+                        value={componentData.primaryButton.backgroundColor}
                         onChange={handleChange}
                       />
                     </div>
@@ -263,7 +292,11 @@ const Hero = ({ component, showSettings }) => {
                       name='secondaryButton'
                       value={componentData.secondaryButton.text}
                       onChange={handleChange}
-                      className='input-subtitle lead bg-transparent'
+                      style={{
+                        backgroundColor:
+                          componentData.secondaryButton.backgroundColor,
+                      }}
+                      className='input-subtitle lead'
                     />
                   </Form.Group>
                   <Form.Group className='mb-3'>
@@ -276,6 +309,7 @@ const Hero = ({ component, showSettings }) => {
                           backgroundColor:
                             componentData.secondaryButton.backgroundColor,
                         }}
+                        value={componentData.secondaryButton.backgroundColor}
                         onChange={handleChange}
                       />
                     </div>

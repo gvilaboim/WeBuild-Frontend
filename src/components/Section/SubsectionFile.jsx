@@ -23,11 +23,11 @@ const Subsection = ({
   showToast,
 }) => {
   const {
-    contentSections,
-    setContentSections,
+    website,
+    setWebsite,
     saveChanges,
     setShowSettingsSidebar,
-    
+
     setSelectedComponent,
     publicView,
   } = useContext(CanvasContext)
@@ -52,7 +52,7 @@ const Subsection = ({
     // and has content and shows a confirmation message
 
     if (
-      contentSections.length === 2 ||
+      website.sections.length === 2 ||
       (subsection.length !== 1 && subsection.components.length === 0)
     ) {
       handleDeleteSubsection(id, subsection._id, sectionId)
@@ -64,11 +64,13 @@ const Subsection = ({
 
   const handleDrop = async (draggedComponent) => {
     // Find the section and subsection to modify
-    const sectionIndex = contentSections.findIndex(
+    const sectionIndex = website.sections.findIndex(
       (sectionFromDb) => sectionFromDb._id === sectionId
     )
 
-    const subsectionIndex = contentSections[sectionIndex].subsections.findIndex(
+    const subsectionIndex = website.sections[
+      sectionIndex
+    ].subsections.findIndex(
       (subsectionFromDb) => subsectionFromDb._id === subsection._id
     )
 
@@ -79,7 +81,7 @@ const Subsection = ({
       sectionIndex,
       subsectionIndex,
     }).then((updatedContent) => {
-      setContentSections(updatedContent.sections)
+      setWebsite(updatedContent)
     })
   }
 

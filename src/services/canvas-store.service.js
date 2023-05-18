@@ -79,9 +79,14 @@ class CanvasStoreService {
   }
 
   // DASHBOARD
-  // GET /api//websites/get-all
-  getAllWebsites = async () => {
-    return this.api.get('/api/websites/get-all')
+  // GET /api//websites/community
+  getCommunityWebsites = async () => {
+    return this.api.get('/api/websites/community')
+  }
+
+  // GET /api//websites/user/:id
+  getUserWebsites = async (id) => {
+    return this.api.get(`/api/websites/user/${id}`)
   }
 
   // DELETE /api/examples/:id
@@ -150,16 +155,13 @@ class CanvasStoreService {
 
   updateWebsiteStatistics = async (StatisticsObject) => {
     console.log('store service', StatisticsObject)
-    return this.api.put(`/api/dashboard/statistics`, { StatisticsObject }) 
+    return this.api.put(`/api/dashboard/statistics`, { StatisticsObject })
   }
-  
-  getStatistics = async (id) => {
+
+  getStats = async (id) => {
     return this.api.get(`/api/dashboard/statistics/${id}`)
   }
-  
 }
-
-
 
 // Create one instance of the service
 const canvasStoreService = new CanvasStoreService()

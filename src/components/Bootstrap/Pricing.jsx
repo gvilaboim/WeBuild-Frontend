@@ -1,28 +1,25 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap'
+import { Container, Row, Form } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { CanvasContext } from '../../context/canvas.context'
 import PricingCard from './PricingCard'
-
+import { set } from 'lodash'
 const Pricing = ({ component, showSettings }) => {
-  const {
-    saveChanges,
-    setContentSections,
-    publicView,
-    setShowSettingsSidebar,
-  } = useContext(CanvasContext)
+  const { setWebsite, saveChanges, publicView, setShowSettingsSidebar } =
+    useContext(CanvasContext)
   const { id } = useParams()
 
   const wrapperRef = useRef(null)
+
   const [isEditing, setIsEditing] = useState(false)
+  const [hasChanges, setHasChanges] = useState(false)
+  const [clickedOutside, setClickedOutside] = useState(false)
 
   const [componentData, setComponentData] = useState({
     title: component.items[0].content.title,
     subtitle: component.items[0].content.subtitle,
     cards: component.items[0].content.cards,
   })
-
-  const [clickedOutside, setClickedOutside] = useState(false)
 
   const handleClickOutside = async (event) => {
     if (!publicView) {
@@ -37,14 +34,14 @@ const Pricing = ({ component, showSettings }) => {
   }
 
   useEffect(() => {
-    if (clickedOutside) {
+    if (clickedOutside && hasChanges) {
       saveChanges(id, {
         componentToEdit: { data: componentData, id: component._id },
       })
         .then((updatedWebsite) => {
-          setContentSections(updatedWebsite.sections)
+          setWebsite(updatedWebsite)
           setClickedOutside(false)
-          setShowSettingsSidebar(false)
+          setHasChanges(false)
         })
         .catch((err) => console.log(err))
     }
@@ -58,8 +55,10 @@ const Pricing = ({ component, showSettings }) => {
   }, [])
 
   const handleDoubleClick = (e) => {
-    if (!publicView) setIsEditing(true)
-    setShowSettingsSidebar(false)
+    if (!publicView) {
+      setIsEditing(true)
+      setShowSettingsSidebar(false)
+    }
   }
 
   // changes to values within the cards
@@ -67,49 +66,81 @@ const Pricing = ({ component, showSettings }) => {
     const { name, value } = e.target
     const [cardIndex, propName1, propName2, propName3] = name.split('.')
 
-    const updatedCards = componentData.cards.map((card, index) => {
-      if (index === parseInt(cardIndex)) {
-        return {
-          ...card,
-          [propName1]: {
-            ...card[propName1],
-            [propName2]: value,
-          },
+    setHasChanges(true)
+
+    if (!propName3) {
+      const updatedCards = componentData.cards.map((card, index) => {
+        if (index === parseInt(cardIndex)) {
+          const updatedCard = { ...card }
+          set(updatedCard, `${propName1}.${propName2}`, value)
+
+          return updatedCard
         }
-      }
-      return card
+        return card
+      })
+      setComponentData((prevValue) => ({ ...prevValue, cards: updatedCards }))
+    } else {
+      const updatedCards = componentData.cards.map((card, index) => {
+        if (index === parseInt(cardIndex)) {
+          const updatedCard = { ...card }
+          set(updatedCard, `${propName1}.${propName2}.${propName3}`, value)
+
+          return updatedCard
+        }
+        return card
+      })
+      setComponentData((prevValue) => ({ ...prevValue, cards: updatedCards }))
+    }
+  }
+
+  // changes to the listed variables in the Card Body
+  const handleListItemChange = (event, index, cardIndex) => {
+    const { name, value } = event.target
+
+    setHasChanges(true)
+
+    const updatedListedItems = [
+      ...componentData.cards[cardIndex].body.listedItems,
+    ]
+
+    updatedListedItems[index] = {
+      ...updatedListedItems[index],
+      [name]: value,
+    }
+
+    setComponentData({
+      ...componentData,
+      cards: [
+        ...componentData.cards.slice(0, cardIndex),
+        {
+          ...componentData.cards[cardIndex],
+          body: {
+            ...componentData.cards[cardIndex].body,
+            listedItems: updatedListedItems,
+          },
+        },
+        ...componentData.cards.slice(cardIndex + 1),
+      ],
     })
-    setComponentData((prevValue) => ({ ...prevValue, cards: updatedCards }))
   }
 
   // changes to the top variables (not nested in the Card)
   const handleChange = (e, id) => {
     const { value, name } = e.target
 
-    if (name === 'titleText') {
-      setComponentData((prevValue) => ({
-        ...prevValue,
-        title: { ...prevValue.title, text: value },
-      }))
-    } else if (name === 'titleColor') {
-      setComponentData((prevValue) => ({
-        ...prevValue,
-        title: { ...prevValue.title, color: value },
-      }))
-    } else if (name === 'subtitleText') {
-      setComponentData((prevValue) => ({
-        ...prevValue,
-        subtitle: { ...prevValue.subtitle, text: value },
-      }))
-    } else if (name === 'subtitleColor') {
-      setComponentData((prevValue) => ({
-        ...prevValue,
-        subtitle: { ...prevValue.subtitle, color: value },
-      }))
+    setHasChanges(true)
+
+    if (name.startsWith('title')) {
+      setComponentData((prevValue) =>
+        set({ ...prevValue }, `title.${name.split('.')[1]}`, value)
+      )
+    } else if (name.startsWith('subtitle')) {
+      setComponentData((prevValue) =>
+        set({ ...prevValue }, `subtitle.${name.split('.')[1]}`, value)
+      )
     } else {
-      console.log(name, value)
       // Otherwise, update the regular component data
-      setComponentData((prevValue) => ({ ...prevValue, [name]: value }))
+      setComponentData((prevValue) => set({ ...prevValue }, name, value))
     }
   }
 
@@ -138,7 +169,7 @@ const Pricing = ({ component, showSettings }) => {
           <div className='d-flex'>
             <Form.Group className='mb-3'>
               <Form.Control
-                name='titleText'
+                name='title.text'
                 as='textarea'
                 value={componentData.title.text}
                 onChange={handleChange}
@@ -155,7 +186,7 @@ const Pricing = ({ component, showSettings }) => {
               >
                 <Form.Label className='fs-5'>Text Color:</Form.Label>
                 <Form.Control
-                  name='titleColor'
+                  name='title.color'
                   type='color'
                   value={componentData.title.color}
                   onChange={handleChange}
@@ -182,7 +213,7 @@ const Pricing = ({ component, showSettings }) => {
           <div className='d-flex'>
             <Form.Group className='mb-3 w-100'>
               <Form.Control
-                name='subtitleText'
+                name='subtitle.text'
                 as='textarea'
                 style={{ height: '100px', width: '100%' }}
                 value={componentData.subtitle.text}
@@ -194,7 +225,7 @@ const Pricing = ({ component, showSettings }) => {
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Form.Label>Text Color:</Form.Label>
                 <Form.Control
-                  name='subtitleColor'
+                  name='subtitle.color'
                   type='color'
                   value={componentData.subtitle.color}
                   onChange={handleChange}
@@ -224,6 +255,7 @@ const Pricing = ({ component, showSettings }) => {
                 setIsEditing={setIsEditing}
                 handleDoubleClick={handleDoubleClick}
                 onChange={handleCardChanges}
+                handleListItemChange={handleListItemChange}
               />
             )
           })}

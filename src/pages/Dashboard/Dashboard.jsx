@@ -1,77 +1,70 @@
-import { Link } from 'react-router-dom'
 import './Dashboard.css'
 import { useContext, useEffect, useState } from 'react'
 import { CanvasContext } from '../../context/canvas.context'
-import ListGroup from 'react-bootstrap/ListGroup'
-import ListGroupItem from 'react-bootstrap/ListGroupItem'
+
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
-import Statistics from './Statistics'
 import Button from 'react-bootstrap/Button'
-
+import { AuthContext } from '../../context/auth.context'
+import SideMenu from './SideMenu'
+import { Col } from 'react-bootstrap'
 
 function Dashboard() {
-  const { webSites, fetchAllWebsites ,GetStatistics} = useContext(CanvasContext)
-  const [id, setId] = useState(0)
+  const {
+    userWebsites,
+    fetchUserWebsites,
+    communityWebsites,
+    fetchCommunityWebsites,
+    getStatistics,
+  } = useContext(CanvasContext)
 
+  const { user } = useContext(AuthContext)
+  const [id, setId] = useState(0)
   const [skip, setSkip] = useState(false)
+
   useEffect(() => {
-    fetchAllWebsites()
+    fetchUserWebsites(user._id)
+    fetchCommunityWebsites()
   }, [])
 
-
-  const ViewtStatistics = async (id) =>{
-    setId(id)
-    setSkip(true)
-  }
-
+  // const viewStatistics = async (id) => {
+  //   setId(id)
+  //   setSkip(true)
+  // }
 
   return (
     <>
-    <div> 
-      <h1>Websites</h1>
-    
-      <Container>
-      
-      <Card>
-        <Card.Body>
-          <Card.Title>Create a Website</Card.Title>
-          <Card.Text>
-            Use your Imagination and our tools to create the page of your dreams
-          </Card.Text>
-          <Card.Link href='/websites'>Start now!</Card.Link>
-        </Card.Body>
-      </Card>
+      <div className='dashboard'>
+        <SideMenu
+          userWebsites={userWebsites}
+          communityWebsites={communityWebsites}
+        />
 
-        <Row>
-          {webSites.length > 0 &&
-            webSites.map((element) => {
-              return (
-                <Col
-                  md={3}
-                  key={element._id}
-                >
-                  <Card>
-                    <Card.Title>{element.name}</Card.Title>
-                    <Card.Subtitle className='mb-2 text-muted'>
-                      {element.category}
-                    </Card.Subtitle>
-                    <Button onClick={() => ViewtStatistics(element._id) }> Insights</Button>
-                    <Card.Body style={{ width: '100%', height: '100%' }}>
-                      <Link to={`/websites/edit/${element._id}`}>Visit</Link>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              )
-            })}
-        </Row>
-      </Container>
-       <Statistics GetStatistics={GetStatistics} id={id} />
+        <Container>
+          <Card className='m-3'>
+            <Card.Body>
+              <Card.Title>Create a Website</Card.Title>
+              <Card.Text>
+                Use your Imagination and our tools to create the page of your
+                dreams
+              </Card.Text>
+              <Button href='/websites'>Start now!</Button>
+            </Card.Body>
+          </Card>
 
-     
+          <Row>
+            <Col>
+              <h1>Stats</h1>
 
+              {/* <Statistics
+                getStatistics={getStatistics}
+                id={id}
+              /> */}
+            </Col>
+          </Row>
+          <Row></Row>
+        </Container>
       </div>
     </>
   )

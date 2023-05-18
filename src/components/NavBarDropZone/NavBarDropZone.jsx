@@ -8,8 +8,12 @@ import NavBarBS from '../Bootstrap/NavBarBS'
 import './NavBarDropZone.css'
 
 const NavBarDropZone = () => {
+<<<<<<< HEAD
   const { navbarComponents, setNavbarComponents, saveChanges, publicView ,    setShowSettingsSidebar,
     setSelectedComponent } =
+=======
+  const { website, setWebsite, saveChanges, publicView } =
+>>>>>>> 66ac551e298565d8a953720515352d19dbe60529
     useContext(CanvasContext)
   const { id } = useParams()
   const [isEditing, setIsEditing] = useState(false)
@@ -22,7 +26,7 @@ const NavBarDropZone = () => {
     saveChanges(id, {
       droppedComponent,
     }).then((updatedContent) => {
-      setNavbarComponents(updatedContent.navbar)
+      setWebsite(updatedContent)
     })
   }
 
@@ -46,23 +50,16 @@ const NavBarDropZone = () => {
     backgroundColor = 'darkkhaki'
   }
   const style = publicView ? {} : { border: '1px dashed black' }
-  const handleShowSettingsSidebar = (componentToEdit) => {
-    if (!publicView) {
-      setSelectedComponent(componentToEdit)
-      setShowSettingsSidebar(true)
-    }
-  }
-  const handleDoubleClick = (e) => {
-    if (!publicView) setIsEditing(true)
-    setShowSettingsSidebar(false)
-  }
- 
 
+  const className =
+    website && website.navbar && website.navbar.length === 0
+      ? 'navbar-drop-zone'
+      : ''
   return (
     <div
       ref={drop}
       style={{ ...style, backgroundColor }}
-      className={navbarComponents.length === 0 ? 'navbar-drop-zone' : ''}
+      className={className}
     >
       {navbarComponents.length !== 0 ? (
         navbarComponents.map((component) => {
@@ -77,6 +74,18 @@ const NavBarDropZone = () => {
       ) : (
         <>{!publicView && <div>Drag a Header Item here</div>}</>
       )}
+      {website &&
+        website.navbar &&
+        website.navbar.map((component) => (
+          <NavBarBS
+            key={component._id}
+            component={component}
+          />
+        ))}
+      {website &&
+        website.navbar &&
+        website.navbar.length === 0 &&
+        !publicView && <div>Drag a Header Item here</div>}
     </div>
   )
 }

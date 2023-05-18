@@ -13,17 +13,16 @@ import { useParams } from 'react-router-dom'
 
 const Section = ({ section }) => {
   const {
-    
+    website,
+    setWebsite,
     saveChanges,
-    contentSections,
-    setContentSections,
     deleteSubsection,
     deleteSection,
     addASection,
     publicView,
   } = useContext(CanvasContext)
 
-  const {id} = useParams()
+  const { id } = useParams()
 
   const [showButtons, setShowButtons] = useState(false)
   const showButtonOptions = () => setShowButtons(true)
@@ -38,7 +37,7 @@ const Section = ({ section }) => {
   const handleSplitSections = async (numberOfSubsectionsClicked) => {
     const subsectionsIncrease =
       numberOfSubsectionsClicked - section.subsections.length
-    const sectionIndex = contentSections.findIndex(
+    const sectionIndex = website.sections.findIndex(
       (sectionToFind) => sectionToFind._id === section._id
     )
 
@@ -47,7 +46,7 @@ const Section = ({ section }) => {
       sectionIndex: sectionIndex,
     })
       .then((updatedContent) => {
-        setContentSections(updatedContent.sections)
+        setWebsite(updatedContent)
       })
       .catch((err) => console.log(err))
   }
@@ -79,15 +78,13 @@ const Section = ({ section }) => {
   const handleDeleteSubsection = (id, subsectionId, sectionId) => {
     //if it is the last subSection it will delete the whole section
     if (section.subsections.length !== 1) {
-      deleteSubsection(id, subsectionId, sectionId).then(
-        (updatedWebsite) => {
-          setContentSections(updatedWebsite.sections)
-        }
-      )
+      deleteSubsection(id, subsectionId, sectionId).then((updatedWebsite) => {
+        setWebsite(updatedWebsite)
+      })
     } else {
-      if (contentSections.length > 2) {
+      if (website.sections.length > 2) {
         deleteSection(id, sectionId).then((updatedWebsite) =>
-          setContentSections(updatedWebsite.sections)
+        setWebsite(updatedWebsite)
         )
       } else {
         //must have at least 2 sections
@@ -98,11 +95,11 @@ const Section = ({ section }) => {
 
   const handleAddASection = (id, sectionId) => {
     addASection(id, sectionId).then((updatedWebsite) =>
-      setContentSections(updatedWebsite.sections)
+    setWebsite(updatedWebsite)
     )
   }
 
-  const style = {margin: "2%"}
+  const style = { margin: '2%' }
   return (
     <div
       style={style}
@@ -180,14 +177,13 @@ const Section = ({ section }) => {
         )}
       </>
       {!publicView && (
-
-      <Button
-        className='add-section-button'
-        variant={'dark'}
-        onClick={() => handleAddASection(id, section._id)}
-      >
-        Add a Section
-      </Button>
+        <Button
+          className='add-section-button'
+          variant={'dark'}
+          onClick={() => handleAddASection(id, section._id)}
+        >
+          Add a Section
+        </Button>
       )}
     </div>
   )
