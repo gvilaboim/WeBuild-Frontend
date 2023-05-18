@@ -8,13 +8,9 @@ import NavBarBS from '../Bootstrap/NavBarBS'
 import './NavBarDropZone.css'
 
 const NavBarDropZone = () => {
-<<<<<<< HEAD
-  const { navbarComponents, setNavbarComponents, saveChanges, publicView ,    setShowSettingsSidebar,
-    setSelectedComponent } =
-=======
-  const { website, setWebsite, saveChanges, publicView } =
->>>>>>> 66ac551e298565d8a953720515352d19dbe60529
-    useContext(CanvasContext)
+  const { website , setWebsite , navbarComponents, setNavbarComponents, saveChanges, publicView ,    setShowSettingsSidebar,
+    setSelectedComponent } =    useContext(CanvasContext)
+
   const { id } = useParams()
   const [isEditing, setIsEditing] = useState(false)
 
