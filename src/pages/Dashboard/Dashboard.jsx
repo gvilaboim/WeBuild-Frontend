@@ -9,7 +9,9 @@ import Button from 'react-bootstrap/Button'
 import { AuthContext } from '../../context/auth.context'
 import SideMenu from './SideMenu'
 import { Col } from 'react-bootstrap'
-
+import Statistics from './Statistics'
+import WebsiteDetails from './WebsiteDetails'
+import LastUpdatedWebsites from './LastUpdatedWebsites'
 function Dashboard() {
   const {
     userWebsites,
@@ -22,16 +24,18 @@ function Dashboard() {
   const { user } = useContext(AuthContext)
   const [id, setId] = useState(0)
   const [skip, setSkip] = useState(false)
+  const [clickedWebsite, setClickedWebsite] = useState(null)
 
   useEffect(() => {
     fetchUserWebsites(user._id)
     fetchCommunityWebsites()
   }, [])
 
-  // const viewStatistics = async (id) => {
-  //   setId(id)
-  //   setSkip(true)
-  // }
+  const viewStatistics = async (id) => {
+    setId(id)
+    setSkip(true)
+    setClickedWebsite(userWebsites.find((website) => website._id === id))
+  }
 
   return (
     <>
@@ -39,28 +43,45 @@ function Dashboard() {
         <SideMenu
           userWebsites={userWebsites}
           communityWebsites={communityWebsites}
+          viewStatistics={viewStatistics}
         />
 
         <Container>
-          <Card className='m-3'>
-            <Card.Body>
-              <Card.Title>Create a Website</Card.Title>
-              <Card.Text>
-                Use your Imagination and our tools to create the page of your
-                dreams
-              </Card.Text>
-              <Button href='/websites'>Start now!</Button>
-            </Card.Body>
-          </Card>
+          <Row>
+            <Col>
+              <Card className='my-3'>
+                <Card.Body>
+                  <Card.Title>Create a Website</Card.Title>
+                  <Card.Text>
+                    Use your Imagination and our tools to create the page of
+                    your dreams
+                  </Card.Text>
+                  <Button href='/websites'>Start now!</Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
 
           <Row>
             <Col>
-              <h1>Stats</h1>
+         
+                {clickedWebsite ? (
+                  <>
+                    <WebsiteDetails website={clickedWebsite} />
+                    <h1>Stats</h1>
 
-              {/* <Statistics
-                getStatistics={getStatistics}
-                id={id}
-              /> */}
+                    <Statistics
+                      getStatistics={getStatistics}
+                      id={id}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <LastUpdatedWebsites
+                      communityWebsites={communityWebsites}
+                    />
+                  </>
+                )}
             </Col>
           </Row>
           <Row></Row>

@@ -1,8 +1,12 @@
+.dashboard{
+  display: flex;
+}
+
 .dashboard-sidemenu {
   height: 100vh;
-  position: fixed;
+  /* position: fixed;
   left: 0;
-  top: 0;
+  top: 0; */
   padding-top: 3.8em;
   display: flex;
   justify-content: center;
@@ -28,6 +32,4 @@
   color: #f8f9fa;
   background-color: #2e343b;
   border-bottom: 1px solid #212529;
-  /* margin: 1rem 0; */
-  /* border-radius: 5px; */
 }
