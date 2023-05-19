@@ -12,6 +12,12 @@ import { Col } from 'react-bootstrap'
 import Statistics from './Statistics'
 import WebsiteDetails from './WebsiteDetails'
 import LastUpdatedWebsites from './LastUpdatedWebsites'
+
+import UserSettings from './UserSettings'
+
+import AllPlans from './AllPlans'
+
+
 function Dashboard() {
   const {
     userWebsites,
@@ -25,6 +31,8 @@ function Dashboard() {
   const [id, setId] = useState(0)
   const [skip, setSkip] = useState(false)
   const [clickedWebsite, setClickedWebsite] = useState(null)
+
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     fetchUserWebsites(user._id)
@@ -44,27 +52,30 @@ function Dashboard() {
           userWebsites={userWebsites}
           communityWebsites={communityWebsites}
           viewStatistics={viewStatistics}
+          setPage={setPage}
         />
 
-        <Container>
-          <Row>
-            <Col>
-              <Card className='my-3'>
-                <Card.Body>
-                  <Card.Title>Create a Website</Card.Title>
-                  <Card.Text>
-                    Use your Imagination and our tools to create the page of
-                    your dreams
-                  </Card.Text>
-                  <Button href='/websites'>Start now!</Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          </Row>
+        {page == 1 ? (
 
-          <Row>
-            <Col>
-         
+          <Container>
+            <Row>
+              <Col>
+                <Card className='my-3'>
+                  <Card.Body>
+                    <Card.Title>Create a Website</Card.Title>
+                    <Card.Text>
+                      Use your Imagination and our tools to create the page of
+                      your dreams
+                    </Card.Text>
+                    <Button href='/websites'>Start now!</Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col>
+
                 {clickedWebsite ? (
                   <>
                     <WebsiteDetails website={clickedWebsite} />
@@ -82,10 +93,28 @@ function Dashboard() {
                     />
                   </>
                 )}
-            </Col>
-          </Row>
-          <Row></Row>
-        </Container>
+              </Col>
+            </Row>
+            <Row></Row>
+          </Container>
+
+        ) : <></>
+        }
+        {page == 2 ? (
+          <UserSettings />
+        ) : <></>
+        }
+
+
+        {page == 3 ? (
+          <AllPlans/>
+          
+          ) : <></>
+        }
+
+  
+
+
       </div>
     </>
   )

@@ -40,9 +40,6 @@ const NavigationBar = () => {
             <>
               <Nav className='me-auto'>
                 <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
-                <Nav.Link href='/upgrade'>Pricing</Nav.Link>
-                <Nav.Link href='/settings'>Settings</Nav.Link>
-                <Nav.Link href='/'>WebSites Find</Nav.Link>
               </Nav>
               {isLoggedIn && (
                 <Nav className='ms-auto'>
@@ -62,12 +59,7 @@ const NavigationBar = () => {
                   >
                     Log Out
                   </Button>
-                  <Button
-                    variant='light'
-                    href='/upgrade'
-                  >
-                    Upgrade
-                  </Button>
+              
                 </Nav>
               )}
 
