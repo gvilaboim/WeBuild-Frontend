@@ -22,6 +22,7 @@ const NavigationBar = () => {
     if (publicView) {
       setShowNavbar((previousValue) => !previousValue)
     }
+    
   }
 
   return (

@@ -15,6 +15,8 @@ const RightSideBar = () => {
     showSettingsSidebar,
     setContentSections,
     setSelectedComponent,
+    website,
+    setWebsite
   } = useContext(CanvasContext)
 
   const { id } = useParams()
@@ -29,12 +31,15 @@ const RightSideBar = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-
     setComponentData((prevState) => set({ ...prevState }, name, value))
+
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    console.log(componentData)
+
     try {
       const response = await canvasStoreService.saveComponentChanges(
         id,
@@ -42,7 +47,8 @@ const RightSideBar = () => {
       )
 
       setSelectedComponent(response.data.updatedComponent)
-      setContentSections(response.data.updatedWebsite.sections)
+      // setContentSections(response.data.updatedWebsite.sections)
+      setWebsite(response.data.updatedWebsite)
     } catch (error) {
       console.log(error)
     }
@@ -95,6 +101,50 @@ const RightSideBar = () => {
                 </>
               )}
 
+            {componentData.navLinks && (
+              <Form.Group
+                className='mb-3'
+                controlId='formBasicBackgroundImage'
+              >
+                <Form.Label>NavLinks:</Form.Label>
+                <Form.Control
+                  name='navLinks[0].text'
+                  type='text'
+                  value={componentData.navLinks[0].text}
+                  onChange={handleChange}
+                />
+
+                <Form.Control
+                  name='navLinks[1].text'
+                  type='text'
+                  value={componentData.navLinks[1].text}
+                  onChange={handleChange}
+                />
+                    <Form.Control
+                  name='navLinks[2].text'
+                  type='text'
+                  value={componentData.navLinks[2].text}
+                  onChange={handleChange}
+                />
+                    <Form.Control
+                  name='navLinks[3].text'
+                  type='text'
+                  value={componentData.navLinks[3].text}
+                  onChange={handleChange}
+                />
+                    <Form.Control
+                  name='navLinks[4].text'
+                  type='text'
+                  value={componentData.navLinks[4].text}
+                  onChange={handleChange}
+                />
+
+
+              </Form.Group>
+              
+
+            )}
+
               {componentData.style && (
                 <div>
                   <Form.Group className='mb-3'>
@@ -119,6 +169,19 @@ const RightSideBar = () => {
                       name='style.backgroundImage'
                       type='text'
                       value={componentData.style.backgroundImage}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+
+                  <Form.Group
+                    className='mb-3'
+                    controlId='formBasicBackgroundImage'
+                  >
+                    <Form.Label>Text Align :</Form.Label>
+                    <Form.Control
+                      name='style.textAlign'
+                      type='text'
+                      value={componentData.style.textAlign}
                       onChange={handleChange}
                     />
                   </Form.Group>
@@ -150,25 +213,30 @@ const RightSideBar = () => {
                   </Form.Group>
 
                   <Form.Group className='mb-3'>
-                    <Form.Label>Padding:</Form.Label>
+                    <Form.Label> Padding Top:</Form.Label>
                     <Form.Control
                       name='style.padding.top'
                       type='number'
                       value={componentData.style.padding.top}
                       onChange={handleChange}
                     />
+                    <Form.Label>Padding Right:</Form.Label>
                     <Form.Control
                       name='style.padding.right'
                       type='number'
                       value={componentData.style.padding.right}
                       onChange={handleChange}
                     />
+                    <Form.Label>Padding Bottom:</Form.Label>
+
                     <Form.Control
                       name='style.padding.bottom'
                       type='number'
                       value={componentData.style.padding.bottom}
                       onChange={handleChange}
                     />
+                    <Form.Label>Padding Left:</Form.Label>
+
                     <Form.Control
                       name='style.padding.left'
                       type='number'
