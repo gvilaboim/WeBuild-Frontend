@@ -29,8 +29,8 @@ const NavBarBS = ({ showSettings,  component: { brand, navLinks }  , component})
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='me-auto'>
-              {navLinks.map((link) => (
+            <Nav className='ms-auto'>
+              {navLinks && navLinks.map((link) => (
                 <NavLink
                   className='nav-link'
                   key={link.text}
