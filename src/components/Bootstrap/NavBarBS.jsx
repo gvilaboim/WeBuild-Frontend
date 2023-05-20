@@ -6,14 +6,19 @@ import Navbar from 'react-bootstrap/Navbar'
 import { CanvasContext } from '../../context/canvas.context'
 import { NavLink } from 'react-router-dom'
 
-const NavBarBS = ({ showSettings,  component: { brand, navLinks }  , component}) => {
-  const { publicView , website } = useContext(CanvasContext)
+const NavBarBS = ({ showSettings, component: { brand, navLinks }, component }) => {
+  const { publicView, website, setSelectedComponent } = useContext(CanvasContext)
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleSidebar = () => {
-    if (!isEditing) showSettings(component)
+    if (!isEditing) {
+      setSelectedComponent(component)
+      showSettings(component)
+    }
+    console.log(component)
   }
-  
+  const style = component.style
+
   return (
     <>
       <Navbar
@@ -22,10 +27,20 @@ const NavBarBS = ({ showSettings,  component: { brand, navLinks }  , component})
         className='mb-3'
         onClick={toggleSidebar}
         onDoubleClick={() => setIsEditing(true)}
+        style={{
+          ...style,
+          textAlign: `${style.textAlign}`,
+          height: `${style.height}px`,
+          width: `${style.width}%`,
+          background: `no-repeat center/cover url(${style.backgroundImage})`,
+          padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
+          backgroundColor: style.backgroundColor
+        }}
       >
         <Container>
           <Navbar.Brand href={publicView ? '/home' : ''}>
             {website.name}
+          
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>

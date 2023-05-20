@@ -6,7 +6,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../../context/auth.context'
 
 const CustomToggle = ({ children, eventKey }) => {
-  const decoratedOnClick = useAccordionButton(eventKey, () => {})
+  const decoratedOnClick = useAccordionButton(eventKey, () => { })
 
   return (
     <Button
@@ -19,12 +19,12 @@ const CustomToggle = ({ children, eventKey }) => {
   )
 }
 
-function SideMenu({ userWebsites, communityWebsites, viewStatistics }) {
+function SideMenu({ setPage, userWebsites, communityWebsites, viewStatistics }) {
   return (
     <div className='dashboard-sidemenu'>
       <Container >
         <Accordion>
-          <Card className='bg-dark border-none'>
+          <Card className='bg-dark border-none' onClick={() => setPage(1)} >
             <Card.Header>
               <CustomToggle eventKey='0'>My Websites</CustomToggle>
             </Card.Header>
@@ -74,6 +74,82 @@ function SideMenu({ userWebsites, communityWebsites, viewStatistics }) {
               </>
             </Accordion.Collapse>
           </Card>
+
+
+          <Card className='bg-dark border-none'>
+            <Card.Header>
+              <CustomToggle eventKey='2'>User </CustomToggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey='2'>
+
+              <Card.Body   className='custom-sidebar-links' >
+                <p onClick={() => setPage(2)}>Settings</p>
+
+                <p onClick={() => setPage(3)}>Plans</p>
+
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+
+          <Card className='bg-dark border-none'>
+            <Card.Header>
+              <CustomToggle eventKey='3'>Support </CustomToggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey='3'>
+
+              <Card.Body   className='custom-sidebar-links' >
+                <p onClick={() => setPage(4)}>Help Forum</p>
+
+
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+
+
+          <Card className='bg-dark border-none'>
+            <Card.Header>
+              <CustomToggle eventKey='4'>Link Costumization </CustomToggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey='4'>
+
+              <Card.Body   className='custom-sidebar-links' >
+                <p onClick={() => setPage(5)}> Change Link</p>
+
+
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card> 
+
+
+          <Card className='bg-dark border-none'>
+            <Card.Header>
+              <CustomToggle eventKey='5'>Admin</CustomToggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey='5'>
+
+              <Card.Body   className='custom-sidebar-links' >
+                <p onClick={() => setPage(6)}> Users</p>
+
+
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card> 
+
+          <Card className='bg-dark border-none'>
+            <Card.Header>
+              <CustomToggle eventKey='6'>My Products</CustomToggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey='6'>
+
+              <Card.Body   className='custom-sidebar-links' >
+                <p onClick={() => setPage(7)}> See Products</p>
+                <p onClick={() => setPage(8)}> Add New Product</p>
+
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card> 
+
+
         </Accordion>
       </Container>
     </div>
