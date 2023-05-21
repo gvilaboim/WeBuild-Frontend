@@ -5,8 +5,8 @@
   align-items: center;
 }
 
-.home-page-cta{
-    padding: 2em;
-    color: #212529;
-    font-size: 6rem;
+.home-page-jumbotron {
+  padding: 12em;
+  color: #212529;
+  border-radius: 5px;
 }

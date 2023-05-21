@@ -1,35 +1,88 @@
-.dashboard{
+.dashboard {
+  background-color: #e9ecef;
+  min-height: 100vh;
+  overflow-y: scroll;
+}
+
+.section-border{
+  border-bottom: 1px solid #212529;
+  opacity: 0.2;
+  margin: 4rem 5rem 0;
+}
+.section-title {
+  text-align: left;
+  padding: 2rem;
+}
+
+.dashboard-row {
+  margin-bottom: 1.5rem;
+}
+.dashboard-card {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  min-height: 300px;
+}
+
+/* My Websites */
+
+.my-websites-row {
+  text-align: left;
   display: flex;
 }
 
-.dashboard-sidemenu {
-  height: 100vh;
-  /* position: fixed;
-  left: 0;
-  top: 0; */
-  padding-top: 3.8em;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background-color: #212529;
+.my-websites-table {
+  flex: 1;
+  height: 300px;
+  overflow-y: scroll;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
+.my-websites-stats {
+  flex: 1;
+  display: flex;
+  height: 300px;
+}
+
+.stats-card {
+  flex: 1;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* SideMenu */
 .custom-toggle-button {
   background-color: inherit;
   color: #f8f9fa;
   width: 100%;
   text-align: left;
   border: none;
-  padding: 1rem 4rem;
+  padding: 1rem;
 }
 
 .custom-toggle-button:hover {
-  background-color: #f8f9fa;
+  background-color: #ced4da;
   color: #212529;
 }
 
 .custom-sidebar-links {
-  color: #f8f9fa;
+  color: #e9ecef;
   background-color: #2e343b;
   border-bottom: 1px solid #212529;
+  padding: 1rem;
 }
+
+.custom-user-info {
+  font-size: 1.2rem;
+  color: #e9ecef;
+  background-color: #2e343b;
+}
+
+/* user settings */
+
+.user-settings-container {
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.profile-pic {
+  height: 300px;
+}
+

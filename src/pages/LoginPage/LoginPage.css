@@ -1,0 +1,32 @@
+.LoginPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+h1 {
+  color: #343a40;
+  margin-bottom: 30px;
+}
+
+.form-row {
+  margin-top: 30px;
+  max-width: 50%;
+  min-width: 20%;
+}
+
+p {
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+Link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+Link:hover {
+  text-decoration: underline;
+}

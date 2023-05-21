@@ -24,9 +24,8 @@ function AllPlans() {
 
   return (
     <>
-      <h1>Upgrade Plans</h1>
 
-      <Container>
+      <Container >
         <Card>
           <Card.Body>
             <Card.Title>Upgrade Your Features</Card.Title>

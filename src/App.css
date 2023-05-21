@@ -1,6 +1,24 @@
 .App {
+  display: flex;
   text-align: center;
-  min-height: 100vh;
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.side-menu {
+  height: 100vh;
+  overflow-y: scroll;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #212529;
+}
+
+.content {
   display: flex;
   flex-direction: column;
+  z-index: 999;
+  height: 100vh;
+  background-color: #f8f9fa;
+  overflow-y: auto;
 }
