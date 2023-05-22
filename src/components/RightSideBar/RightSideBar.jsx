@@ -101,7 +101,7 @@ const RightSideBar = () => {
                 </>
               )}
 
-            {componentData.navLinks && (
+            {componentData.navLinks && componentData.navLinks.length > 0 && (
               <Form.Group
                 className='mb-3'
                 controlId='formBasicBackgroundImage'
@@ -126,18 +126,21 @@ const RightSideBar = () => {
                   value={componentData.navLinks[2].text}
                   onChange={handleChange}
                 />
-                    <Form.Control
+                {componentData.navLinks[3]?.text && (
+                  <Form.Control
                   name='navLinks[3].text'
                   type='text'
-                  value={componentData.navLinks[3].text}
+                  value={componentData.navLinks[3]?.text}
                   onChange={handleChange}
                 />
+                )}
+                     {componentData.navLinks[4]?.text && (
                     <Form.Control
                   name='navLinks[4].text'
                   type='text'
-                  value={componentData.navLinks[4].text}
+                  value={componentData.navLinks[4]?.text}
                   onChange={handleChange}
-                />
+                />   )}
 
 
               </Form.Group>

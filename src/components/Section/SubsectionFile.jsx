@@ -36,6 +36,7 @@ const Subsection = ({
   const { id } = useParams()
 
   const handleShowSettingsSidebar = (componentToEdit) => {
+    console.log("teste ma g")
     if (!publicView) {
       setSelectedComponent(componentToEdit)
       setShowSettingsSidebar(true)

@@ -11,6 +11,8 @@ const NavBarBS = ({  showSettings, component: { brand, navLinks }, component }) 
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleSidebar = () => {
+    console.log("ALGUMA CENA BOY")
+
     if (!isEditing) {
       setSelectedComponent(component)
       showSettings(component)
@@ -22,23 +24,23 @@ const NavBarBS = ({  showSettings, component: { brand, navLinks }, component }) 
   return (
     <>
       <Navbar
-        expand='lg'
-        className='mb-3'
-        onDoubleClick={() => toggleSidebar}
-        style={{
-          ...style,
-          alignItems: `${style.alignItems}`,
-          height: `${style.height}px`,
-          width: `${style.width}%`,
-          background: `no-repeat center/cover url(${style.backgroundImage})`,
-          padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-          backgroundColor: style.backgroundColor
-        }}
-      >
-        <Container>
+      expand='lg'
+      className='mb-3'
+      onDoubleClick={toggleSidebar}
+      style={{
+        ...style,
+        alignItems: `${style.alignItems || ''}`,
+        height: `${style.height || ''}px`,
+        width: `${style.width || ''}%`,
+        background: `no-repeat center/cover url(${style.backgroundImage || ''})`,
+        padding: `${style.padding?.top || ''}% ${style.padding?.right || ''}% ${style.padding?.bottom || ''}% ${style.padding?.left || ''}%`,
+        backgroundColor: style.backgroundColor || ''
+      }}
+    >
+        <Container >
           <Navbar.Brand href={publicView ? '/home' : ''}>
             {website.name}
-          
+  
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
