@@ -1,17 +1,12 @@
 .home-page {
   flex: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode: hard-light;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.home-page-cta{
-    padding: 2em;
-    color: #fff;
-    font-size: 6rem;
+.home-page-jumbotron {
+  padding: 12em;
+  color: #212529;
+  border-radius: 5px;
 }

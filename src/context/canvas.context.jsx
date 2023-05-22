@@ -11,6 +11,11 @@ function CanvasProviderWrapper(props) {
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
 
+  // Left Menu
+  const [showMenu, setShowMenu] = useState(false)
+  // clicked on the left menu to display stats in the dashboard
+  const [clickedWebsite, setClickedWebsite] = useState(null)
+
   const [website, setWebsite] = useState({})
   const [publicView, setPublicView] = useState(false)
   const [menu, setMenu] = useState(0)
@@ -177,6 +182,8 @@ function CanvasProviderWrapper(props) {
     <CanvasContext.Provider
       value={{
         storeComponents,
+        showMenu,
+        setShowMenu,
 
         website,
         setWebsite,
@@ -185,7 +192,8 @@ function CanvasProviderWrapper(props) {
         setCommunityWebsites,
         userWebsites,
         setUserWebsites,
-
+        clickedWebsite,
+        setClickedWebsite,
         fetchUserWebsites,
         fetchCommunityWebsites,
         fetchStoreItems,

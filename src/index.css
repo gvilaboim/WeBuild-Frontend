@@ -1,9 +1,12 @@
+html {
+  overflow: hidden;
+}
 body {
+  box-sizing: border-box;
   margin: 0;
   user-select: none;
-  background-color: #f8f9fa;
+  background: #212529;
 }
-
 
 a {
   text-decoration: none;

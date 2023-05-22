@@ -1,78 +1,101 @@
-import "./SignupPage.css";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import authService from "../../services/auth.service";
+import './SignupPage.css'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import authService from '../../services/auth.service'
+import { Form, Button, Alert, Container } from 'react-bootstrap'
 
 function SignupPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [errorMessage, setErrorMessage] = useState(undefined);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [errorMessage, setErrorMessage] = useState(undefined)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
+  const handleEmail = (e) => setEmail(e.target.value)
+  const handlePassword = (e) => setPassword(e.target.value)
+  const handleName = (e) => setName(e.target.value)
 
   const handleSignupSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     // Create an object representing the request body
-    const requestBody = { email, password, name };
+    const requestBody = { email, password, name }
 
-    // Send a request to the server using axios
-    /* 
-    const authToken = localStorage.getItem("authToken");
-    axios.post(
-      `${process.env.REACT_APP_SERVER_URL}/auth/signup`, 
-      requestBody, 
-      { headers: { Authorization: `Bearer ${authToken}` },
-    })
-    .then((response) => {})
-    */
-
-    // Or using a service
+    // Send a request to the server using a service
     authService
       .signup(requestBody)
       .then((response) => {
         // If the POST request is successful redirect to the login page
-        navigate("/login");
+        navigate('/login')
       })
       .catch((error) => {
         // If the request resolves with an error, set the error message in the state
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
-      });
-  };
+        const errorDescription = error.response.data.message
+        setErrorMessage(errorDescription)
+      })
+  }
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
+    <Container
+      fluid
+      className='p-0 m-0'
+    >
+      <div className='SignupPage'>
+        <h1>Sign Up</h1>
 
-      <form onSubmit={handleSignupSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
+        <Form
+          className='form-row'
+          onSubmit={handleSignupSubmit}
+        >
+          <Form.Group controlId='formBasicEmail'>
+            <Form.Label>Email:</Form.Label>
+            <Form.Control
+              type='email'
+              name='email'
+              value={email}
+              onChange={handleEmail}
+              placeholder='Enter email'
+            />
+          </Form.Group>
 
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
+          <Form.Group controlId='formBasicPassword'>
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              type='password'
+              name='password'
+              value={password}
+              onChange={handlePassword}
+              placeholder='Enter password'
+            />
+          </Form.Group>
 
-        <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
+          <Form.Group controlId='formBasicName'>
+            <Form.Label>Name:</Form.Label>
+            <Form.Control
+              type='text'
+              name='name'
+              value={name}
+              onChange={handleName}
+              placeholder='Enter name'
+            />
+          </Form.Group>
 
-        <button type="submit">Sign Up</button>
-      </form>
+          <Button
+            className='mt-3'
+            variant='dark'
+            type='submit'
+          >
+            Sign Up
+          </Button>
+        </Form>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <Alert variant='danger'>{errorMessage}</Alert>}
 
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
-    </div>
-  );
+        <p>Already have an account?</p>
+        <Link to={'/login'}> Login</Link>
+      </div>
+    </Container>
+  )
 }
 
-export default SignupPage;
+export default SignupPage

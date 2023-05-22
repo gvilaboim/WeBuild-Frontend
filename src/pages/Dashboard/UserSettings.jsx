@@ -2,86 +2,100 @@ import React, { useContext, useEffect, useState } from 'react'
 import canvasStoreService from '../../services/canvas-store.service'
 import { AuthContext } from '../../context/auth.context'
 import { CanvasContext } from '../../context/canvas.context'
-
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import { Col, Figure, Row } from 'react-bootstrap'
 const UserSettings = () => {
+  const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
+  const { fetchUserInfo, userPlan, userInfo, setUserInfo, UpdateUserInfo } =
+    useContext(CanvasContext)
 
- const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
- const { fetchUserInfo , userPlan , userInfo ,setUserInfo, UpdateUserInfo} = useContext(CanvasContext)
+  console.log(user.profilePic)
 
   useEffect(() => {
     const loadInfoUser = async () => {
       try {
-        const loadedUserInfo = await  fetchUserInfo(user._id)
+        const loadedUserInfo = await fetchUserInfo(user._id)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-    loadInfoUser();
-}, []);
-
-
-    const handleChange = (e) => {
-      setUserInfo((previousValue) => ({
-          ...previousValue,
-          [e.target.name]: e.target.value,
-        }))
-      }
-    
-      const handleSubmit = (e) => {
-        e.preventDefault()
-        
-        const SaveInfoUser = async (userInfo) => {
-          try {
-            const loadedUserInfo = await  UpdateUserInfo(userInfo)
-        console.log(loadedUserInfo)
-         setUserInfo(userInfo)
-
-          } catch (error) {
-            console.log(error);
-          }
-        };
-        SaveInfoUser(userInfo);
     }
+    loadInfoUser()
+  }, [])
 
-    
+  const handleChange = (e) => {
+    setUserInfo((previousValue) => ({
+      ...previousValue,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    const SaveInfoUser = async (userInfo) => {
+      try {
+        const loadedUserInfo = await UpdateUserInfo(userInfo)
+        console.log(loadedUserInfo)
+        setUserInfo(userInfo)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    SaveInfoUser(userInfo)
+  }
+
   return (
+    <>
 
-    <div>
-    <h3>User Settings</h3>
-    <br/>
-
-    {userInfo &&  <form onSubmit={handleSubmit}>
-    
-      <label> Name: </label>
-      <input
-        type='text'
-        name='name'
-        value={userInfo.name}
-        onChange={handleChange}
-      />
-       <br/>
-     <label>Username: </label>
-      <input
-        type='text'
-        name='username'
-        value={userInfo.username}
-        onChange={handleChange}
-      />
-             <br/>
-
-    <label>Email: </label>
-
-      <input
-        type='text'
-        name='email'
-        value={userInfo.email}
-        onChange={handleChange}
-      />
-       <br/>
-
-      <button type='submit'>Save Changes</button>
-    </form>   }
-  </div>
+      <Col md={6} className='px-5 d-flex flex-column justify-content-center'>
+        {userInfo && (
+          <Form onSubmit={handleSubmit} className='px-5'>
+            <Form.Group>
+              <Form.Label>Name:</Form.Label>
+              <Form.Control
+                type='text'
+                name='name'
+                value={userInfo.name}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Username:</Form.Label>
+              <Form.Control
+                type='text'
+                name='username'
+                value={userInfo.username}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Email:</Form.Label>
+              <Form.Control
+                type='text'
+                name='email'
+                value={userInfo.email}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Button
+            className='mt-3'
+              variant='dark'
+              type='submit'
+            >
+              Save Changes
+            </Button>
+          </Form>
+        )}
+      </Col>
+      <Col md={6}>
+        <div
+          className='profile-pic'
+          style={{background: `no-repeat center/40% url(${user.profilePic})`}}
+        ></div>
+        <Button variant='dark'>Change your Photo</Button>
+      </Col>
+    </>
   )
 }
 

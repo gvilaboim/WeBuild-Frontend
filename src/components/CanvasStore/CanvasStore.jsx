@@ -20,13 +20,13 @@ const CanvasStore = () => {
   }, [])
 
   return (
-    <div className='left-sidebar'>
+    <div>
       <Button
-        style={{ height: '100%' }}
+        style={{ height: '10vh' }}
         variant='outline-dark'
         onClick={handleShow}
       >
-        ╰(*°▽°*)╯
+        Add Widgets{' '}
       </Button>
 
       <Offcanvas
@@ -40,9 +40,9 @@ const CanvasStore = () => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           {storeComponents.length > 0 ? (
-            <Accordion >
+            <Accordion>
               <Accordion.Item eventKey='0'>
-                <Accordion.Header >Navbar</Accordion.Header>
+                <Accordion.Header>Navbar</Accordion.Header>
                 {storeComponents.map(
                   (component, index) =>
                     component.type === 'navbar' && (
@@ -72,7 +72,7 @@ const CanvasStore = () => {
                 )}
               </Accordion.Item>
               <Accordion.Item eventKey='2'>
-                <Accordion.Header >Footer</Accordion.Header>
+                <Accordion.Header>Footer</Accordion.Header>
                 {storeComponents.map(
                   (component, index) =>
                     component.type === 'footer' && (

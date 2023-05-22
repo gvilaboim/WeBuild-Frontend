@@ -1,97 +1,89 @@
-import { Link } from 'react-router-dom';
-import './Dashboard.css';
-import { useContext, useEffect, useState } from 'react';
-import { CanvasContext } from '../../context/canvas.context';
-import ListGroup from 'react-bootstrap/ListGroup';
-import ListGroupItem from 'react-bootstrap/ListGroupItem';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Table from 'react-bootstrap/Table';
-import Spinner from 'react-bootstrap/Spinner';
+import './Dashboard.css'
+import { useEffect, useState } from 'react'
 
-function Statistics({ getStatistics , id }) {
-  const { webSites, fetchAllWebsites } = useContext(CanvasContext);
-  const [statistics, setStatistics] = useState({});
-  const [skip, setSkip] = useState(false);
-  const [error, setError] = useState(null);
+import Card from 'react-bootstrap/Card'
+import Table from 'react-bootstrap/Table'
+import Spinner from 'react-bootstrap/Spinner'
+import { Container } from 'react-bootstrap'
+
+function Statistics({ getStatistics, id }) {
+  const [statistics, setStatistics] = useState({})
+  const [skip, setSkip] = useState(false)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     if (id !== 0) {
       const fetchData = async () => {
         try {
-          const stats = await getStatistics(id);
-          setStatistics(stats);
-          setSkip(true);
+          const stats = await getStatistics(id)
+          setStatistics(stats)
+          setSkip(true)
         } catch (error) {
-          setError(error);
+          setError(error)
         }
-      };
-      fetchData();
+      }
+      fetchData()
     }
-  }, [id]);
+  }, [id])
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error: {error.message}</div>
   }
 
   // Get the sum of views for each country
-  let viewsByCountry = {};
+  let viewsByCountry = {}
   if (statistics.visitors) {
     viewsByCountry = statistics.visitors.reduce((accumulator, visitor) => {
-      const country = visitor.location;
-      const views = visitor.views;
-      accumulator[country] = (accumulator[country] || 0) + views;
-      return accumulator;
-    }, {});
+      const country = visitor.location
+      const views = visitor.views
+      accumulator[country] = (accumulator[country] || 0) + views
+      return accumulator
+    }, {})
   }
 
   return (
     <>
-      <div>
-        <Container>
-          <Card>
-            <Card.Body>
-              
-
-              {skip ? (
-                <>
-                  {statistics.visitors ? (
-                    <Table striped bordered hover>
-                      <thead>
-                        <tr>
-                          <th>Country</th>
-                          <th>Views</th>
+      <Card className='stats-card'>
+        <Card.Body>
+          {skip ? (
+            <>
+              {statistics.visitors ? (
+                <Table
+                  striped
+                  bordered
+                  hover
+                >
+                  <thead>
+                    <tr>
+                      <th>Country</th>
+                      <th>Views</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Object.entries(viewsByCountry).map(
+                      ([country, views], index) => (
+                        <tr key={index}>
+                          <td>{country}</td>
+                          <td>{views}</td>
                         </tr>
-                      </thead>
-                      <tbody>
-                        {Object.entries(viewsByCountry).map(([country, views], index) => (
-                          <tr key={index}>
-                            <td>{country}</td>
-                            <td>{views}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </Table>
-                  ) : (
-                    <div>No visitors data available.</div>
-                  )}
-                </>
+                      )
+                    )}
+                  </tbody>
+                </Table>
               ) : (
-                <div className="text-center">
-                  <Spinner animation="border" />
-                  <p>Loading...</p>
-                </div>
+                <div>No visitors data available.</div>
               )}
-            </Card.Body>
-          </Card>
-
-          <Row></Row>
-        </Container>
-      </div>
+            </>
+          ) : (
+            <div className='text-center'>
+              <Spinner animation='border' />
+              <p>Loading...</p>
+            </div>
+          )}
+        </Card.Body>
+      </Card>
     </>
-  );
+  )
 }
 
-export default Statistics;
+export default Statistics
