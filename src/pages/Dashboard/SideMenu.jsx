@@ -105,14 +105,29 @@ const SideMenu = () => {
           </Card.Body>
         </Card>
         {isLoggedIn && (
-          <Accordion>
+          <Accordion defaultActiveKey={5}>
+            {/* Admin? */}
+
+            <Card className='bg-dark border-none'>
+              <Card.Header>
+                <CustomToggle eventKey='0'>Dashboard</CustomToggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey='0'>
+                <ListGroup>
+                  <ListGroup.Item className='custom-sidebar-links'>
+                    <a href='/dashboard'> Dashboard</a>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Accordion.Collapse>
+            </Card>
+
             {/* User websites  */}
 
             <Card className='bg-dark border-none'>
               <Card.Header>
-                <CustomToggle eventKey='0'>My Websites</CustomToggle>
+                <CustomToggle eventKey='1'>My Websites</CustomToggle>
               </Card.Header>
-              <Accordion.Collapse eventKey='0'>
+              <Accordion.Collapse eventKey='1'>
                 <>
                   {userWebsites &&
                     userWebsites.length > 0 &&
@@ -122,9 +137,7 @@ const SideMenu = () => {
                           className='custom-sidebar-links'
                           key={website._id}
                         >
-                          <div>
-                            {website.name}
-                          </div>
+                          <div>{website.name}</div>
                         </Card.Body>
                       )
                     })}
@@ -144,9 +157,9 @@ const SideMenu = () => {
             {/* community websites  */}
             <Card className='bg-dark border-none'>
               <Card.Header>
-                <CustomToggle eventKey='1'>Community Pages</CustomToggle>
+                <CustomToggle eventKey='2'>Community Pages</CustomToggle>
               </Card.Header>
-              <Accordion.Collapse eventKey='1'>
+              <Accordion.Collapse eventKey='2'>
                 <>
                   <ListGroup>
                     {communityWebsites &&
@@ -174,9 +187,9 @@ const SideMenu = () => {
 
             <Card className='bg-dark border-none'>
               <Card.Header>
-                <CustomToggle eventKey='2'>User </CustomToggle>
+                <CustomToggle eventKey='3'>User </CustomToggle>
               </Card.Header>
-              <Accordion.Collapse eventKey='2'>
+              <Accordion.Collapse eventKey='3'>
                 <ListGroup>
                   <ListGroup.Item className='custom-sidebar-links'>
                     Settings
@@ -192,9 +205,9 @@ const SideMenu = () => {
 
             <Card className='bg-dark border-none'>
               <Card.Header>
-                <CustomToggle eventKey='3'>Support </CustomToggle>
+                <CustomToggle eventKey='4'>Support </CustomToggle>
               </Card.Header>
-              <Accordion.Collapse eventKey='3'>
+              <Accordion.Collapse eventKey='4'>
                 <ListGroup>
                   <ListGroup.Item className='custom-sidebar-links'>
                     Help Forum
@@ -206,9 +219,9 @@ const SideMenu = () => {
 
             <Card className='bg-dark border-none'>
               <Card.Header>
-                <CustomToggle eventKey='4'>Link Costumization </CustomToggle>
+                <CustomToggle eventKey='5'>Link Costumization </CustomToggle>
               </Card.Header>
-              <Accordion.Collapse eventKey='4'>
+              <Accordion.Collapse eventKey='5'>
                 <ListGroup>
                   <ListGroup.Item className='custom-sidebar-links'>
                     Change Link
@@ -217,20 +230,6 @@ const SideMenu = () => {
               </Accordion.Collapse>
             </Card>
 
-            {/* Admin? */}
-
-            <Card className='bg-dark border-none'>
-              <Card.Header>
-                <CustomToggle eventKey='5'>Admin</CustomToggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey='5'>
-                <ListGroup>
-                  <ListGroup.Item className='custom-sidebar-links'>
-                    <a href='/dashboard'> Dashboard</a>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Accordion.Collapse>
-            </Card>
             {/* Products  */}
 
             <Card className='bg-dark border-none'>

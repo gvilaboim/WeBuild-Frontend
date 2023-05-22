@@ -39,13 +39,13 @@ const WebsiteDetails = ({ website }) => {
               >
                 View
               </Button>
-              <Button
+              {/* <Button
                 className='px-4'
                 variant='dark'
                 href={`/websites/edit/${website._id}`}
               >
                 Edit
-              </Button>
+              </Button> */}
             </ListGroup.Item>
           </ListGroup>
         </Card>

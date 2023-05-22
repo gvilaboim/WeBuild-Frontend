@@ -44,7 +44,6 @@ function App() {
 
   const contentStyle = {
     flexBasis: !showMenu ? '100%' : '80%',
-    borderTopLeftRadius: !showMenu ? '0' : '2rem',
   }
 
   return (
