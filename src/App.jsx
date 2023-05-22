@@ -16,8 +16,13 @@ import SinglePlan from './pages/Upgrade/SinglePlan'
 import Success from './pages/Upgrade/Success'
 import PublicView from './pages/PublicView/PublicView'
 import UserSettings from './pages/Settings/UserSettings'
+import { useContext, useEffect } from 'react'
+import { CanvasContext } from './context/canvas.context'
 
 function App() {
+
+  const { website } = useContext(CanvasContext)
+
   return (
     <div className='App'>
       <NavigationBar />
@@ -102,9 +107,12 @@ function App() {
         />
 
         <Route
-          path='/webuild/:username/:sitename/:id'
+          path={`/webuild/:username/:sitename/:id/`}
           element={<PublicView />}
         />
+
+    
+
       </Routes>
     </div>
   )

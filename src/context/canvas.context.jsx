@@ -13,6 +13,9 @@ function CanvasProviderWrapper(props) {
 
   const [website, setWebsite] = useState({})
   const [publicView, setPublicView] = useState(false)
+  const [menu, setMenu] = useState(0)
+
+
 
   const [userInfo, setUserInfo] = useState({})
   const [userPlan, setUserPlan] = useState({})
@@ -25,6 +28,11 @@ function CanvasProviderWrapper(props) {
   const [selectedComponent, setSelectedComponent] = useState({})
   const [showSettingsSidebar, setShowSettingsSidebar] = useState(false)
 
+
+  const ChangeMenu = async (name) => {
+    setMenu(name)
+    console.log(menu)
+  }
   //populates the sidebar
   const fetchStoreItems = () => {
     canvasStoreService
@@ -213,6 +221,9 @@ function CanvasProviderWrapper(props) {
 
         UpdateStatistics,
         getStatistics,
+        setMenu,
+        menu,
+        ChangeMenu
       }}
     >
       {props.children}

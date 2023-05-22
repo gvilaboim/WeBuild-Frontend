@@ -6,8 +6,8 @@ import Navbar from 'react-bootstrap/Navbar'
 import { CanvasContext } from '../../context/canvas.context'
 import { NavLink } from 'react-router-dom'
 
-const NavBarBS = ({ showSettings, component: { brand, navLinks }, component }) => {
-  const { publicView, website, setSelectedComponent } = useContext(CanvasContext)
+const NavBarBS = ({  showSettings, component: { brand, navLinks }, component }) => {
+  const { publicView, website, setSelectedComponent ,menu , setMenu , ChangeMenu} = useContext(CanvasContext)
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleSidebar = () => {
@@ -22,14 +22,12 @@ const NavBarBS = ({ showSettings, component: { brand, navLinks }, component }) =
   return (
     <>
       <Navbar
-        bg='light'
         expand='lg'
         className='mb-3'
-        onClick={toggleSidebar}
-        onDoubleClick={() => setIsEditing(true)}
+        onDoubleClick={() => toggleSidebar}
         style={{
           ...style,
-          textAlign: `${style.textAlign}`,
+          alignItems: `${style.alignItems}`,
           height: `${style.height}px`,
           width: `${style.width}%`,
           background: `no-repeat center/cover url(${style.backgroundImage})`,
@@ -45,11 +43,12 @@ const NavBarBS = ({ showSettings, component: { brand, navLinks }, component }) =
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='me-auto'>
-              {navLinks.map((link) => (
+              {navLinks.map((link , index) => (
                 <NavLink
                   className='nav-link'
                   key={link.text}
                   href={publicView ? `/${link.text}` : ''}
+                  onClick={ () =>  { ChangeMenu(index) ; console.log(index)}}
                 >
                   {link.text}
                 </NavLink>

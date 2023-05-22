@@ -25,6 +25,7 @@ function Dashboard() {
     communityWebsites,
     fetchCommunityWebsites,
     getStatistics,
+    userInfo
   } = useContext(CanvasContext)
 
   const { user } = useContext(AuthContext)
@@ -43,6 +44,7 @@ function Dashboard() {
     setId(id)
     setSkip(true)
     setClickedWebsite(userWebsites.find((website) => website._id === id))
+    console.log(clickedWebsite)
   }
 
   return (

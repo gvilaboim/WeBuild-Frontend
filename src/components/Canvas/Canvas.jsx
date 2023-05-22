@@ -9,8 +9,8 @@ import { Button } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context'
 
-const Canvas = ({ website }) => {
-  const { publishWebsite, publicView, setWebsite } = useContext(CanvasContext)
+const Canvas = ({  setMenu , page, website }) => {
+  const { publishWebsite, publicView, setWebsite ,menu} = useContext(CanvasContext)
   const { user } = useContext(AuthContext)
   const { id } = useParams()
 
@@ -21,6 +21,9 @@ const Canvas = ({ website }) => {
       setWebsite(publishedWebsite)
     )
   }
+
+
+  
 
   const style = publicView
     ? { margin: '0%' }
@@ -56,25 +59,23 @@ const Canvas = ({ website }) => {
         </div>
       )}
 
-      {website && (
-        <>
-          <NavBarDropZone />
-          <div className='website-body'>
-            {website &&
-              website.sections &&
-              website.sections.length > 0 &&
-              website.sections.map((section) => {
-                return (
-                  <Section
-                    key={section._id}
-                    section={section}
-                  />
-                )
-              })}
-          </div>
-          <FooterDropZone />
-        </>
+
+{website.pages && (
+  <>
+    <NavBarDropZone setMenu={setMenu}/>
+    <div className='website-body'>
+      {website.pages[menu].sections && website.pages[menu].sections.length > 0 ? (
+        website.pages[menu].sections.map((section) => (
+          <Section key={section._id} section={section} />
+        ))
+      ) : (
+        <p>No sections found.</p>
       )}
+    </div>
+    <FooterDropZone />
+  </>
+)}
+
     </div>
   )
 }

@@ -177,11 +177,11 @@ const RightSideBar = () => {
                     className='mb-3'
                     controlId='formBasicBackgroundImage'
                   >
-                    <Form.Label>Text Align :</Form.Label>
+                    <Form.Label>Align Items :</Form.Label>
                     <Form.Control
-                      name='style.textAlign'
+                      name='style.alignItems'
                       type='text'
-                      value={componentData.style.textAlign}
+                      value={componentData.style.alignItems}
                       onChange={handleChange}
                     />
                   </Form.Group>

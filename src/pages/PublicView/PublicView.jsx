@@ -5,11 +5,14 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
 const PublicView = () => {
-  const { UpdateStatistics, website, fetchOneWebsite, setPublicView } =
+  const { UpdateStatistics, website, fetchOneWebsite, setPublicView , menu , setMenu} =
     useContext(CanvasContext)
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
   const [locationName, setLocationName] = useState(null)
+
+
+
 
   const { id } = useParams()
   useEffect(() => {
@@ -64,13 +67,15 @@ const PublicView = () => {
 
   return (
     <div>
-      {website && website.name ? (
+      {website && website.name  ? (
         <>
-          <Canvas website={website} />
+          <Canvas website={website}  setMenu = {setMenu} menu={menu}/>
         </>
       ) : (
-        <h1>Website not found</h1>
+        <></> 
       )}
+
+
       <div></div>
     </div>
   )

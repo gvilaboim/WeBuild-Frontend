@@ -1,5 +1,5 @@
 import './Section.css'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import SubsectionFile from './SubsectionFile'
 import Loading from '../Loading/Loading'
 import { CanvasContext } from '../../context/canvas.context'
@@ -20,6 +20,7 @@ const Section = ({ section }) => {
     deleteSection,
     addASection,
     publicView,
+    menu
   } = useContext(CanvasContext)
 
   const { id } = useParams()
@@ -34,6 +35,10 @@ const Section = ({ section }) => {
 
   const [showToast, setShowToast] = useState(false)
 
+
+
+  
+
   const handleSplitSections = async (numberOfSubsectionsClicked) => {
     const subsectionsIncrease =
       numberOfSubsectionsClicked - section.subsections.length
@@ -42,6 +47,7 @@ const Section = ({ section }) => {
     )
 
     saveChanges(id, {
+      menu:menu,
       subsectionsIncrease: subsectionsIncrease,
       sectionIndex: sectionIndex,
     })
