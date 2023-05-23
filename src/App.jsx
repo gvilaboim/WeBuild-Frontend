@@ -20,6 +20,7 @@ import SideMenu from './pages/Dashboard/SideMenu'
 
 import { useContext, useEffect } from 'react'
 import { CanvasContext } from './context/canvas.context'
+import SupportPage from './pages/SupportPage/SupportPage'
 
 function App() {
   const location = useLocation()
@@ -69,6 +70,14 @@ function App() {
             element={
               <IsPrivate>
                 <Dashboard />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path='/support'
+            element={
+              <IsPrivate>
+                <SupportPage />
               </IsPrivate>
             }
           />

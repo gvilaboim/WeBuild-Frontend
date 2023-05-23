@@ -8,14 +8,12 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import { AuthContext } from '../../context/auth.context'
 import { Col, Table } from 'react-bootstrap'
+
 import Statistics from './Statistics'
-import WebsiteDetails from './WebsiteDetails'
-import LastUpdatedWebsites from './LastUpdatedWebsites'
-
 import UserSettings from './UserSettings'
-
 import AllPlans from './AllPlans'
 import CreateForm from '../Create/CreateForm'
+import { useNavigate } from 'react-router-dom'
 
 function Dashboard() {
   const {
@@ -32,6 +30,8 @@ function Dashboard() {
   const [skip, setSkip] = useState(false)
 
   const { user } = useContext(AuthContext)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchUserWebsites(user._id)
@@ -50,8 +50,7 @@ function Dashboard() {
         <Container>
           <h2 className='display-4 section-title'>My Websites</h2>
 
-          {/* Not needed here if the user has no websites - will be show up top  */}
-
+          {/* Renders  */}
           <Row className='dashboard-row'>
             <Col md={6}>
               <CreateForm />
@@ -60,15 +59,38 @@ function Dashboard() {
               md={6}
               className=''
             >
-              <Card className='dashboard-card'>
-                <Card.Body className='d-flex flex-column justify-content-center fs-lg'>
-                  <Card.Text>Need Help?</Card.Text>
-                  <Card.Link href='/support'>Talk to Support</Card.Link>
-                  <Card.Text>Or</Card.Text>
-                  <Card.Link href='/hire-a-dev'>
-                    Hire a Professional Designer
-                  </Card.Link>
-                </Card.Body>
+              <Card className='dashboard-card support-container'>
+                <Row>
+                  <Card.Text className='fs-2 fw-bold support-header'>
+                    Need Help?
+                  </Card.Text>
+                </Row>
+                <Row className='support-cards'>
+                  <Col
+                    onClick={() => navigate('/support')}
+                    className='support-card'
+                  >
+                    <Card.Link className='fs-5'>Talk to Support</Card.Link>
+                    <img
+                      src='./support.png'
+                      alt='support-icon'
+                      className='mt-2 get-support-icon'
+                    />
+                  </Col>
+                  <Col
+                    onClick={() => navigate('/hire-a-dev')}
+                    className='support-card'
+                  >
+                    <Card.Link className='fs-5'>
+                      Hire a Professional Designer
+                    </Card.Link>
+                    <img
+                      src='./programmer.png'
+                      alt='hire-dev'
+                      className='mt-2 get-support-icon'
+                    />
+                  </Col>
+                </Row>
               </Card>
             </Col>
           </Row>
@@ -195,18 +217,82 @@ function Dashboard() {
 
           <h2 className='display-4 section-title'>Community Websites</h2>
           <Row>
-            {communityWebsites &&
-              communityWebsites.length > 0 &&
-              communityWebsites.map((website) => {
-                return (
-                  <Col
-                    md={6}
-                    key={website._id}
-                  >
-                    <WebsiteDetails website={website} />
-                  </Col>
-                )
-              })}
+            <Card
+              body
+              className='py-1 dashboard-card'
+            >
+              <Table
+                variant='light'
+                responsive='md'
+                striped
+                hover
+              >
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Created at</th>
+                    <th>Last updated</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {communityWebsites &&
+                    communityWebsites.length > 0 &&
+                    communityWebsites.map((website) => {
+                      const createdAt = new Date(website.createdAt)
+                      const updatedAt = new Date(website.updatedAt)
+
+                      return (
+                        <tr
+                          key={website._id}
+                          onClick={() => viewStatistics(website._id)}
+                        >
+                          <td>{website.name}</td>
+                          <td>
+                            {website.category.length > 10
+                              ? website.category.slice(0, 10) + '...'
+                              : website.category}
+                          </td>
+                          <td>
+                            {createdAt
+                              .toLocaleString()
+                              .slice(
+                                0,
+                                createdAt.toLocaleString().indexOf(',')
+                              )}
+                          </td>
+                          <td>
+                            {updatedAt
+                              .toLocaleString()
+                              .slice(
+                                0,
+                                updatedAt.toLocaleString().indexOf(',')
+                              )}
+                          </td>
+                          <td>
+                            <Button
+                              variant='secondary'
+                              href={`/webuild/${website.user.name}/${website.name}/${website._id}`}
+                            >
+                              View
+                            </Button>
+                          </td>
+                          <td>
+                            <Button
+                              variant='dark'
+                              href={`/websites/edit/${website._id}`}
+                            >
+                              Edit
+                            </Button>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                </tbody>
+              </Table>
+            </Card>
           </Row>
 
           <div className='section-border'></div>
@@ -220,7 +306,6 @@ function Dashboard() {
 
           <h2 className='display-4 section-title'>Upgrade</h2>
           <AllPlans />
-          
         </Container>
       </div>
     </>

@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.5",
     "install": "^0.13.0",
     "mdb-react-ui-kit": "^6.0.0",
     "react": "^18.2.0",

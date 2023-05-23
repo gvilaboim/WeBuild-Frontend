@@ -22,3 +22,7 @@
   background-color: #f8f9fa;
   overflow-y: auto;
 }
+
+.not-found-img{
+  max-width: 80%
+}

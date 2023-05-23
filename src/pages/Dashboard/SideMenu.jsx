@@ -5,10 +5,13 @@ import './Dashboard.css'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../context/auth.context'
 import { CanvasContext } from '../../context/canvas.context'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const CustomToggle = ({ children, eventKey }) => {
-  const decoratedOnClick = useAccordionButton(eventKey, () => {})
+  const navigate = useNavigate()
+  const decoratedOnClick = useAccordionButton(eventKey, () => {
+    if (eventKey === '0') navigate('/dashboard')
+  })
 
   return (
     <Button
@@ -23,14 +26,8 @@ const CustomToggle = ({ children, eventKey }) => {
 
 const SideMenu = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
-  const {
-    userWebsites,
-    communityWebsites,
-    fetchUserWebsites,
-    fetchCommunityWebsites,
-    fetchUserInfo,
-    userPlan,
-  } = useContext(CanvasContext)
+  const { fetchUserWebsites, fetchCommunityWebsites, fetchUserInfo, userPlan } =
+    useContext(CanvasContext)
 
   useEffect(() => {
     if (user) {
@@ -105,82 +102,11 @@ const SideMenu = () => {
           </Card.Body>
         </Card>
         {isLoggedIn && (
-          <Accordion defaultActiveKey={5}>
-            {/* Admin? */}
-
+          <Accordion>
             <Card className='bg-dark border-none'>
               <Card.Header>
                 <CustomToggle eventKey='0'>Dashboard</CustomToggle>
               </Card.Header>
-              <Accordion.Collapse eventKey='0'>
-                <ListGroup>
-                  <ListGroup.Item className='custom-sidebar-links'>
-                    <a href='/dashboard'> Dashboard</a>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Accordion.Collapse>
-            </Card>
-
-            {/* User websites  */}
-
-            <Card className='bg-dark border-none'>
-              <Card.Header>
-                <CustomToggle eventKey='1'>My Websites</CustomToggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey='1'>
-                <>
-                  {userWebsites &&
-                    userWebsites.length > 0 &&
-                    userWebsites.map((website) => {
-                      return (
-                        <Card.Body
-                          className='custom-sidebar-links'
-                          key={website._id}
-                        >
-                          <div>{website.name}</div>
-                        </Card.Body>
-                      )
-                    })}
-
-                  {userWebsites.length === 0 && (
-                    <Card.Body className='custom-sidebar-links'>
-                      <Card.Text className='p-3'>
-                        You don't have any websites
-                      </Card.Text>
-                      <a href='/websites'>Create One</a>
-                    </Card.Body>
-                  )}
-                </>
-              </Accordion.Collapse>
-            </Card>
-
-            {/* community websites  */}
-            <Card className='bg-dark border-none'>
-              <Card.Header>
-                <CustomToggle eventKey='2'>Community Pages</CustomToggle>
-              </Card.Header>
-              <Accordion.Collapse eventKey='2'>
-                <>
-                  <ListGroup>
-                    {communityWebsites &&
-                      communityWebsites.length > 0 &&
-                      communityWebsites.map((website) => {
-                        return (
-                          <ListGroup.Item
-                            className='custom-sidebar-links'
-                            key={website._id}
-                          >
-                            <a
-                              href={`/webuild/${website.user.name}/${website.name}/${website._id}`}
-                            >
-                              {website.name}
-                            </a>
-                          </ListGroup.Item>
-                        )
-                      })}
-                  </ListGroup>
-                </>
-              </Accordion.Collapse>
             </Card>
 
             {/* user settings  */}
