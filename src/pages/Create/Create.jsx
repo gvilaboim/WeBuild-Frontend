@@ -19,12 +19,6 @@ const Create = () => {
 
   return (
     <div className='create-page'>
-      {showSidebar ? (
-        <CanvasStore setShowSidebar={setShowSidebar} />
-      ) : (
-        <button onClick={() => setShowSidebar(true)}>Show Sidebar</button>
-      )}
-
       {website ? <Canvas website={website} /> : <Loading />}
 
       <RightSideBar />

@@ -42,7 +42,6 @@
   align-items: center;
 }
 
-
 .support-card {
   flex: 1;
   height: 100%;
@@ -52,8 +51,13 @@
   align-items: center;
 }
 
+.support-card:hover {
+  border-radius: 5px;
+  background-color: #f8f9fa;
+  transform: scale(1.1);
+}
 .get-support-icon {
-  width: 70px;
+  width: 60px;
 }
 .my-websites-row {
   text-align: left;
@@ -81,6 +85,8 @@
 }
 
 /* SideMenu */
+
+
 .custom-toggle-button {
   background-color: inherit;
   color: #f8f9fa;
@@ -91,8 +97,8 @@
 }
 
 .custom-toggle-button:hover {
-  background-color: #ced4da;
-  color: #212529;
+  background-color: #f8f9fa0c;
+  /* color: #212529; */
 }
 
 .custom-sidebar-links {

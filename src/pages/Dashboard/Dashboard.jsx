@@ -13,7 +13,7 @@ import Statistics from './Statistics'
 import UserSettings from './UserSettings'
 import AllPlans from './AllPlans'
 import CreateForm from '../Create/CreateForm'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function Dashboard() {
   const {
@@ -53,22 +53,18 @@ function Dashboard() {
         <Container>
           <h2 className='display-4 section-title'>My Websites</h2>
 
-          {/* Renders  */}
           <Row className='dashboard-row'>
             <Col md={6}>
               <CreateForm />
             </Col>
-            <Col
-              md={6}
-              className=''
-            >
+            <Col md={6}>
               <Card className='dashboard-card support-container'>
                 <Row>
                   <Card.Text className='fs-2 fw-bold support-header'>
                     Need Help?
                   </Card.Text>
                 </Row>
-                <Row className='support-cards'>
+                <Row className='support-cards m-5'>
                   <Col
                     onClick={() => navigate('/support')}
                     className='support-card'
@@ -84,7 +80,7 @@ function Dashboard() {
                     onClick={() => navigate('/hire-a-dev')}
                     className='support-card'
                   >
-                    <Card.Link className='fs-5'>
+                    <Card.Link className='fs-5 '>
                       Hire a Professional Designer
                     </Card.Link>
                     <img

@@ -18,16 +18,17 @@ import PublicView from './pages/PublicView/PublicView'
 import UserSettings from './pages/Settings/UserSettings'
 import SideMenu from './pages/Dashboard/SideMenu'
 
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { CanvasContext } from './context/canvas.context'
 import SupportPage from './pages/SupportPage/SupportPage'
 
 function App() {
-
   const { website } = useContext(CanvasContext)
   const location = useLocation()
 
   const { showMenu, setShowMenu } = useContext(CanvasContext)
+
+  const [isCompactSideMenu, setIsCompactSideMenu] = useState(false)
 
   useEffect(() => {
     if (
@@ -39,14 +40,21 @@ function App() {
     } else {
       setShowMenu(true)
     }
+
+    // Check if the current route is the public view
+    if (location.pathname.startsWith('/webuild')) {
+      setIsCompactSideMenu(true)
+    } else {
+      setIsCompactSideMenu(false)
+    }
   }, [location.pathname])
 
   const sideMenuStyle = {
-    flexBasis: !showMenu ? '0' : '20%',
+    flexBasis: !showMenu ? '0' : isCompactSideMenu ? '5%' : '20%',
   }
 
   const contentStyle = {
-    flexBasis: !showMenu ? '100%' : '80%',
+    flexBasis: !showMenu ? '100%' : isCompactSideMenu ? '95%' : '80%',
   }
 
   return (
@@ -55,7 +63,7 @@ function App() {
         style={{ ...sideMenuStyle }}
         className='side-menu'
       >
-        <SideMenu />
+        <SideMenu isCompactSideMenu={isCompactSideMenu} setIsCompactSideMenu={setIsCompactSideMenu} />
       </div>
       <div
         style={{ ...contentStyle }}

@@ -1,6 +1,6 @@
 import { useDrag } from 'react-dnd'
 
-const DraggableComponent = ({ component, closeSidebar }) => {
+const DraggableComponent = ({ component }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: component.type,
     item: component,
@@ -15,7 +15,6 @@ const DraggableComponent = ({ component, closeSidebar }) => {
   }))
 
   const style = {
-    backgroundColor: 'white',
     cursor: 'move',
   }
   const opacity = isDragging ? 0.4 : 1
@@ -24,7 +23,6 @@ const DraggableComponent = ({ component, closeSidebar }) => {
     <div
       ref={drag}
       style={{ ...style, opacity }}
-      onDragStart={closeSidebar}
     >
       {component.name}
     </div>
