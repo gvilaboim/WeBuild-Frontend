@@ -39,10 +39,10 @@ const Section = ({ section }) => {
 
   
 
-  const handleSplitSections = async (numberOfSubsectionsClicked) => {
+  const handleSplitSections = async (numberOfSubsectionsClicked , menu) => {
     const subsectionsIncrease =
       numberOfSubsectionsClicked - section.subsections.length
-    const sectionIndex = website.sections.findIndex(
+    const sectionIndex = website.pages[menu].sections.findIndex(
       (sectionToFind) => sectionToFind._id === section._id
     )
 
@@ -81,15 +81,15 @@ const Section = ({ section }) => {
     window.removeEventListener('mouseup', handleMouseUp)
   }
 
-  const handleDeleteSubsection = (id, subsectionId, sectionId) => {
+  const handleDeleteSubsection = (id, subsectionId, sectionId, menu) => {
     //if it is the last subSection it will delete the whole section
     if (section.subsections.length !== 1) {
-      deleteSubsection(id, subsectionId, sectionId).then((updatedWebsite) => {
+      deleteSubsection(id, subsectionId, sectionId, menu).then((updatedWebsite) => {
         setWebsite(updatedWebsite)
       })
     } else {
-      if (website.sections.length > 2) {
-        deleteSection(id, sectionId).then((updatedWebsite) =>
+      if (website.pages[menu].sections.length > 2) {
+        deleteSection(id, sectionId,menu).then((updatedWebsite) =>
         setWebsite(updatedWebsite)
         )
       } else {
@@ -99,8 +99,8 @@ const Section = ({ section }) => {
     }
   }
 
-  const handleAddASection = (id, sectionId) => {
-    addASection(id, sectionId).then((updatedWebsite) =>
+  const handleAddASection = (id, sectionId , menu) => {
+    addASection(id, sectionId, menu).then((updatedWebsite) =>
     setWebsite(updatedWebsite)
     )
   }
@@ -128,7 +128,7 @@ const Section = ({ section }) => {
                 variant={
                   section.subsections.length === 1 ? 'dark' : 'outline-dark'
                 }
-                onClick={() => handleSplitSections(1)}
+                onClick={() => handleSplitSections(1, menu)}
               >
                 1
               </Button>
@@ -136,7 +136,7 @@ const Section = ({ section }) => {
                 variant={
                   section.subsections.length === 2 ? 'dark' : 'outline-dark'
                 }
-                onClick={() => handleSplitSections(2)}
+                onClick={() => handleSplitSections(2, menu)}
               >
                 2
               </Button>
@@ -144,7 +144,7 @@ const Section = ({ section }) => {
                 variant={
                   section.subsections.length === 3 ? 'dark' : 'outline-dark'
                 }
-                onClick={() => handleSplitSections(3)}
+                onClick={() => handleSplitSections(3, menu)}
               >
                 3
               </Button>
@@ -186,7 +186,7 @@ const Section = ({ section }) => {
         <Button
           className='add-section-button'
           variant={'dark'}
-          onClick={() => handleAddASection(id, section._id)}
+          onClick={() => handleAddASection(id, section._id , menu)}
         >
           Add a Section
         </Button>

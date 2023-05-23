@@ -54,20 +54,25 @@ class CanvasStoreService {
     return this.api.put(`/api/websites/${id}`, { siteData })
   }
 
-  removeSubsection = async (websiteId, subsectionId, sectionId) => {
+  removeSubsection = async (websiteId, subsectionId, sectionId, menu) => {
     return this.api.put(`/api/websites/${websiteId}/delete-subsection`, {
       subsectionId,
       sectionId,
+      menu
     })
   }
-  addSection = async (websiteId, sectionId) => {
-    return this.api.put(`/api/websites/${websiteId}/add-section`, {
+  addSection = async (websiteId, sectionId , menu) => {
+    let data = {
       sectionId,
-    })
+    menu
+    }
+    return this.api.put(`/api/websites/${websiteId}/add-section`, {
+      data })
   }
-  removeSection = async (websiteId, sectionId) => {
+  removeSection = async (websiteId, sectionId , menu) => {
     return this.api.put(`/api/websites/${websiteId}/delete-section`, {
       sectionId,
+      menu
     })
   }
 

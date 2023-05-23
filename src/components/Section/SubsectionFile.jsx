@@ -49,15 +49,15 @@ const Subsection = ({
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
   const handleShowDeleteConfirmation = () => {
-    //user tries to delete a subsection
+    // user tries to delete a subsection
     // check if it is the last one
     // and has content and shows a confirmation message
 
     if (
-      website.sections.length === 2 ||
+      website.pages[menu].sections.length === 2 ||
       (subsection.length !== 1 && subsection.components.length === 0)
     ) {
-      handleDeleteSubsection(id, subsection._id, sectionId)
+      handleDeleteSubsection(id, subsection._id, sectionId , menu)
     } else {
       setShowConfirmDelete(true)
     }
@@ -223,7 +223,7 @@ const Subsection = ({
           <Button
             variant='primary'
             onClick={() =>
-              handleDeleteSubsection(id, subsection._id, sectionId)
+              handleDeleteSubsection(id, subsection._id, sectionId , menu)
             }
           >
             Understood

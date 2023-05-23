@@ -29,12 +29,12 @@ const NavBarBS = ({  showSettings, component: { brand, navLinks }, component }) 
       onDoubleClick={toggleSidebar}
       style={{
         ...style,
-        alignItems: `${style.alignItems || ''}`,
-        height: `${style.height || ''}px`,
-        width: `${style.width || ''}%`,
-        background: `no-repeat center/cover url(${style.backgroundImage || ''})`,
-        padding: `${style.padding?.top || ''}% ${style.padding?.right || ''}% ${style.padding?.bottom || ''}% ${style.padding?.left || ''}%`,
-        backgroundColor: style.backgroundColor || ''
+        alignItems: `${style?.alignItems || ''}`,
+        height: `${style?.height || ''}px`,
+        width: `${style?.width || ''}%`,
+        background: `no-repeat center/cover url(${style?.backgroundImage || ''})`,
+        padding: `${style?.padding?.top || ''}% ${style?.padding?.right || ''}% ${style?.padding?.bottom || ''}% ${style?.padding?.left || ''}%`,
+        backgroundColor: style?.backgroundColor || ''
       }}
     >
         <Container >

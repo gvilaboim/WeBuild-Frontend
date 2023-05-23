@@ -76,12 +76,13 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const deleteSubsection = async (websiteId, subsectionId, sectionId) => {
+  const deleteSubsection = async (websiteId, subsectionId, sectionId , menu) => {
     try {
       const response = await canvasStoreService.removeSubsection(
         websiteId,
         subsectionId,
-        sectionId
+        sectionId,
+        menu
       )
       return response.data
     } catch (error) {
@@ -89,11 +90,12 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const deleteSection = async (websiteId, sectionId) => {
+  const deleteSection = async (websiteId, sectionId, menu) => {
     try {
       const response = await canvasStoreService.removeSection(
         websiteId,
-        sectionId
+        sectionId,
+        menu
       )
       return response.data
     } catch (error) {
@@ -101,9 +103,9 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const addASection = async (websiteId, sectionId) => {
+  const addASection = async (websiteId, sectionId , menu) => {
     try {
-      const response = await canvasStoreService.addSection(websiteId, sectionId)
+      const response = await canvasStoreService.addSection(websiteId, sectionId , menu)
       return response.data
     } catch (error) {
       console.log(error)
