@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react'
 import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap'
+import { Link, Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const WebsiteDetails = ({ website }) => {
   const createdAt = new Date(website.createdAt)
   const updatedAt = new Date(website.updatedAt)
+  const navigate = useNavigate();
 
+  useEffect(() => {
+   console.log(website.user.name)
+  }, [website])
+  
   return (
     <>
       {website && (

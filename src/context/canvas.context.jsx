@@ -18,6 +18,9 @@ function CanvasProviderWrapper(props) {
 
   const [website, setWebsite] = useState({})
   const [publicView, setPublicView] = useState(false)
+  const [menu, setMenu] = useState(0)
+
+
 
   const [userInfo, setUserInfo] = useState({})
   const [userPlan, setUserPlan] = useState({})
@@ -30,6 +33,11 @@ function CanvasProviderWrapper(props) {
   const [selectedComponent, setSelectedComponent] = useState({})
   const [showSettingsSidebar, setShowSettingsSidebar] = useState(false)
 
+
+  const ChangeMenu = async (name) => {
+    setMenu(name)
+    console.log(menu)
+  }
   //populates the sidebar
   const fetchStoreItems = () => {
     canvasStoreService
@@ -68,12 +76,13 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const deleteSubsection = async (websiteId, subsectionId, sectionId) => {
+  const deleteSubsection = async (websiteId, subsectionId, sectionId , menu) => {
     try {
       const response = await canvasStoreService.removeSubsection(
         websiteId,
         subsectionId,
-        sectionId
+        sectionId,
+        menu
       )
       return response.data
     } catch (error) {
@@ -81,11 +90,12 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const deleteSection = async (websiteId, sectionId) => {
+  const deleteSection = async (websiteId, sectionId, menu) => {
     try {
       const response = await canvasStoreService.removeSection(
         websiteId,
-        sectionId
+        sectionId,
+        menu
       )
       return response.data
     } catch (error) {
@@ -93,9 +103,9 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const addASection = async (websiteId, sectionId) => {
+  const addASection = async (websiteId, sectionId , menu) => {
     try {
-      const response = await canvasStoreService.addSection(websiteId, sectionId)
+      const response = await canvasStoreService.addSection(websiteId, sectionId , menu)
       return response.data
     } catch (error) {
       console.log(error)
@@ -221,6 +231,9 @@ function CanvasProviderWrapper(props) {
 
         UpdateStatistics,
         getStatistics,
+        setMenu,
+        menu,
+        ChangeMenu
       }}
     >
       {props.children}

@@ -22,6 +22,7 @@ function Dashboard() {
     communityWebsites,
     fetchCommunityWebsites,
     getStatistics,
+    userInfo,
     clickedWebsite,
     setClickedWebsite,
   } = useContext(CanvasContext)
@@ -41,6 +42,8 @@ function Dashboard() {
   const viewStatistics = async (websiteId) => {
     setId(websiteId)
     setSkip(true)
+    setClickedWebsite(userWebsites.find((website) => website._id === id))
+    console.log(clickedWebsite)
     setClickedWebsite(userWebsites.find((website) => website._id === websiteId))
   }
 

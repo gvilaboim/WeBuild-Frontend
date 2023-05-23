@@ -23,6 +23,8 @@ import { CanvasContext } from './context/canvas.context'
 import SupportPage from './pages/SupportPage/SupportPage'
 
 function App() {
+
+  const { website } = useContext(CanvasContext)
   const location = useLocation()
 
   const { showMenu, setShowMenu } = useContext(CanvasContext)

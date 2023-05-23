@@ -29,11 +29,14 @@ const Subsection = ({
     setShowSettingsSidebar,
     setSelectedComponent,
     publicView,
+    setMenu,
+    menu
   } = useContext(CanvasContext)
 
   const { id } = useParams()
 
   const handleShowSettingsSidebar = (componentToEdit) => {
+    console.log("teste ma g")
     if (!publicView) {
       setSelectedComponent(componentToEdit)
       setShowSettingsSidebar(true)
@@ -46,15 +49,15 @@ const Subsection = ({
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
   const handleShowDeleteConfirmation = () => {
-    //user tries to delete a subsection
+    // user tries to delete a subsection
     // check if it is the last one
     // and has content and shows a confirmation message
 
     if (
-      website.sections.length === 2 ||
+      website.pages[menu].sections.length === 2 ||
       (subsection.length !== 1 && subsection.components.length === 0)
     ) {
-      handleDeleteSubsection(id, subsection._id, sectionId)
+      handleDeleteSubsection(id, subsection._id, sectionId , menu)
     } else {
       setShowConfirmDelete(true)
     }
@@ -63,19 +66,23 @@ const Subsection = ({
 
   const handleDrop = async (draggedComponent) => {
     // Find the section and subsection to modify
-    const sectionIndex = website.sections.findIndex(
+  
+  
+
+    const sectionIndex = website.pages[menu].sections.findIndex(
       (sectionFromDb) => sectionFromDb._id === sectionId
     )
 
-    const subsectionIndex = website.sections[
+    const subsectionIndex = website.pages[menu].sections[
       sectionIndex
     ].subsections.findIndex(
       (subsectionFromDb) => subsectionFromDb._id === subsection._id
     )
 
-    //removing the id from the dropped component
+    //removing the id from the dropped component // Page 1 | Page 2 | Page 3 
     const { _id, ...droppedComponent } = draggedComponent
     saveChanges(id, {
+      menu:menu,
       droppedComponent,
       sectionIndex,
       subsectionIndex,
@@ -216,7 +223,7 @@ const Subsection = ({
           <Button
             variant='primary'
             onClick={() =>
-              handleDeleteSubsection(id, subsection._id, sectionId)
+              handleDeleteSubsection(id, subsection._id, sectionId , menu)
             }
           >
             Understood
