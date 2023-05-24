@@ -1,11 +1,4 @@
-import {
-  Accordion,
-  Button,
-  Card,
-  CloseButton,
-  Container,
-  ListGroup,
-} from 'react-bootstrap'
+import { Accordion, Button, Card, Container, ListGroup } from 'react-bootstrap'
 import { useAccordionButton } from 'react-bootstrap/AccordionButton'
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from 'react-icons/fa'
 
@@ -68,23 +61,25 @@ const SideMenu = ({ setIsCompactSideMenu, isCompactSideMenu }) => {
     <>
       <Container>
         {isCompactSideMenu ? (
-          <Button
-            variant='dark'
+          <div
             onClick={handleExpandMenuClick}
-            className='mt-5'
+            className='compact-menu'
           >
-            <FaAngleDoubleRight color="#f8f9fa" size={40} />
-          </Button>
+            <FaAngleDoubleRight
+              className='dark mt-5'
+              onClick={handleExpandMenuClick}
+              color='#212529ae'
+              size={window.innerWidth > 874 ? '2vw' : '4vw'}
+            />
+          </div>
         ) : (
           <>
-            <Button
-              variant='dark'
+            <FaAngleDoubleLeft
+              className='dark mt-5'
               onClick={handleExpandMenuClick}
-              className='mt-5'
-            >
-              <FaAngleDoubleLeft size={40} />
-            </Button>
-
+              color='#f9fafbae'
+              size={'2vw'}
+            />
             {/* User login info/logout  */}
             <Card className='bg-dark text-white my-5 border-0'>
               <Card.Header>
@@ -141,7 +136,6 @@ const SideMenu = ({ setIsCompactSideMenu, isCompactSideMenu }) => {
                 )}
               </Card.Body>
             </Card>
-
             {isLoggedIn && (
               <Accordion>
                 {/* Dashboard */}
