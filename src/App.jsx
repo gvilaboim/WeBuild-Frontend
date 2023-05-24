@@ -50,11 +50,24 @@ function App() {
   }, [location.pathname])
 
   const sideMenuStyle = {
-    flexBasis: !showMenu ? '0' : isCompactSideMenu ? '5%' : '20%',
+    backgroundColor: isCompactSideMenu ?  '#f8f9fa' :  '#212529',
+    flexBasis: !showMenu
+      ? '0'
+      : isCompactSideMenu
+      ? '5%'
+      : window.innerWidth > 874
+      ? '25%'
+      : '100%',
   }
 
   const contentStyle = {
-    flexBasis: !showMenu ? '100%' : isCompactSideMenu ? '95%' : '80%',
+    flexBasis: !showMenu
+      ? '100%'
+      : isCompactSideMenu
+      ? '95%'
+      : window.innerWidth > 874
+      ? '75%'
+      : '0',
   }
 
   return (
@@ -63,7 +76,10 @@ function App() {
         style={{ ...sideMenuStyle }}
         className='side-menu'
       >
-        <SideMenu isCompactSideMenu={isCompactSideMenu} setIsCompactSideMenu={setIsCompactSideMenu} />
+        <SideMenu
+          isCompactSideMenu={isCompactSideMenu}
+          setIsCompactSideMenu={setIsCompactSideMenu}
+        />
       </div>
       <div
         style={{ ...contentStyle }}

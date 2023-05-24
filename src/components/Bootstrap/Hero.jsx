@@ -235,7 +235,7 @@ const Hero = ({ component, showSettings }) => {
             ) : (
               <p
                 onDoubleClick={(e) => handleDoubleClick(e)}
-                className='lead'
+                className='lead pb-3'
                 style={{ color: componentData.subtitle.style.color }}
               >
                 {componentData.subtitle.text}
@@ -257,7 +257,7 @@ const Hero = ({ component, showSettings }) => {
                     />
                   </Form.Group>
                   <Form.Group className='mb-3'>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <div  style={{ display: 'flex', alignItems: 'center' }}>
                       <Form.Label>Button Color:</Form.Label>
                       <Form.Control
                         name='primaryButtonColor'
