@@ -52,7 +52,6 @@ function CanvasProviderWrapper(props) {
   // works for public or private views
   const fetchOneWebsite = async (websiteId) => {
     const response = await canvasStoreService.getOneWebsite(websiteId)
-
     setWebsite(response.data)
   }
 

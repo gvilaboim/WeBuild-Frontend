@@ -29,17 +29,17 @@ const Component = ({ component: { style, items }, showSettings }) => {
         className='component'
         onDoubleClick={showSettings}
         style={{
-          ...style,
+          ...(style || {}), // make sure style is defined
           display: itemLoaded ? 'flex' : 'none',
-          height: `${style.heightPx}px`,
-          width: `${style.widthPercentage}%`,
-          // padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-          background: `no-repeat center/cover url(${style.backgroundImage})`,
+          height: `${style?.heightPx ?? 0}px`,
+          width: `${style?.widthPercentage ?? 100}%`,
+          // padding: `${style?.padding?.top}% ${style?.padding?.right}% ${style?.padding?.bottom}% ${style?.padding?.left}%`,
+          background: `no-repeat center/cover url(${style?.backgroundImage ?? ''})`,
           backgroundSize: 'cover',
-          backgroundColor: `rgba(${style.backgroundColor.r}, ${style.backgroundColor.g},${style.backgroundColor.b},${style.backgroundColor.a})`,
+          backgroundColor: `rgba(${style?.backgroundColor?.r ?? 0}, ${style?.backgroundColor?.g ?? 0},${style?.backgroundColor?.b ?? 0},${style?.backgroundColor?.a ?? 1})`,
         }}
       >
-        {items.map((item) => {
+        {items && items.map((item) => {
           return (
             <div style={{ ...item.style }}>
               <div style={{ marginBottom: '30px' }}>{item.title}</div>
