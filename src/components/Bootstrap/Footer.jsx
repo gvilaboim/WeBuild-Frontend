@@ -16,11 +16,17 @@ const Footer = ({ component, showSettings }) => {
   const [hasChanges, setHasChanges] = useState(false);
   const [clickedOutside, setClickedOutside] = useState(false);
 
-  const [componentData, setComponentData] = useState({
+  const [componentData, setComponentData] = useState();
+
+useEffect(() => {
+  setComponentData({
     header1: component?.items[0]?.content?.headers[0] || '',
     header2: component?.items[0]?.content?.headers[1] || '',
     header3: component?.items[0]?.content?.headers[2]|| '',
-  });
+  })
+  
+}, [component])
+
 
   const handleClickOutside = async (event) => {
     if (!publicView) {
