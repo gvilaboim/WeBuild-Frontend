@@ -107,7 +107,6 @@ const Section = ({ section }) => {
   
   return (
     <div
-      ref={sectionRef}
       className='section'
       onMouseEnter={showButtonOptions}
       onMouseLeave={hideButtonOptions}

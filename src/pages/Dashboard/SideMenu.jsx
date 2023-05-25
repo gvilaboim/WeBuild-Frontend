@@ -36,9 +36,6 @@ const SideMenu = () => {
     fetchUserInfo,
     userPlan,
     fetchStoreItems,
-    planFeature,
-    website,
-    publicView,
   } = useContext(CanvasContext)
 
   const location = useLocation()
