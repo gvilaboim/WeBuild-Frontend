@@ -16,7 +16,11 @@ const Footer = ({ component, showSettings }) => {
   const [hasChanges, setHasChanges] = useState(false);
   const [clickedOutside, setClickedOutside] = useState(false);
 
-  const [componentData, setComponentData] = useState();
+  const [componentData, setComponentData] = useState({
+    header1:{},
+    header2:{},
+    header3:{}
+  });
 
 useEffect(() => {
   setComponentData({
