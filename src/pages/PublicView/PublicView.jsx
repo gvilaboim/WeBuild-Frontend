@@ -18,8 +18,6 @@ const PublicView = () => {
   useEffect(() => {
     fetchOneWebsite(id)
     setPublicView(true)
-
-    console.log(website)
   }, [])
 
   useEffect(() => {

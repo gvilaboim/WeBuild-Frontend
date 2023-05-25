@@ -24,6 +24,7 @@ function CanvasProviderWrapper(props) {
 
   const [userInfo, setUserInfo] = useState({})
   const [userPlan, setUserPlan] = useState({})
+  const [planFeature, setPlanFeature] = useState(false)
 
   //TBD
   const [showHints, setShowHints] = useState(true)
@@ -132,6 +133,14 @@ function CanvasProviderWrapper(props) {
       .then((response) => {
         setUserInfo(response.data)
         setUserPlan(response.data.plan)
+
+        if(response.data.plan.name ==="Profissional Plan" || response.data.plan.name === "MySelf Plan")
+        {
+          setPlanFeature(true)
+
+        }
+
+
       })
       .catch((err) => console.log(err))
   }
@@ -232,7 +241,8 @@ function CanvasProviderWrapper(props) {
         getStatistics,
         setMenu,
         menu,
-        ChangeMenu
+        ChangeMenu,
+        planFeature
       }}
     >
       {props.children}

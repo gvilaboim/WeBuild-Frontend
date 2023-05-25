@@ -26,7 +26,7 @@ function App() {
   const { website } = useContext(CanvasContext)
   const location = useLocation()
 
-  const { showMenu, setShowMenu } = useContext(CanvasContext)
+  const { showMenu, setShowMenu ,publicView } = useContext(CanvasContext)
 
   const [isCompactSideMenu, setIsCompactSideMenu] = useState(false)
 
@@ -50,28 +50,30 @@ function App() {
   }, [location.pathname])
 
   const sideMenuStyle = {
-    backgroundColor: isCompactSideMenu ?  '#f8f9fa' :  '#212529',
+    backgroundColor: isCompactSideMenu ? '#f8f9fa' : '#212529',
     flexBasis: !showMenu
       ? '0'
       : isCompactSideMenu
-      ? '5%'
-      : window.innerWidth > 874
-      ? '25%'
-      : '100%',
+        ? '5%'
+        : window.innerWidth > 874
+          ? '25%'
+          : '100%',
   }
 
   const contentStyle = {
     flexBasis: !showMenu
       ? '100%'
       : isCompactSideMenu
-      ? '95%'
-      : window.innerWidth > 874
-      ? '75%'
-      : '0',
+        ? '95%'
+        : window.innerWidth > 874
+          ? '75%'
+          : '0',
   }
 
   return (
     <div className='App'>
+
+{publicView ? ( 
       <div
         style={{ ...sideMenuStyle }}
         className='side-menu'
@@ -81,8 +83,10 @@ function App() {
           setIsCompactSideMenu={setIsCompactSideMenu}
         />
       </div>
+      ) : ( <> </> )}
+
       <div
-        style={{ ...contentStyle }}
+        style={{ ...contentStyle ,  border: 'none' }}
         className='content'
       >
         <Routes>

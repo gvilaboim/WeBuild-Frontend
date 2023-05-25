@@ -4,13 +4,12 @@ import { CanvasContext } from '../../context/canvas.context';
 import { useParams } from 'react-router-dom';
 
 const Footer = ({ component, showSettings }) => {
-  const { saveChanges, setWebsite, publicView, setShowSettingsSidebar , setSelectedComponent } =
+  const { saveChanges, setWebsite, publicView, setShowSettingsSidebar , setSelectedComponent , website } =
     useContext(CanvasContext);
   const year = new Date().getFullYear();
 
 
-
-  const { id } = useParams();
+  const { id } = website._id;
   const wrapperRef = useRef(null);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -18,9 +17,9 @@ const Footer = ({ component, showSettings }) => {
   const [clickedOutside, setClickedOutside] = useState(false);
 
   const [componentData, setComponentData] = useState({
-    header1: component.items[0].content.headers[0],
-    header2: component.items[0].content.headers[1],
-    header3: component.items[0].content.headers[2],
+    header1: component?.items[0]?.content?.headers[0],
+    header2: component?.items[0]?.content?.headers[1],
+    header3: component?.items[0]?.content?.headers[2],
   });
 
   const handleClickOutside = async (event) => {
