@@ -9,8 +9,9 @@ import { Button } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context'
 
-const Canvas = ({  setMenu , page, website }) => {
-  const { publishWebsite, publicView, setWebsite ,menu} = useContext(CanvasContext)
+const Canvas = ({ setMenu, page, website }) => {
+  const { publishWebsite, publicView, setWebsite, menu } =
+    useContext(CanvasContext)
   const { user } = useContext(AuthContext)
   const { id } = useParams()
 
@@ -22,12 +23,9 @@ const Canvas = ({  setMenu , page, website }) => {
     )
   }
 
-
-  
-
   const style = publicView
-  ? { margin: '0%' }
-  : { border: '1px solid black', margin: '6% 23%' }
+    ? { margin: '0%' }
+    : { border: '1px solid black', margin: '6% 23%' }
 
   return (
     <div
@@ -39,7 +37,12 @@ const Canvas = ({  setMenu , page, website }) => {
       {!publicView && website && (
         <div className='p-2'>
           {website.isPublished ? (
-            <Button variant='warning'>Published</Button>
+            <Button
+              onClick={() => handlePublishWebsite(id)}
+              variant='warning'
+            >
+              Published
+            </Button>
           ) : (
             <Button
               onClick={() => handlePublishWebsite(id)}
@@ -59,23 +62,28 @@ const Canvas = ({  setMenu , page, website }) => {
         </div>
       )}
 
-
-{website.pages && (
-  <>
-    <NavBarDropZone setMenu={setMenu}/>
-    <div className='website-body' style={{padding: "0px"}}>
-      {website.pages[menu].sections && website.pages[menu].sections.length > 0 ? (
-        website.pages[menu].sections.map((section,index) => (
-          <Section key={index} section={section} />
-        ))
-      ) : (
-        <p>No sections found.</p>
+      {website.pages && (
+        <>
+          <NavBarDropZone setMenu={setMenu} />
+          <div
+            className='website-body'
+            style={{ padding: '0px' }}
+          >
+            {website.pages[menu].sections &&
+            website.pages[menu].sections.length > 0 ? (
+              website.pages[menu].sections.map((section, index) => (
+                <Section
+                  key={index}
+                  section={section}
+                />
+              ))
+            ) : (
+              <p>No sections found.</p>
+            )}
+          </div>
+          <FooterDropZone />
+        </>
       )}
-    </div>
-    <FooterDropZone />
-  </>
-)}
-
     </div>
   )
 }

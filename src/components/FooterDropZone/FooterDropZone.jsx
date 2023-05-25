@@ -7,8 +7,13 @@ import Footer from '../Bootstrap/Footer'
 import './FooterDropZone.css'
 
 const FooterDropZone = () => {
-  const { website, setWebsite, saveChanges, publicView , setShowSettingsSidebar} =
-    useContext(CanvasContext)
+  const {
+    website,
+    setWebsite,
+    saveChanges,
+    publicView,
+    setShowSettingsSidebar,
+  } = useContext(CanvasContext)
 
   const { id } = useParams()
 
@@ -55,13 +60,16 @@ const FooterDropZone = () => {
     >
       {website &&
         website.footer &&
-        website.footer.map((component) => (
-          <Footer
-            key={component._id}
-            component={component}
-            showSettings={setShowSettingsSidebar}
-          />
-        ))}
+        website.footer.map((component) => {
+          console.log(component)
+          return (
+            <Footer
+              key={component._id}
+              component={component}
+              showSettings={setShowSettingsSidebar}
+            />
+          )
+        })}
 
       {website &&
         website.footer &&

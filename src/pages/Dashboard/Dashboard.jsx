@@ -15,6 +15,8 @@ import AllPlans from './AllPlans'
 import CreateForm from '../Create/CreateForm'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { GrView } from 'react-icons/gr'
+
 function Dashboard() {
   const {
     userWebsites,
@@ -150,12 +152,13 @@ function Dashboard() {
                                     )}
                                 </td>
                                 <td>
-                                  <Button
-                                    variant='secondary'
+                                  <a
                                     href={`/webuild/${website.user.name}/${website.name}/${website._id}`}
+                                    target='_blank'
+                                    rel='noopener noreferrer'
                                   >
-                                    View
-                                  </Button>
+                                    <GrView className='view-button' />
+                                  </a>
                                 </td>
                                 <td>
                                   <Button
@@ -232,7 +235,7 @@ function Dashboard() {
                     <th>Category</th>
                     <th>Created at</th>
                     <th>Last updated</th>
-                    <th></th>
+                    <th>Views</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -270,21 +273,15 @@ function Dashboard() {
                                 updatedAt.toLocaleString().indexOf(',')
                               )}
                           </td>
+                          <td>{website.visitors.length}</td>
                           <td>
-                            <Button
-                              variant='secondary'
+                            <a
                               href={`/webuild/${website.user.name}/${website.name}/${website._id}`}
+                              target='_blank'
+                              rel='noopener noreferrer'
                             >
-                              View
-                            </Button>
-                          </td>
-                          <td>
-                            <Button
-                              variant='dark'
-                              href={`/websites/edit/${website._id}`}
-                            >
-                              Edit
-                            </Button>
+                              <GrView className='view-button' />
+                            </a>
                           </td>
                         </tr>
                       )

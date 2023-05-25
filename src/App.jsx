@@ -21,54 +21,48 @@ import SideMenu from './pages/Dashboard/SideMenu'
 import { useContext, useEffect, useState } from 'react'
 import { CanvasContext } from './context/canvas.context'
 import SupportPage from './pages/SupportPage/SupportPage'
+import { AuthContext } from './context/auth.context'
 
 function App() {
-  const { website } = useContext(CanvasContext)
   const location = useLocation()
-
-  const { showMenu, setShowMenu ,publicView } = useContext(CanvasContext)
+  const { website, showMenu, setShowMenu, publicView, premiumPlan } =
+    useContext(CanvasContext)
+  const { user } = useContext(AuthContext)
 
   const [isCompactSideMenu, setIsCompactSideMenu] = useState(false)
 
   useEffect(() => {
+    console.log(premiumPlan, user)
     if (
       location.pathname === '/' ||
       location.pathname === '/login' ||
-      location.pathname === '/signup'
+      location.pathname === '/signup' ||
+      location.pathname.startsWith('/webuild')
     ) {
       setShowMenu(false)
     } else {
       setShowMenu(true)
     }
 
-    // Check if the current route is the public view
-    if (location.pathname.startsWith('/webuild')) {
-      setIsCompactSideMenu(true)
-    } else {
-      setIsCompactSideMenu(false)
+    if (
+      website &&
+      website.user &&
+      website.user.plan &&
+      website.user.plan.name !== 'Free Plan'
+    ) {
+      setShowMenu(false)
     }
   }, [location.pathname])
 
   const sideMenuStyle = {
     backgroundColor: isCompactSideMenu ? '#f8f9fa' : '#212529',
-    flexBasis: !showMenu
-      ? '0'
-      : isCompactSideMenu
-        ? '5%'
-        : window.innerWidth > 874
-          ? '25%'
-          : '100%',
+    flexBasis: !showMenu ? '0' : '25%',
   }
 
   const contentStyle = {
-    flexBasis: !showMenu
-      ? '100%'
-      : isCompactSideMenu
-        ? '95%'
-        : window.innerWidth > 874
-          ? '75%'
-          : '0',
+    flexBasis: !showMenu ? '100%' : '75%',
   }
+
   /* 
   
   
@@ -86,22 +80,20 @@ function App() {
   
   
   
-  */ 
+  */
 
   return (
     <div className='App'>
-    <div
+      <div
         style={{ ...sideMenuStyle }}
         className='side-menu'
       >
         <SideMenu
-          isCompactSideMenu={isCompactSideMenu}
-          setIsCompactSideMenu={setIsCompactSideMenu}
         />
-      </div> 
+      </div>
 
       <div
-        style={{ ...contentStyle ,  border: 'none' }}
+        style={{ ...contentStyle, border: 'none' }}
         className='content'
       >
         <Routes>
