@@ -9,7 +9,7 @@ const Footer = ({ component, showSettings }) => {
   const year = new Date().getFullYear();
 
 
-  const { id } = website._id;
+  const { id } = website?._id;
   const wrapperRef = useRef(null);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -117,7 +117,7 @@ const Footer = ({ component, showSettings }) => {
     console.log(component)
   }
 
-  const style = component.style;
+  const style = component?.style;
 
   useEffect(() => {
    console.log("style" , style)
@@ -150,9 +150,9 @@ const Footer = ({ component, showSettings }) => {
                   <Form.Group className="mb-3">
                     <Form.Control
                       name="header0.links[0].text"
-                      value={componentData.header1?.links[0]?.text}
+                      value={componentData.header1?.links[0]?.text || ''}
                       onChange={(e) => handleChange(e, 'header0.links[0].text')}
-                      style={{ color: componentData.header1?.links[0]?.color }}
+                      style={{ color: componentData.header1?.links[0]?.color || '' }}
                       className="display-5 fw-bold text-body-emphasis lh-1 mb-3"
                     />
                   </Form.Group>
@@ -168,7 +168,7 @@ const Footer = ({ component, showSettings }) => {
                       <Form.Control
                         name="color0.0"
                         type="color"
-                        value={componentData.header1?.links[0]?.color}
+                        value={componentData.header1?.links[0]?.color || ''}
                         onChange={(e) => handleChange(e, 'color0.0')}
                       />
                     </div>
@@ -176,10 +176,10 @@ const Footer = ({ component, showSettings }) => {
                 </>
               ) : (
                 <Nav.Link
-                  href={componentData.header1?.links[0]?.href}
+                  href={componentData.header1?.links[0]?.href || ''}
                   className="nav-link p-0 text-body-secondary"
                   onDoubleClick={handleDoubleClick}
-                  style={{ color: componentData.header1?.links[0]?.color }}
+                  style={{ color: componentData.header1?.links[0]?.color  || ''}}
                 >
                   {componentData.header1?.links[0]?.text}
                 </Nav.Link>
@@ -187,124 +187,124 @@ const Footer = ({ component, showSettings }) => {
             </Nav.Item>
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header1?.links[1]?.href}
+                href={componentData.header1?.links[1]?.href || ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header1?.links[1]?.text}
+                {componentData.header1?.links[1]?.text || ''}
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header1?.links[2]?.href}
+                href={componentData.header1?.links[2]?.href || ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header1?.links[2]?.text}
+                {componentData.header1?.links[2]?.text|| '' }
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header1?.links[3]?.href}
+                href={componentData.header1?.links[3]?.href|| ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header1?.links[3].text}
+                {componentData.header1?.links[3].text|| ''}
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header1?.links[4].href}
+                href={componentData.header1?.links[4].href|| ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header1?.links[4].text}
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
-        </Col>
-        <Col mb={3}>
-          <h5>{componentData.header2?.header.text}</h5>
-          <Nav className="flex-column">
-            <Nav.Item className="mb-2">
-              <Nav.Link
-                href={componentData.header2?.links[0].href}
-                className="nav-link p-0 text-body-secondary"
-              >
-                {componentData.header2?.links[0].text}
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className="mb-2">
-              <Nav.Link
-                href={componentData.header2?.links[1].href}
-                className="nav-link p-0 text-body-secondary"
-              >
-                {componentData.header2?.links[1].text}
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className="mb-2">
-              <Nav.Link
-                href={componentData.header2?.links[2].href}
-                className="nav-link p-0 text-body-secondary"
-              >
-                {componentData.header2?.links[2].text}
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className="mb-2">
-              <Nav.Link
-                href={componentData.header2?.links[3].href}
-                className="nav-link p-0 text-body-secondary"
-              >
-                {componentData.header2?.links[3].text}
-              </Nav.Link>
-            </Nav.Item>
-            <Nav.Item className="mb-2">
-              <Nav.Link
-                href={componentData.header2?.links[4].href}
-                className="nav-link p-0 text-body-secondary"
-              >
-                {componentData.header2?.links[4].text}
+                {componentData.header1?.links[4].text|| ''}
               </Nav.Link>
             </Nav.Item>
           </Nav>
         </Col>
         <Col mb={3}>
-          <h5>{componentData.header3?.header?.text}</h5>
+          <h5>{componentData.header2?.header.text|| ''}</h5>
           <Nav className="flex-column">
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header3?.links[0]?.href}
+                href={componentData.header2?.links[0].href|| ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header3?.links[0]?.text}
+                {componentData.header2?.links[0].text || ''}
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header3?.links[1]?.href}
+                href={componentData.header2?.links[1].href|| ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header3?.links[1]?.text}
+                {componentData.header2?.links[1].text|| ''}
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header3?.links[2]?.href}
+                href={componentData.header2?.links[2].href|| ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header3?.links[2]?.text}
+                {componentData.header2?.links[2].text|| ''}
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header3?.links[3]?.href}
+                href={componentData.header2?.links[3].href|| ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header3?.links[3]?.text}
+                {componentData.header2?.links[3].text|| ''}
               </Nav.Link>
             </Nav.Item>
             <Nav.Item className="mb-2">
               <Nav.Link
-                href={componentData.header3?.links[4]?.href}
+                href={componentData.header2?.links[4].href|| ''}
                 className="nav-link p-0 text-body-secondary"
               >
-                {componentData.header3?.links[4]?.text}
+                {componentData.header2?.links[4].text|| ''}
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Col>
+        <Col mb={3}>
+          <h5>{componentData.header3?.header?.text|| ''}</h5>
+          <Nav className="flex-column">
+            <Nav.Item className="mb-2">
+              <Nav.Link
+                href={componentData.header3?.links[0]?.href|| ''}
+                className="nav-link p-0 text-body-secondary"
+              >
+                {componentData.header3?.links[0]?.text|| ''}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="mb-2">
+              <Nav.Link
+                href={componentData.header3?.links[1]?.href|| ''}
+                className="nav-link p-0 text-body-secondary"
+              >
+                {componentData.header3?.links[1]?.text|| ''}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="mb-2">
+              <Nav.Link
+                href={componentData.header3?.links[2]?.href|| ''}
+                className="nav-link p-0 text-body-secondary"
+              >
+                {componentData.header3?.links[2]?.text|| ''}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="mb-2">
+              <Nav.Link
+                href={componentData.header3?.links[3]?.href|| ''}
+                className="nav-link p-0 text-body-secondary"
+              >
+                {componentData.header3?.links[3]?.text|| ''}
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="mb-2">
+              <Nav.Link
+                href={componentData.header3?.links[4]?.href|| ''}
+                className="nav-link p-0 text-body-secondary"
+              >
+                {componentData.header3?.links[4]?.text|| ''}
               </Nav.Link>
             </Nav.Item>
           </Nav>

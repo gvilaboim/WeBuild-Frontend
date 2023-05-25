@@ -33,8 +33,12 @@ const Subsection = ({
     menu
   } = useContext(CanvasContext)
 
+
   const { id } = useParams()
 
+  if (!subsection) {
+    return null; // Return null or handle the empty state accordingly
+  }
   const handleShowSettingsSidebar = (componentToEdit) => {
     console.log("teste ma g")
     if (!publicView) {
