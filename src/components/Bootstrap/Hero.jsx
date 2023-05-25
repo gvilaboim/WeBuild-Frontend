@@ -153,9 +153,9 @@ const Hero = ({ component, showSettings }) => {
     >
       <Container
         fluid='xxl'
-        className='px-4 py-5'
+        className='px-5 py-1'
       >
-        <Row className='flex-lg-row-reverse align-items-center g-5 py-5'>
+        <Row className='flex-lg-row-reverse align-items-center g-5 py-1'>
           <Col
             lg={6}
             className='text-center'

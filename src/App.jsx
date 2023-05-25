@@ -69,12 +69,12 @@ function App() {
           ? '75%'
           : '0',
   }
-
-  return (
-    <div className='App'>
-
-{publicView ? ( 
-      <div
+  /* 
+  
+  
+  {publicView ? ( 
+   <></>
+      ) : (      <div
         style={{ ...sideMenuStyle }}
         className='side-menu'
       >
@@ -82,8 +82,23 @@ function App() {
           isCompactSideMenu={isCompactSideMenu}
           setIsCompactSideMenu={setIsCompactSideMenu}
         />
-      </div>
-      ) : ( <> </> )}
+      </div> )}
+  
+  
+  
+  */ 
+
+  return (
+    <div className='App'>
+    <div
+        style={{ ...sideMenuStyle }}
+        className='side-menu'
+      >
+        <SideMenu
+          isCompactSideMenu={isCompactSideMenu}
+          setIsCompactSideMenu={setIsCompactSideMenu}
+        />
+      </div> 
 
       <div
         style={{ ...contentStyle ,  border: 'none' }}

@@ -118,6 +118,7 @@ const Subsection = ({
   const style = publicView ? {} : { border: '1px dashed black' }
   return (
     <div
+      key={sectionId}
       ref={drop}
       style={{ ...style, backgroundColor }}
       className='sub-section'

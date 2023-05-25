@@ -26,8 +26,8 @@ const Canvas = ({  setMenu , page, website }) => {
   
 
   const style = publicView
-    ? { margin: '0%' }
-    : { border: '1px solid black', margin: '6% 23%' }
+  ? { margin: '0%' }
+  : { border: '1px solid black', margin: '6% 23%' }
 
   return (
     <div
@@ -63,7 +63,7 @@ const Canvas = ({  setMenu , page, website }) => {
 {website.pages && (
   <>
     <NavBarDropZone setMenu={setMenu}/>
-    <div className='website-body'>
+    <div className='website-body' style={{padding: "0px"}}>
       {website.pages[menu].sections && website.pages[menu].sections.length > 0 ? (
         website.pages[menu].sections.map((section) => (
           <Section key={section._id} section={section} />
