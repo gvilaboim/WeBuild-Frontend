@@ -17,9 +17,9 @@ const Footer = ({ component, showSettings }) => {
   const [clickedOutside, setClickedOutside] = useState(false);
 
   const [componentData, setComponentData] = useState({
-    header1: component?.items[0]?.content?.headers[0],
-    header2: component?.items[0]?.content?.headers[1],
-    header3: component?.items[0]?.content?.headers[2],
+    header1: component?.items[0]?.content?.headers[0] || '',
+    header2: component?.items[0]?.content?.headers[1] || '',
+    header3: component?.items[0]?.content?.headers[2]|| '',
   });
 
   const handleClickOutside = async (event) => {
