@@ -11,7 +11,6 @@ const NavBarBS = ({  showSettings, component: { brand, navLinks }, component }) 
   const [isEditing, setIsEditing] = useState(false)
 
   const toggleSidebar = () => {
-    console.log("ALGUMA CENA BOY")
 
     if (!isEditing) {
       setSelectedComponent(component)

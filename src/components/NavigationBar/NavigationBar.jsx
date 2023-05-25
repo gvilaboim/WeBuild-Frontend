@@ -7,10 +7,13 @@ import { AuthContext } from '../../context/auth.context'
 import Button from 'react-bootstrap/Button'
 import { CanvasContext } from '../../context/canvas.context'
 import './NavigationBar.css'
+import { Col, Row } from 'react-bootstrap'
 const NavigationBar = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
-  const { fetchUserInfo, userPlan, publicView } = useContext(CanvasContext)
-  const [showNavbar, setShowNavbar] = useState(true)
+  const { fetchUserInfo, userPlan, publicView, website } =
+    useContext(CanvasContext)
+
+  const [isOwner, setIsOwner] = useState(false)
 
   useEffect(() => {
     if (user) {
@@ -18,67 +21,30 @@ const NavigationBar = () => {
     }
   }, [user])
 
-  const handleNavbarVisibility = () => {
-    if (publicView) {
-      setShowNavbar((previousValue) => !previousValue)
-    }
-    
-  }
+  useEffect(() => {
+    setIsOwner(website.user._id === user._id)
+  }, [])
 
   return (
     <>
-      <Navbar
-        bg='dark'
+      <Button
+        className='px-1 text-white w-100'
         variant='dark'
-        className='z-index-2 sticky-top'
-        onMouseEnter={handleNavbarVisibility}
-        onMouseLeave={handleNavbarVisibility}
+        href='/dashboard'
       >
-        <Container>
-          <Navbar.Brand href='/'>WeBuild</Navbar.Brand>
-          {showNavbar && (
-            <>
-              <Nav className='me-auto'>
-                <Nav.Link href='/dashboard'>Dashboard</Nav.Link>
-              </Nav>
-              {isLoggedIn && (
-                <Nav className='ms-auto'>
-                  {userPlan && (
-                    <Navbar.Text className='me-2'>
-                      Plan: <a href='/account'>{userPlan.name}</a>
-                    </Navbar.Text>
-                  )}
-                  <Navbar.Text className='me-2'>
-                    Signed in as: <a href='/account'>{user.name}</a>
-                  </Navbar.Text>
-
-                  <Button
-                    className='me-1'
-                    variant='info'
-                    onClick={logOutUser}
-                  >
-                    Log Out
-                  </Button>
-              
-                </Nav>
-              )}
-
-              {!isLoggedIn && (
-                <Nav className='ms-auto'>
-                  <Nav.Link href='/signup'>Signup</Nav.Link>
-                  <Nav.Link href='/login'>Login</Nav.Link>
-                  <Button
-                    variant='light'
-                    href='/premium'
-                  >
-                    Upgrade
-                  </Button>
-                </Nav>
-              )}
-            </>
-          )}
-        </Container>
-      </Navbar>
+        {isOwner ? (
+          <Container className=''>
+            <h6 className='fw-bold my-auto py-2'>WeBuild - Upgrade your Plan to remove this banner</h6>
+          </Container>
+        ) : (
+          <Container>
+            <div className='mx-auto text-white'>
+              This website was created with our Powerful Engine, what are you
+              waiting for?
+            </div>
+          </Container>
+        )}
+      </Button>
     </>
   )
 }

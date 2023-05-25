@@ -3,6 +3,8 @@ import { CanvasContext } from '../../context/canvas.context'
 import Canvas from '../../components/Canvas/Canvas'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
+import { AuthContext } from '../../context/auth.context'
+import NavigationBar from '../../components/NavigationBar/NavigationBar'
 
 const PublicView = () => {
   const { UpdateStatistics, website, fetchOneWebsite, setPublicView , menu , setMenu} =
@@ -13,12 +15,13 @@ const PublicView = () => {
 
 
 
-
   const { id } = useParams()
   useEffect(() => {
     fetchOneWebsite(id)
     setPublicView(true)
   }, [])
+
+  
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -67,6 +70,7 @@ const PublicView = () => {
     <div>
       {website && website.name  ? (
         <>
+          <NavigationBar />
           <Canvas website={website}  setMenu = {setMenu} menu={menu}/>
         </>
       ) : (

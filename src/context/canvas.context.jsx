@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import canvasStoreService from '../services/canvas-store.service'
 import { AuthContext } from './auth.context'
@@ -20,11 +20,10 @@ function CanvasProviderWrapper(props) {
   const [publicView, setPublicView] = useState(false)
   const [menu, setMenu] = useState(0)
 
-
-
+  //remove?
   const [userInfo, setUserInfo] = useState({})
   const [userPlan, setUserPlan] = useState({})
-  const [planFeature, setPlanFeature] = useState(false)
+  const [premiumPlan, setPremiumPlan] = useState(false)
 
   //TBD
   const [showHints, setShowHints] = useState(true)
@@ -34,11 +33,11 @@ function CanvasProviderWrapper(props) {
   const [selectedComponent, setSelectedComponent] = useState({})
   const [showSettingsSidebar, setShowSettingsSidebar] = useState(false)
 
-
   const ChangeMenu = async (name) => {
     setMenu(name)
     console.log(menu)
   }
+
   //populates the sidebar
   const fetchStoreItems = () => {
     canvasStoreService
@@ -76,7 +75,7 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const deleteSubsection = async (websiteId, subsectionId, sectionId , menu) => {
+  const deleteSubsection = async (websiteId, subsectionId, sectionId, menu) => {
     try {
       const response = await canvasStoreService.removeSubsection(
         websiteId,
@@ -103,9 +102,13 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-  const addASection = async (websiteId, sectionId , menu) => {
+  const addASection = async (websiteId, sectionId, menu) => {
     try {
-      const response = await canvasStoreService.addSection(websiteId, sectionId , menu)
+      const response = await canvasStoreService.addSection(
+        websiteId,
+        sectionId,
+        menu
+      )
       return response.data
     } catch (error) {
       console.log(error)
@@ -134,13 +137,12 @@ function CanvasProviderWrapper(props) {
         setUserInfo(response.data)
         setUserPlan(response.data.plan)
 
-        if(response.data.plan.name ==="Profissional Plan" || response.data.plan.name === "MySelf Plan")
-        {
-          setPlanFeature(true)
-
+        if (
+          response.data.plan.name === 'Profissional Plan' ||
+          response.data.plan.name === 'MySelf Plan'
+        ) {
+          setPremiumPlan(true)
         }
-
-
       })
       .catch((err) => console.log(err))
   }
@@ -154,7 +156,6 @@ function CanvasProviderWrapper(props) {
   }
 
   const UpdateUserInfo = async (userInfo) => {
-    console.log('UpdateUserInfo Function : ', userInfo)
     try {
       const response = await canvasStoreService.updateUserInfo(userInfo)
       console.log(response.data)
@@ -177,7 +178,6 @@ function CanvasProviderWrapper(props) {
   }
 
   const getStatistics = async (id) => {
-    console.log('StatisticsArray', id)
 
     try {
       const response = await canvasStoreService.getStats(id)
@@ -188,10 +188,19 @@ function CanvasProviderWrapper(props) {
     }
   }
 
+
+  useEffect(() => {
+    if (user) {
+      fetchUserInfo(user._id)
+    }
+  }, [user])
+
+
   return (
     <CanvasContext.Provider
       value={{
         storeComponents,
+
         showMenu,
         setShowMenu,
 
@@ -242,7 +251,8 @@ function CanvasProviderWrapper(props) {
         setMenu,
         menu,
         ChangeMenu,
-        planFeature
+        premiumPlan,
+        setPremiumPlan,
       }}
     >
       {props.children}

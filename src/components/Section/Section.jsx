@@ -1,5 +1,5 @@
 import './Section.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import SubsectionFile from './SubsectionFile'
 import Loading from '../Loading/Loading'
 import { CanvasContext } from '../../context/canvas.context'
@@ -20,7 +20,7 @@ const Section = ({ section }) => {
     deleteSection,
     addASection,
     publicView,
-    menu
+    menu,
   } = useContext(CanvasContext)
 
   const { id } = useParams()
@@ -36,10 +36,7 @@ const Section = ({ section }) => {
   const [showToast, setShowToast] = useState(false)
 
 
-
-  
-
-  const handleSplitSections = async (numberOfSubsectionsClicked , menu) => {
+  const handleSplitSections = async (numberOfSubsectionsClicked, menu) => {
     const subsectionsIncrease =
       numberOfSubsectionsClicked - section.subsections.length
     const sectionIndex = website.pages[menu].sections.findIndex(
@@ -47,7 +44,7 @@ const Section = ({ section }) => {
     )
 
     saveChanges(id, {
-      menu:menu,
+      menu: menu,
       subsectionsIncrease: subsectionsIncrease,
       sectionIndex: sectionIndex,
     })
@@ -84,13 +81,15 @@ const Section = ({ section }) => {
   const handleDeleteSubsection = (id, subsectionId, sectionId, menu) => {
     //if it is the last subSection it will delete the whole section
     if (section.subsections.length !== 1) {
-      deleteSubsection(id, subsectionId, sectionId, menu).then((updatedWebsite) => {
-        setWebsite(updatedWebsite)
-      })
+      deleteSubsection(id, subsectionId, sectionId, menu).then(
+        (updatedWebsite) => {
+          setWebsite(updatedWebsite)
+        }
+      )
     } else {
       if (website.pages[menu].sections.length > 2) {
-        deleteSection(id, sectionId,menu).then((updatedWebsite) =>
-        setWebsite(updatedWebsite)
+        deleteSection(id, sectionId, menu).then((updatedWebsite) =>
+          setWebsite(updatedWebsite)
         )
       } else {
         //must have at least 2 sections
@@ -99,16 +98,16 @@ const Section = ({ section }) => {
     }
   }
 
-  const handleAddASection = (id, sectionId , menu) => {
+  const handleAddASection = (id, sectionId, menu) => {
     addASection(id, sectionId, menu).then((updatedWebsite) =>
-    setWebsite(updatedWebsite)
+      setWebsite(updatedWebsite)
     )
   }
 
-  const style = { margin: '2%' }
+  
   return (
     <div
-      style={style}
+      ref={sectionRef}
       className='section'
       onMouseEnter={showButtonOptions}
       onMouseLeave={hideButtonOptions}
@@ -186,7 +185,7 @@ const Section = ({ section }) => {
         <Button
           className='add-section-button'
           variant={'dark'}
-          onClick={() => handleAddASection(id, section._id , menu)}
+          onClick={() => handleAddASection(id, section._id, menu)}
         >
           Add a Section
         </Button>
