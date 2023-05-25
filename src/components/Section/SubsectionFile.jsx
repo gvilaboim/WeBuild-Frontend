@@ -36,9 +36,7 @@ const Subsection = ({
 
   const { id } = useParams()
 
-  if (!subsection) {
-    return null; // Return null or handle the empty state accordingly
-  }
+
   const handleShowSettingsSidebar = (componentToEdit) => {
     console.log("teste ma g")
     if (!publicView) {
@@ -120,6 +118,9 @@ const Subsection = ({
   }
 
   const style = publicView ? {} : { border: '1px dashed black' }
+  if (!subsection) {
+    return null; // Return null or handle the empty state accordingly
+  }
   return (
     <div
       key={sectionId}
