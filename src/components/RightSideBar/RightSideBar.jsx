@@ -29,7 +29,7 @@ const RightSideBar = () => {
   useEffect(() => {
     setComponentData(selectedComponent)
     console.log(selectedComponent)
-  }, [selectedComponent])
+ }, [selectedComponent])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -151,13 +151,13 @@ const RightSideBar = () => {
               )}
 
 
-                { componentData.item && (
+                { componentData && componentData.items   && componentData.items[0].content[0] &&(
                 <Form.Group className='mb-3' controlId='formBasicBackgroundImage'>
                   <Form.Label>Image:</Form.Label>
                   <Form.Control
-                    name='item[0].image.src'
+                    name='items[0].content[0].image.src'
                     type='text'
-                    value={componentData.item[0]?.image?.src}
+                    value={componentData.items[0].content[0]?.image.src || ''}
                     onChange={handleChange}
                   />
                 </Form.Group>
