@@ -65,8 +65,8 @@ const Canvas = ({  setMenu , page, website }) => {
     <NavBarDropZone setMenu={setMenu}/>
     <div className='website-body' style={{padding: "0px"}}>
       {website.pages[menu].sections && website.pages[menu].sections.length > 0 ? (
-        website.pages[menu].sections.map((section) => (
-          <Section key={section._id} section={section} />
+        website.pages[menu].sections.map((section,index) => (
+          <Section key={index} section={section} />
         ))
       ) : (
         <p>No sections found.</p>
