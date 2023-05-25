@@ -1,127 +1,176 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Row, Col, Card, Button, Image } from 'react-bootstrap';
+import { Row, Col, Card, Button, Image, Form } from 'react-bootstrap';
 import { CanvasContext } from '../../context/canvas.context';
 import { useParams } from 'react-router-dom';
 
-const ImageRight = ({ component , showSettings }) => {
-  const { saveChanges, setContentSections } = useContext(CanvasContext);
+const ImageRight = ({ component, showSettings }) => {
+  const {
+    setWebsite,
+    saveChanges,
+    publicView,
+    setShowSettingsSidebar,
+  } = useContext(CanvasContext);
   const { id } = useParams();
+
+  // Needed to detect clicks outside
   const wrapperRef = useRef(null);
+  const [hasChanges, setHasChanges] = useState(false);
+  const [clickedOutside, setClickedOutside] = useState(false);
+
   const [isEditing, setIsEditing] = useState(false);
 
   const [componentData, setComponentData] = useState({
-    title: component.items[0]?.content[0]?.cards[0]?.title?.text,
-    description: component.items[0]?.content[0]?.cards[0].description?.text,
-    imageSrc: component.items[0]?.content[0]?.cards[0].image?.src,
-    imageAlt: component.items[0]?.content[0]?.cards[0].image?.alt
+    title: component.items[0]?.title?.text,
+    titleColor: component.items[0]?.title?.color,
+    description: component.items[0]?.description?.text,
+    descriptionColor: component.items[0]?.description?.color,
+    imageSrc: component.items[0]?.image?.src,
+    imageAlt: component.items[0]?.image?.alt,
   });
 
-  const [clickedOutside, setClickedOutside] = useState(false);
-  
-  const handleClickOutside = async (event) => {
-    if (wrapperRef.current === event.target.parentNode.parentNode) {
+  const handleClickOutside = (event) => {
+    if (!publicView && wrapperRef.current && !wrapperRef.current.contains(event.target.parentNode)) {
       setIsEditing(false);
       setClickedOutside(true);
     }
   };
 
-useEffect(() => {
-
-    if (clickedOutside) {
-      console.log(component.content)
-      const NewComponent = component;
-      NewComponent.items[0].content[0].cards[0].title.text = componentData.title
-      NewComponent.items[0].content[0].cards[0].description.text = componentData.description
-      NewComponent.items[0].content[0].cards[0].image.src = componentData.imageSrc
-      NewComponent.items[0].content[0].cards[0].image.alt = componentData.imageAlt
-
-      const contentArray = [NewComponent.items[0].content[0]];
-      console.log(contentArray)
+  useEffect(() => {
+    if (clickedOutside && hasChanges) {
       saveChanges(id, {
-        componentToEdit: { data: contentArray, id: component._id },
+        componentToEdit: { data: componentData, id: component._id },
       })
         .then((updatedWebsite) => {
-          setContentSections(updatedWebsite.sections);
+          setWebsite(updatedWebsite);
           setClickedOutside(false);
+          setHasChanges(false);
         })
         .catch((err) => console.log(err));
     }
   }, [clickedOutside]);
-  useEffect(() => {
 
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
-  const handleDoubleClick = (e) => {
-    setIsEditing(true);
+  const handleDoubleClick = () => {
+    if (!publicView) {
+      setIsEditing(true);
+      setShowSettingsSidebar(false);
+    }
   };
 
   const handleChange = (e) => {
     const { value, name } = e.target;
-    setComponentData((prevValue) => ({ ...prevValue, [name]: value }));
+    setHasChanges(true);
+    // If the name is primaryButton or secondaryButton,
+    // update the corresponding button text value
+  
+      // Otherwise, update the regular component data
+      setComponentData((prevValue) => ({ ...prevValue, [name]: value }));
 
   };
+
+  const toggleSidebar = () => {
+    if (!isEditing) showSettings(component);
+  };
+
   const style = component.style;
+
   return (
     <div
-    ref={wrapperRef}
-    onClick={() => showSettings(component)}
-    style={{
-      ...style,
-      height: `${style.height}px`,
-      width: `${style.width}%`,
-      backgroundColor: `${style.backgroundColor}`,
-      background: `no-repeat  center/cover url(${style.backgroundImage})`,
-      padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-    }}
-  >
-    <Row className="featurette">
-      <Col md={7}>
-        {isEditing ? (
-              <input
-                onChange={handleChange}
-                className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                type='text'
-                value={componentData.title}
-                name='title'
-              />
-            ) : (
-              <h2
-                name='title-h3'
-                onDoubleClick={(e) => handleDoubleClick(e)}
-                className="featurette-heading fw-normal lh-1"
-                              >
-                {componentData.title}
-              </h2>
-            )}
-              {isEditing ? (
-              <input
-                onChange={handleChange}
-                className='display-5 fw-bold text-body-emphasis lh-1 mb-3 '
-                type='text'
-                value={componentData.description}
-                name='description'
-              />
-            ) : (
-              <p
-                name='title-h1'
-                onDoubleClick={(e) => handleDoubleClick(e)}
-                className="lead"
-              >
-                {componentData.description}
-              </p>
-            )}
+      ref={wrapperRef}
+      onClick={() => showSettings(component)}
+      style={{
+        ...style,
+        height: `${style.height}px`,
+        width: `${style.width}%`,
+        backgroundColor: style.backgroundColor,
+        background: `no-repeat center/cover url(${style.backgroundImage})`,
+        padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
+      }}
+    >
+      <Row className="featurette">
+        <Col md={7}>
+          {isEditing ? (
+            <>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  name="title"
+                  as="textarea"
+                  style={{ color: componentData.titleColor }}
+                  value={componentData.title}
+                  onChange={handleChange}
+                  className="input-title fw-bold lh-1 mb-3 bg-transparent"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Form.Label>Text Color:</Form.Label>
+                  <Form.Control
+                    name="titleColor"
+                    type="color"
+                    value={componentData.titleColor}
+                    onChange={handleChange}
+                  />
+                </div>
+              </Form.Group>
+            </>
+          ) : (
+            <h1
+              name="title-h1"
+              onDoubleClick={handleDoubleClick}
+              className="display-5 fw-bold text-body-emphasis lh-1 mb-3"
+              style={{ color: componentData.titleColor }}
+            >
+              {componentData.title}
+            </h1>
+          )}
 
-      </Col>
-      <Col md={5}>
-        <Image src={componentData.imageSrc} alt={componentData.imageAlt} fluid />
-      </Col>
-    </Row>
+          {isEditing ? (
+            <>
+              <Form.Group className="mb-3">
+                <Form.Control
+                  name="description"
+                  as="textarea"
+                  style={{ color: componentData.descriptionColor }}
+                  value={componentData.description}
+                  onChange={handleChange}
+                  className="input-title fw-bold lh-1 mb-3 bg-transparent"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Form.Label>Text Color:</Form.Label>
+                  <Form.Control
+                    name="descriptionColor"
+                    type="color"
+                    value={componentData.descriptionColor}
+                    onChange={handleChange}
+                  />
+                </div>
+              </Form.Group>
+            </>
+          ) : (
+            <p
+              name="title-h1"
+              onDoubleClick={handleDoubleClick}
+              style={{ color: componentData.descriptionColor }}
+              className="lead"
+            >
+              {componentData.description}
+            </p>
+          )}
+        </Col>
+        <Col md={5}>
+          <Image src={componentData.imageSrc} alt={componentData.imageAlt} fluid />
+        </Col>
+      </Row>
     </div>
   );
 };
 
-export default ImageRight; 
+export default ImageRight;
