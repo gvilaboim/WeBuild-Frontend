@@ -15,6 +15,8 @@ const RightSideBar = () => {
     showSettingsSidebar,
     setSelectedComponent,
     setWebsite,
+    setIsSaving,
+    isSaving
   } = useContext(CanvasContext)
 
   const { id } = useParams()
@@ -32,9 +34,10 @@ const RightSideBar = () => {
     setComponentData((prevState) => set({ ...prevState }, name, value))
   }
 
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-
+    setIsSaving(true);
     try {
       const response = await canvasStoreService.saveComponentChanges(
         id,
@@ -43,8 +46,11 @@ const RightSideBar = () => {
 
       setSelectedComponent(response.data.updatedComponent)
       setWebsite(response.data.updatedWebsite)
+      setIsSaving(false);
+      console.log(response.data.updatedWebsite)
     } catch (error) {
       console.log(error)
+      setIsSaving(false);
     }
   }
 
@@ -153,13 +159,13 @@ const RightSideBar = () => {
                 </Form.Group>
               )}
 
-              {componentData?.items?.[0]?.content?.[0] && (
+              {componentData?.items?.[0]?.content && componentData.items[0].content?.image &&  (
                 <Form.Group className='mb-3'>
                   <Form.Label>Image:</Form.Label>
                   <Form.Control
-                    name='items[0].content[0].image.src'
+                    name='items[0].content.image.src'
                     type='text'
-                    value={componentData.items[0].content[0]?.image.src || ''}
+                    value={componentData.items[0].content?.image.src || ''}
                     onChange={handleChange}
                   />
                 </Form.Group>

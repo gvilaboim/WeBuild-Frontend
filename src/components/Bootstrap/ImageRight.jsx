@@ -9,6 +9,8 @@ const ImageRight = ({ component, showSettings }) => {
     saveChanges,
     publicView,
     setShowSettingsSidebar,
+    isSaving,
+    setIsSaving
   } = useContext(CanvasContext)
   const { id } = useParams()
 
@@ -19,15 +21,27 @@ const ImageRight = ({ component, showSettings }) => {
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const [componentData, setComponentData] = useState({
-    title: component.items[0]?.content[0]?.title?.text,
-    titleColor: component.items[0]?.content[0]?.title?.color,
+  const [timestamp, setTimestamp] = useState(Date.now());
 
-    description: component.items[0]?.content[0]?.description?.text,
-    imageSrc: component.items[0]?.content[0]?.image?.src,
-    imageAlt: component.items[0]?.content[0]?.image?.alt
+  const [componentData, setComponentData] = useState({
+    title: component.items[0]?.content?.title?.text,
+    titleColor: component.items[0]?.content?.title?.color,
+
+    description: component.items[0]?.content?.description?.text,
+    imageSrc: component.items[0]?.content?.image?.src,
+    imageAlt: component.items[0]?.content?.image?.alt
   });
 
+  useEffect(() => {
+
+    console.log(isSaving)
+    if(isSaving)
+    {
+      setTimestamp(Date.now()); // Unique value
+
+    }
+
+  }, [isSaving])
 
 
   const handleClickOutside = async (event) => {
@@ -103,7 +117,7 @@ const ImageRight = ({ component, showSettings }) => {
         ...style,
         height: `${style.height}px`,
         width: `${style.width}%`,
-        backgroundColor: `${style.backgroundColor}`,
+        backgroundColor: `${style.backgroundColor}` || "",
         background: `no-repeat  center/cover url(${style.backgroundImage})`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
       }}
@@ -149,34 +163,34 @@ const ImageRight = ({ component, showSettings }) => {
 
 
           {isEditing ? (
-             <> 
+            <>
               <Form.Group className='mb-3'>
-              <Form.Control
-                name='description'
-                as='textarea'
-                style={{ color: componentData.descriptionColor }}
-                value={componentData.description}
-                onChange={handleChange}
-                className='input-title fw-bold lh-1 mb-3  bg-transparent'
-              />
-            </Form.Group>
-            <Form.Group className='mb-3'>
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Form.Label>Text Color:</Form.Label>
                 <Form.Control
-                  name='descriptionColor'
-                  type='color'
-                  value={componentData.descriptionColor}
+                  name='description'
+                  as='textarea'
+                  style={{ color: componentData.descriptionColor }}
+                  value={componentData.description}
                   onChange={handleChange}
+                  className='input-title fw-bold lh-1 mb-3  bg-transparent'
                 />
-              </div>
-            </Form.Group>
+              </Form.Group>
+              <Form.Group className='mb-3'>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Form.Label>Text Color:</Form.Label>
+                  <Form.Control
+                    name='descriptionColor'
+                    type='color'
+                    value={componentData.descriptionColor}
+                    onChange={handleChange}
+                  />
+                </div>
+              </Form.Group>
             </>
           ) : (
             <p
               name='title-h1'
               onDoubleClick={(e) => handleDoubleClick(e)}
-              
+
               className="lead"
             >
               {componentData.description}
@@ -185,7 +199,12 @@ const ImageRight = ({ component, showSettings }) => {
 
         </Col>
         <Col md={5}>
-          <Image src={componentData.imageSrc} alt={componentData.imageAlt} fluid />
+            <Image  key={isSaving ? Date.now() : undefined}
+      src={`${componentData.imageSrc}?cache=${timestamp}`}
+      alt={componentData.imageAlt}
+
+      fluid/>
+    
         </Col>
       </Row>
     </div>
