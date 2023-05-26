@@ -174,8 +174,6 @@ const FeaturesA = ({ component, showSettings }) => {
 
           <Row className='g-4 py-5 row-cols-1 row-cols-lg-3'>
             {componentData.cards.map((card) => {
-              console.log(card.id)
-
               return (
                 <FeaturesCard
                   key={card.id}

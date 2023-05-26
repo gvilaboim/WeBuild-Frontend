@@ -10,6 +10,7 @@ import Loading from '../../components/Loading/Loading'
 import { Button, Carousel, Collapse } from 'react-bootstrap'
 import { AuthContext } from '../../context/auth.context'
 import canvasStoreService from '../../services/canvas-store.service'
+import {RiDeleteBinLine} from 'react-icons/ri'
 
 const Create = () => {
   const { fetchOneWebsite, website, publishWebsite, setWebsite } =
@@ -24,11 +25,14 @@ const Create = () => {
     fetchOneWebsite(id)
   }, [])
 
-  console.log('component rendered')
   const handlePublishWebsite = async (websiteId) => {
     publishWebsite(websiteId).then((publishedWebsite) =>
       setWebsite(publishedWebsite)
     )
+  }
+
+  const handleDeleteSite = async () => {
+    canvasStoreService.deleteWebsite(id).then(response => navigate('/dashboard'))
   }
 
   const handBackgroundChange = (e) => {
@@ -79,6 +83,15 @@ const Create = () => {
               </Button>
             )}
 
+            
+
+            <Button
+              variant='outline-danger'
+              className='px-4'
+              onClick={handleDeleteSite}
+            >
+            <RiDeleteBinLine />
+            </Button>
             <Button
               href={`/webuild/${user.name}/${website.name}/${website._id}`}
               target='_blank'

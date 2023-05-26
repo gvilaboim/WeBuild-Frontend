@@ -102,8 +102,8 @@ class CanvasStoreService {
 
   // DELETE /api/examples/:id
 
-  deleteProject = async (id) => {
-    return this.api.delete(`/api/examples/${id}`)
+  deleteWebsite = async (id) => {
+    return this.api.delete(`/api/websites/${id}`)
   }
 
   getAllPlans = async () => {
