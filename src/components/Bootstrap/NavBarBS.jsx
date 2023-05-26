@@ -6,14 +6,13 @@ import Navbar from 'react-bootstrap/Navbar'
 import { CanvasContext } from '../../context/canvas.context'
 import { NavLink } from 'react-router-dom'
 
-const NavBarBS = ({  showSettings, component: { brand, navLinks }, component }) => {
-  
-  const { publicView, website, setSelectedComponent ,ChangeMenu} = useContext(CanvasContext)
-  
-  const [isEditing, setIsEditing] = useState(false)
-  
-  const toggleSidebar = () => {
+const NavBarBS = ({ showSettings, component: { navLinks }, component }) => {
+  const { publicView, website, setSelectedComponent, ChangeMenu } =
+    useContext(CanvasContext)
 
+  const [isEditing, setIsEditing] = useState(false)
+
+  const toggleSidebar = () => {
     if (!isEditing) {
       setSelectedComponent(component)
       showSettings(component)
@@ -25,38 +24,46 @@ const NavBarBS = ({  showSettings, component: { brand, navLinks }, component }) 
   return (
     <>
       <Navbar
-      expand='lg'
-      className='mb-3'
-      onDoubleClick={toggleSidebar}
-      style={{
-        ...style,
-        alignItems: `${style?.alignItems || ''}`,
-        height: `${style?.height || ''}px`,
-        width: `${style?.width || ''}%`,
-        background: `no-repeat center/cover url(${style?.backgroundImage || ''})`,
-        padding: `${style?.padding?.top || ''}% ${style?.padding?.right || ''}% ${style?.padding?.bottom || ''}% ${style?.padding?.left || ''}%`,
-        backgroundColor: style?.backgroundColor || ''
-      }}
-    >
-        <Container >
-          <Navbar.Brand href={publicView ? '/home' : ''}>
+        expand='lg'
+        className='mb-3'
+        onDoubleClick={toggleSidebar}
+        style={{
+          ...style,
+          alignItems: `${style?.alignItems || ''}`,
+          height: `${style?.height || ''}px`,
+          width: `${style?.width || ''}%`,
+          background: `no-repeat center/cover url(${
+            style?.backgroundImage || ''
+          })`,
+          padding: `${style?.padding?.top || ''}% ${
+            style?.padding?.right || ''
+          }% ${style?.padding?.bottom || ''}% ${style?.padding?.left || ''}%`,
+          backgroundColor: style?.backgroundColor || '',
+        }}
+      >
+        <Container>
+          <Navbar.Brand
+            onClick={() => {
+              ChangeMenu(0)
+            }}
+          >
             {website.name}
-  
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-
             <Nav className='ms-auto'>
-              {navLinks && navLinks.map((link , index) => (
-                <NavLink
-                  className='nav-link'
-                  key={link.text}
-                  href={publicView ? `/${link.text}` : ''}
-                  onClick={ () =>  { ChangeMenu(index) ; console.log(index)}}
-                >
-                  {link.text}
-                </NavLink>
-              ))}
+              {navLinks &&
+                navLinks.map((link, index) => (
+                  <NavLink
+                    className='nav-link'
+                    key={link.text}
+                    onClick={() => {
+                      ChangeMenu(index)
+                    }}
+                  >
+                    {link.text}
+                  </NavLink>
+                ))}
             </Nav>
           </Navbar.Collapse>
         </Container>

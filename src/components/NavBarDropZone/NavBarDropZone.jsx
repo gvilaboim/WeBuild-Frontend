@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import NavBarBS from '../Bootstrap/NavBarBS'
 import './NavBarDropZone.css'
 
-const NavBarDropZone = ({setMenu}) => {
+const NavBarDropZone = ({ setMenu }) => {
   const {
     website,
     setWebsite,
@@ -66,7 +66,7 @@ const NavBarDropZone = ({setMenu}) => {
             key={component._id}
             component={component}
             showSettings={setShowSettingsSidebar}
-            setMenu = {setMenu}
+            setMenu={setMenu}
           />
         ))}
       {website &&

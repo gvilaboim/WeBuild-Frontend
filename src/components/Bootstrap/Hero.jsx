@@ -5,12 +5,8 @@ import { CanvasContext } from '../../context/canvas.context'
 
 import './Bootstrap-override.css'
 const Hero = ({ component, showSettings }) => {
-  const {
-    setWebsite,
-    saveChanges,
-    publicView,
-    setShowSettingsSidebar,
-  } = useContext(CanvasContext)
+  const { setWebsite, saveChanges, publicView, setShowSettingsSidebar } =
+    useContext(CanvasContext)
   const { id } = useParams()
 
   //needed to detect clicks outside
@@ -70,9 +66,10 @@ const Hero = ({ component, showSettings }) => {
 
   const handleChange = (e) => {
     const { value, name } = e.target
+
+    //does not trigger API call unless something is diferent
     setHasChanges(true)
-    // If the name is primaryButton or secondaryButton,
-    // update the corresponding button text value
+
     if (name === 'titleText') {
       setComponentData((prevValue) => ({
         ...prevValue,
@@ -122,17 +119,6 @@ const Hero = ({ component, showSettings }) => {
     }
   }
 
-  useEffect(() => {
-    console.log(
-      'isEditing:',
-      isEditing,
-      'hasChanges',
-      hasChanges,
-      'clicked',
-      clickedOutside
-    )
-  }, [isEditing, hasChanges, clickedOutside])
-
   const toggleSidebar = () => {
     if (!isEditing) showSettings(component)
   }
@@ -146,8 +132,7 @@ const Hero = ({ component, showSettings }) => {
         ...style,
         minHeight: `${style.height}px`,
         width: `${style.width}%`,
-        backgroundColor: `${style.backgroundColor}`,
-        background: `no-repeat  center/cover url(${style.backgroundImage})`,
+        background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
       }}
     >
@@ -257,7 +242,7 @@ const Hero = ({ component, showSettings }) => {
                     />
                   </Form.Group>
                   <Form.Group className='mb-3'>
-                    <div  style={{ display: 'flex', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
                       <Form.Label>Button Color:</Form.Label>
                       <Form.Control
                         name='primaryButtonColor'

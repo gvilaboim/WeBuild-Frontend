@@ -1,0 +1,10 @@
+#change-bg-container {
+  min-height: 400px;
+}
+
+.website-bg-image {
+  width: 100%;
+  height: 400px;
+  object-position: center;
+  object-fit: cover;
+}

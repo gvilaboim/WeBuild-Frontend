@@ -1,74 +1,30 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 import FooterDropZone from '../FooterDropZone/FooterDropZone'
 import NavBarDropZone from '../NavBarDropZone/NavBarDropZone'
 import Section from '../Section/Section'
 import './Canvas.css'
 import { CanvasContext } from '../../context/canvas.context'
 import Loading from '../Loading/Loading'
-import { Button } from 'react-bootstrap'
-import { useNavigate, useParams } from 'react-router-dom'
-import { AuthContext } from '../../context/auth.context'
 
-const Canvas = ({ setMenu, page, website }) => {
-  const { publishWebsite, publicView, setWebsite, menu } =
-    useContext(CanvasContext)
-  const { user } = useContext(AuthContext)
-  const { id } = useParams()
+const Canvas = ({ setMenu, website }) => {
+  const { publicView, menu } = useContext(CanvasContext)
 
-  const navigate = useNavigate()
-
-  const handlePublishWebsite = async (websiteId) => {
-    publishWebsite(websiteId).then((publishedWebsite) =>
-      setWebsite(publishedWebsite)
-    )
-  }
-
-  const style = publicView
-    ? { margin: '0%' }
-    : { border: '1px solid black', margin: '6% 23%' }
-
+  const style = { margin: publicView ? '0%' : '2%' }
+  
   return (
     <div
-      style={style}
+      style={{
+        ...style,
+        background: `no-repeat center/cover url(${website.background}) `,
+      }}
       className='canvas'
     >
       {!website && <Loading />}
 
-      {!publicView && website && (
-        <div className='p-2'>
-          {website.isPublished ? (
-            <Button
-              onClick={() => handlePublishWebsite(id)}
-              variant='warning'
-            >
-              Published
-            </Button>
-          ) : (
-            <Button
-              onClick={() => handlePublishWebsite(id)}
-              variant='success'
-            >
-              Publish
-            </Button>
-          )}
-          <Button
-            onClick={() =>
-              navigate(`/webuild/${user.name}/${website.name}/${website._id}`)
-            }
-            variant='dark'
-          >
-            Go to Website
-          </Button>
-        </div>
-      )}
-
       {website.pages && (
         <>
           <NavBarDropZone setMenu={setMenu} />
-          <div
-            className='website-body'
-            style={{ padding: '0px' }}
-          >
+          <div className='website-body'>
             {website.pages[menu].sections &&
             website.pages[menu].sections.length > 0 ? (
               website.pages[menu].sections.map((section, index) => (

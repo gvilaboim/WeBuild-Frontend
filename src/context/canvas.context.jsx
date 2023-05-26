@@ -12,7 +12,7 @@ function CanvasProviderWrapper(props) {
   const [storeComponents, setStoreComponents] = useState([])
 
   // Left Menu
-  const [showMenu, setShowMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(true)
   // clicked on the left menu to display stats in the dashboard
   const [clickedWebsite, setClickedWebsite] = useState(null)
 

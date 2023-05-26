@@ -53,6 +53,12 @@ class CanvasStoreService {
   saveChanges = async (id, siteData) => {
     return this.api.put(`/api/websites/${id}`, { siteData })
   }
+  updateWebsiteBg = async (id, imgSrc) => {
+    return this.api.put(`/api/websites/${id}/bg`, {imgSrc})
+  }
+ 
+
+
 
   removeSubsection = async (websiteId, subsectionId, sectionId, menu) => {
     return this.api.put(`/api/websites/${websiteId}/delete-subsection`, {

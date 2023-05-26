@@ -13,11 +13,10 @@ const RightSideBar = () => {
     selectedComponent,
     setShowSettingsSidebar,
     showSettingsSidebar,
-    setContentSections,
     setSelectedComponent,
     website,
     setWebsite,
-    menu
+    menu,
   } = useContext(CanvasContext)
 
   const { id } = useParams()
@@ -28,19 +27,16 @@ const RightSideBar = () => {
 
   useEffect(() => {
     setComponentData(selectedComponent)
-    console.log(selectedComponent)
- }, [selectedComponent])
+  }, [selectedComponent])
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setComponentData((prevState) => set({ ...prevState }, name, value))
-
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    console.log("Antes:", componentData)
     try {
       const response = await canvasStoreService.saveComponentChanges(
         id,
@@ -48,8 +44,6 @@ const RightSideBar = () => {
       )
 
       setSelectedComponent(response.data.updatedComponent)
-      // setContentSections(response.data.updatedWebsite.sections)
-      console.log("Depois", response.data.updatedComponent)
       setWebsite(response.data.updatedWebsite)
     } catch (error) {
       console.log(error)
@@ -71,12 +65,20 @@ const RightSideBar = () => {
               Edit a Section ({componentData.name})
             </Offcanvas.Title>
           </Offcanvas.Header>
-          <Offcanvas.Body>
+          <Offcanvas.Body className='pt-0'>
+          <div className='mb-3 sticky-top bg-white'>
+
+            <Button
+              variant='dark'
+              className='mb-5'
+              type='submit'
+              style={{width: '100%'}}
+            >
+              Save Component Changes
+            </Button>
+          </div>
             <Form onSubmit={handleSubmit}>
-              <Form.Group
-                className='mb-3'
-                controlId='formBasicText'
-              >
+              <Form.Group className='mb-3'>
                 <Form.Label>Section Name:</Form.Label>
                 <Form.Control
                   name='name'
@@ -86,12 +88,22 @@ const RightSideBar = () => {
                 />
               </Form.Group>
 
+              {componentData.brand && (
+                <>
+                  <Form.Group className='mb-3'>
+                    <Form.Label>Brand</Form.Label>
+                    <Form.Control
+                      name='brand.text'
+                      type='text'
+                      value={componentData.brand.text}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </>
+              )}
               {componentData.items > 0 && (
                 <>
-                  <Form.Group
-                    className='mb-3'
-                    controlId='formBasicText'
-                  >
+                  <Form.Group className='mb-3'>
                     <Form.Label>Title:</Form.Label>
                     <Form.Control
                       name='title'
@@ -104,10 +116,7 @@ const RightSideBar = () => {
               )}
 
               {componentData.navLinks && componentData.navLinks.length > 0 && (
-                <Form.Group
-                  className='mb-3'
-                  controlId='formBasicBackgroundImage'
-                >
+                <Form.Group className='mb-3'>
                   <Form.Label>NavLinks:</Form.Label>
                   <Form.Control
                     name='navLinks[0].text'
@@ -142,17 +151,13 @@ const RightSideBar = () => {
                       type='text'
                       value={componentData.navLinks[4]?.text}
                       onChange={handleChange}
-                    />)}
-
-
+                    />
+                  )}
                 </Form.Group>
-
-
               )}
 
-
-                { componentData && componentData.items   && componentData.items[0].content[0] &&(
-                <Form.Group className='mb-3' controlId='formBasicBackgroundImage'>
+              {componentData?.items?.[0]?.content?.[0] && (
+                <Form.Group className='mb-3'>
                   <Form.Label>Image:</Form.Label>
                   <Form.Control
                     name='items[0].content[0].image.src'
@@ -265,177 +270,277 @@ const RightSideBar = () => {
                 </div>
               )}
 
-              {componentData.items && componentData.items.content && componentData.items[0]?.content.headers && (
-                <Form.Group className='mb-3' controlId='formBasicBackgroundImage'>
-                  <Form.Label>Section: {componentData.items[0].content.headers[0].header.text}</Form.Label>
-                  <Form.Control
-                    name='items[0].content.headers[0].header.text'
-                    type='text'
-                    value={componentData.items[0].content.headers[0].header.text}
-                    onChange={handleChange}
-                  />
+              {componentData.items &&
+                componentData.items.content &&
+                componentData.items[0]?.content.headers && (
+                  <Form.Group
+                    className='mb-3'
+                    controlId='formBasicBackgroundImage'
+                  >
+                    <Form.Label>
+                      Section:{' '}
+                      {componentData.items[0].content.headers[0].header.text}
+                    </Form.Label>
+                    <Form.Control
+                      name='items[0].content.headers[0].header.text'
+                      type='text'
+                      value={
+                        componentData.items[0].content.headers[0].header.text
+                      }
+                      onChange={handleChange}
+                    />
 
-                  {componentData.items && componentData.items.content && componentData.items[0].content.headers[0].links && componentData.items[0].content.headers[0].links[0] && (
-                    <Form.Control
-                      name='items[0].content.headers[0].links[0].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[0].links[0].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items && componentData.items.content && componentData.items[0].content.headers[0].links && componentData.items[0].content.headers[0].links[1] && (
-                    <Form.Control
-                      name='items[0].content.headers[0].links[1].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[0].links[1].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items && componentData.items.content && componentData.items[0].content.headers[0].links && componentData.items[0].content.headers[0].links[2] && (
-                    <Form.Control
-                      name='items[0].content.headers[0].links[2].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[0].links[2].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items && componentData.items.content && componentData.items[0].content.headers[0].links && componentData.items[0].content.headers[0].links[3] && (
-                    <Form.Control
-                      name='items[0].content.headers[0].links[3].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[0].links[3].text}
-                      onChange={handleChange}
-                    />
-                  )}
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[0].links &&
+                      componentData.items[0].content.headers[0].links[0] && (
+                        <Form.Control
+                          name='items[0].content.headers[0].links[0].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[0].links[0]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[0].links &&
+                      componentData.items[0].content.headers[0].links[1] && (
+                        <Form.Control
+                          name='items[0].content.headers[0].links[1].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[0].links[1]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[0].links &&
+                      componentData.items[0].content.headers[0].links[2] && (
+                        <Form.Control
+                          name='items[0].content.headers[0].links[2].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[0].links[2]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[0].links &&
+                      componentData.items[0].content.headers[0].links[3] && (
+                        <Form.Control
+                          name='items[0].content.headers[0].links[3].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[0].links[3]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
 
-                  {componentData.items && componentData.items.content && componentData.items[0].content.headers[0].links && componentData.items[0].content.headers[0].links[4] && (
-                    <Form.Control
-                      name='items[0].content.headers[0].links[4].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[0].links[4].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                </Form.Group>
-              )}
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[0].links &&
+                      componentData.items[0].content.headers[0].links[4] && (
+                        <Form.Control
+                          name='items[0].content.headers[0].links[4].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[0].links[4]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                  </Form.Group>
+                )}
 
+              {componentData.items &&
+                componentData.items.content &&
+                componentData.items[0]?.content.headers && (
+                  <Form.Group
+                    className='mb-3'
+                    controlId='formBasicBackgroundImage'
+                  >
+                    <Form.Label>
+                      Section:{' '}
+                      {componentData.items[0].content.headers[1].header.text}
+                    </Form.Label>
+                    <Form.Control
+                      name='items[0].content.headers[1].header.text'
+                      type='text'
+                      value={
+                        componentData.items[0].content.headers[1].header.text
+                      }
+                      onChange={handleChange}
+                    />
 
-              {componentData.items && componentData.items.content &&  componentData.items[0]?.content.headers && (
-                <Form.Group className='mb-3' controlId='formBasicBackgroundImage'>
-                  <Form.Label>Section: {componentData.items[0].content.headers[1].header.text}</Form.Label>
-                  <Form.Control
-                    name='items[0].content.headers[1].header.text'
-                    type='text'
-                    value={componentData.items[0].content.headers[1].header.text}
-                    onChange={handleChange}
-                  />
+                    {componentData.items[0].content.headers[1].links &&
+                      componentData.items[0].content.headers[1].links[0] && (
+                        <Form.Control
+                          name='items[0].content.headers[1].links[0].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[1].links[0]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items[0].content.headers[1].links &&
+                      componentData.items[0].content.headers[1].links[1] && (
+                        <Form.Control
+                          name='items[0].content.headers[1].links[1].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[1].links[1]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items[0].content.headers[0].links &&
+                      componentData.items[0].content.headers[1].links[2] && (
+                        <Form.Control
+                          name='items[0].content.headers[1].links[2].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[1].links[2]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items[0].content.headers[1].links &&
+                      componentData.items[0].content.headers[1].links[3] && (
+                        <Form.Control
+                          name='items[0].content.headers[1].links[3].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[1].links[3]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
 
-                  {componentData.items[0].content.headers[1].links && componentData.items[0].content.headers[1].links[0] && (
-                    <Form.Control
-                      name='items[0].content.headers[1].links[0].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[1].links[0].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items[0].content.headers[1].links && componentData.items[0].content.headers[1].links[1] && (
-                    <Form.Control
-                      name='items[0].content.headers[1].links[1].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[1].links[1].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items[0].content.headers[0].links && componentData.items[0].content.headers[1].links[2] && (
-                    <Form.Control
-                      name='items[0].content.headers[1].links[2].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[1].links[2].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items[0].content.headers[1].links && componentData.items[0].content.headers[1].links[3] && (
-                    <Form.Control
-                      name='items[0].content.headers[1].links[3].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[1].links[3].text}
-                      onChange={handleChange}
-                    />
-                  )}
+                    {componentData.items[0].content.headers[1].links &&
+                      componentData.items[0].content.headers[1].links[4] && (
+                        <Form.Control
+                          name='items[0].content.headers[1].links[4].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[1].links[4]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                  </Form.Group>
+                )}
 
-                  {componentData.items[0].content.headers[1].links && componentData.items[0].content.headers[1].links[4] && (
+              {componentData.items &&
+                componentData.items.content &&
+                componentData.items[0]?.content.headers && (
+                  <Form.Group
+                    className='mb-3'
+                    controlId='formBasicBackgroundImage'
+                  >
+                    <Form.Label>
+                      Section:{' '}
+                      {componentData.items[0].content.headers[2].header.text}
+                    </Form.Label>
                     <Form.Control
-                      name='items[0].content.headers[1].links[4].text'
+                      name='items[0].content.headers[2].header.text'
                       type='text'
-                      value={componentData.items[0].content.headers[1].links[4].text}
+                      value={
+                        componentData.items[0].content.headers[2].header.text
+                      }
                       onChange={handleChange}
                     />
-                  )}
-                </Form.Group>
-              )}
 
-              {componentData.items && componentData.items.content    && componentData.items[0]?.content.headers && (
-                <Form.Group className='mb-3' controlId='formBasicBackgroundImage'>
-                  <Form.Label>Section: {componentData.items[0].content.headers[2].header.text}</Form.Label>
-                  <Form.Control
-                    name='items[0].content.headers[2].header.text'
-                    type='text'
-                    value={componentData.items[0].content.headers[2].header.text}
-                    onChange={handleChange}
-                  />
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[2].links &&
+                      componentData.items[0].content.headers[2].links[0] && (
+                        <Form.Control
+                          name='items[0].content.headers[2].links[0].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[2].links[0]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[2].links &&
+                      componentData.items[0].content.headers[2].links[1] && (
+                        <Form.Control
+                          name='items[0].content.headers[2].links[1].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[2].links[1]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[2].links &&
+                      componentData.items[0].content.headers[2].links[2] && (
+                        <Form.Control
+                          name='items[0].content.headers[2].links[2].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[2].links[2]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[2].links &&
+                      componentData.items[0].content.headers[2].links[3] && (
+                        <Form.Control
+                          name='items[0].content.headers[2].links[3].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[2].links[3]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
 
-                  {componentData.items && componentData.items.content    &&  componentData.items[0].content.headers[2].links && componentData.items[0].content.headers[2].links[0] && (
-                    <Form.Control
-                      name='items[0].content.headers[2].links[0].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[2].links[0].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items && componentData.items.content    &&  componentData.items[0].content.headers[2].links && componentData.items[0].content.headers[2].links[1] && (
-                    <Form.Control
-                      name='items[0].content.headers[2].links[1].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[2].links[1].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items && componentData.items.content    &&  componentData.items[0].content.headers[2].links && componentData.items[0].content.headers[2].links[2] && (
-                    <Form.Control
-                      name='items[0].content.headers[2].links[2].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[2].links[2].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                  {componentData.items && componentData.items.content    &&  componentData.items[0].content.headers[2].links && componentData.items[0].content.headers[2].links[3] && (
-                    <Form.Control
-                      name='items[0].content.headers[2].links[3].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[2].links[3].text}
-                      onChange={handleChange}
-                    />
-                  )}
-
-                  {componentData.items && componentData.items.content    &&  componentData.items[0].content.headers[2].links && componentData.items[0].content.headers[2].links[4] && (
-                    <Form.Control
-                      name='items[0].content.headers[2].links[4].text'
-                      type='text'
-                      value={componentData.items[0].content.headers[2].links[4].text}
-                      onChange={handleChange}
-                    />
-                  )}
-                </Form.Group>
-              )}
-
-              
-
-              <Button
-                variant='primary'
-                type='submit'
-              >
-                Save Component Changes
-              </Button>
+                    {componentData.items &&
+                      componentData.items.content &&
+                      componentData.items[0].content.headers[2].links &&
+                      componentData.items[0].content.headers[2].links[4] && (
+                        <Form.Control
+                          name='items[0].content.headers[2].links[4].text'
+                          type='text'
+                          value={
+                            componentData.items[0].content.headers[2].links[4]
+                              .text
+                          }
+                          onChange={handleChange}
+                        />
+                      )}
+                  </Form.Group>
+                )}
             </Form>
           </Offcanvas.Body>
         </Offcanvas>
@@ -445,7 +550,5 @@ const RightSideBar = () => {
 }
 
 export default RightSideBar
-
-
 
 //acabar as cens pra enviar pra DB

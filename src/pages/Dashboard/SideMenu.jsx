@@ -76,28 +76,6 @@ const SideMenu = ({ collapseSidemenu }) => {
                 </a>
               </Card.Header>
               <Card.Body className='custom-user-info'>
-                {!isLoggedIn && (
-                  <div className='d-flex flex-column '>
-                    <Button
-                      variant='secondary'
-                      href='/signup'
-                    >
-                      Signup
-                    </Button>
-                    <Button
-                      variant='secondary'
-                      href='/login'
-                    >
-                      Login
-                    </Button>
-                    <Button
-                      variant='light'
-                      href='/premium'
-                    >
-                      Upgrade
-                    </Button>
-                  </div>
-                )}
                 {isLoggedIn && (
                   <>
                     {userPlan && (

@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Form, Button, Container, Row, Col, Card } from 'react-bootstrap'
-import './Create.css'
+import { Form, Button, Row, Col, Card } from 'react-bootstrap'
 import canvasStoreService from '../../services/canvas-store.service'
 import { useNavigate } from 'react-router-dom'
 
@@ -38,7 +37,6 @@ function CreateForm() {
           <Col md={9}>
             <Form.Control
               className='mb-3'
-
               type='text'
               name='name'
               value={name}

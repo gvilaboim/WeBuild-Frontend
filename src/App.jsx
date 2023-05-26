@@ -43,15 +43,6 @@ function App() {
       setShowMenu(true)
     }
 
-    if (
-      website &&
-      website.user &&
-      website.user.plan &&
-      website.user.plan.name !== 'Basic'
-    ) {
-      setShowMenu(false)
-      
-    }
   }, [location.pathname])
 
   useEffect(() => {
@@ -72,6 +63,7 @@ function App() {
     };
   }, []);
 
+  console.log(showMenu)
   const sideMenuStyle = {
     flexBasis: !showMenu ? '0' : '25%',
   }
