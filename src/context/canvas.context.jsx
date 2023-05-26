@@ -19,6 +19,8 @@ function CanvasProviderWrapper(props) {
   const [website, setWebsite] = useState({})
   const [publicView, setPublicView] = useState(false)
   const [menu, setMenu] = useState(0)
+  const [isSaving, setIsSaving] = useState(false)
+
 
   //remove?
   const [userInfo, setUserInfo] = useState({})
@@ -255,6 +257,8 @@ function CanvasProviderWrapper(props) {
         ChangeMenu,
         premiumPlan,
         setPremiumPlan,
+        setIsSaving,
+        isSaving
       }}
     >
       {props.children}
