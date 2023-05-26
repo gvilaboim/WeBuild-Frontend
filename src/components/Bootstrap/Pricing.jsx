@@ -35,6 +35,7 @@ const Pricing = ({ component, showSettings }) => {
 
   useEffect(() => {
     if (clickedOutside && hasChanges) {
+      console.log(componentData)
       saveChanges(id, {
         componentToEdit: { data: componentData, id: component._id },
       })
@@ -99,28 +100,29 @@ const Pricing = ({ component, showSettings }) => {
 
     setHasChanges(true)
 
-    const updatedListedItems = [
-      ...componentData.cards[cardIndex].body.listedItems,
-    ]
+    setComponentData((prevComponentData) => {
+      const updatedCards = prevComponentData.cards.map(
+        (card, currentCardIndex) => {
+          if (currentCardIndex === cardIndex) {
+            const updatedListedItems = card.body.listedItems.map(
+              (item, currentIndex) => {
+                if (currentIndex === index) {
+                  return { ...item, [name]: value }
+                }
+                return item
+              }
+            )
 
-    updatedListedItems[index] = {
-      ...updatedListedItems[index],
-      [name]: value,
-    }
+            return {
+              ...card,
+              body: { ...card.body, listedItems: updatedListedItems },
+            }
+          }
+          return card
+        }
+      )
 
-    setComponentData({
-      ...componentData,
-      cards: [
-        ...componentData.cards.slice(0, cardIndex),
-        {
-          ...componentData.cards[cardIndex],
-          body: {
-            ...componentData.cards[cardIndex].body,
-            listedItems: updatedListedItems,
-          },
-        },
-        ...componentData.cards.slice(cardIndex + 1),
-      ],
+      return { ...prevComponentData, cards: updatedCards }
     })
   }
 

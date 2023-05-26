@@ -123,8 +123,7 @@ const FeaturesA = ({ component, showSettings }) => {
         textAlign: 'left',
         height: `${style.height}px`,
         width: `${style.width}%`,
-        backgroundColor: `${style.backgroundColor}`,
-        background: `no-repeat  center/cover url(${style.backgroundImage})`,
+        background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
       }}
     >
@@ -175,6 +174,8 @@ const FeaturesA = ({ component, showSettings }) => {
 
           <Row className='g-4 py-5 row-cols-1 row-cols-lg-3'>
             {componentData.cards.map((card) => {
+              console.log(card.id)
+
               return (
                 <FeaturesCard
                   key={card.id}

@@ -38,8 +38,6 @@ const SideMenu = ({ collapseSidemenu }) => {
     fetchStoreItems,
   } = useContext(CanvasContext)
 
-  // const [openMenu, setOpenMenu] = useState(false)
-
   const location = useLocation()
   useEffect(() => {
     if (user) {
