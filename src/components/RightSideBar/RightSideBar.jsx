@@ -14,9 +14,7 @@ const RightSideBar = () => {
     setShowSettingsSidebar,
     showSettingsSidebar,
     setSelectedComponent,
-    website,
     setWebsite,
-    menu,
   } = useContext(CanvasContext)
 
   const { id } = useParams()
@@ -66,18 +64,17 @@ const RightSideBar = () => {
             </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body className='pt-0'>
-          <div className='mb-3 sticky-top bg-white'>
-
-            <Button
-              variant='dark'
-              className='mb-5'
-              type='submit'
-              style={{width: '100%'}}
-            >
-              Save Component Changes
-            </Button>
-          </div>
             <Form onSubmit={handleSubmit}>
+              <div className='mb-3 sticky-top bg-white'>
+                <Button
+                  variant='dark'
+                  className='mb-5'
+                  type='submit'
+                  style={{ width: '100%' }}
+                >
+                  Save Component Changes
+                </Button>
+              </div>
               <Form.Group className='mb-3'>
                 <Form.Label>Section Name:</Form.Label>
                 <Form.Control

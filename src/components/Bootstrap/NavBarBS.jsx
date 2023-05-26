@@ -6,7 +6,11 @@ import Navbar from 'react-bootstrap/Navbar'
 import { CanvasContext } from '../../context/canvas.context'
 import { NavLink } from 'react-router-dom'
 
-const NavBarBS = ({ showSettings, component: { navLinks }, component }) => {
+const NavBarBS = ({
+  showSettings,
+  component: { brand, navLinks },
+  component,
+}) => {
   const { publicView, website, setSelectedComponent, ChangeMenu } =
     useContext(CanvasContext)
 
@@ -26,19 +30,16 @@ const NavBarBS = ({ showSettings, component: { navLinks }, component }) => {
       <Navbar
         expand='lg'
         className='mb-3'
-        onDoubleClick={toggleSidebar}
+        onClick={toggleSidebar}
         style={{
           ...style,
           alignItems: `${style?.alignItems || ''}`,
           height: `${style?.height || ''}px`,
           width: `${style?.width || ''}%`,
-          background: `no-repeat center/cover url(${
-            style?.backgroundImage || ''
-          })`,
+          backgroundColor: `${style.backgroundColor}`,
           padding: `${style?.padding?.top || ''}% ${
             style?.padding?.right || ''
           }% ${style?.padding?.bottom || ''}% ${style?.padding?.left || ''}%`,
-          backgroundColor: style?.backgroundColor || '',
         }}
       >
         <Container>
@@ -47,7 +48,7 @@ const NavBarBS = ({ showSettings, component: { navLinks }, component }) => {
               ChangeMenu(0)
             }}
           >
-            {website.name}
+            {brand.text}
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
