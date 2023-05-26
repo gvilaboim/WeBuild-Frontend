@@ -118,11 +118,26 @@ class CanvasStoreService {
   }
 
   checkout = async (plan, userInfo) => {
-    let details = {
-      plan,
-      userId: userInfo,
+
+    console.log("LOLLLLLLLLLLLLLL" )
+    console.log("userInfo" , userInfo)
+
+    if(plan.name === "Basic")
+    {
+      const userId  = userInfo
+      const planId  = plan._id
+
+     return this.api.post(`/api/update-user-plan`, {  userId, planId  })
+
     }
-    return this.api.post(`/api/create-checkout-session`, { details })
+    else {
+      let details = {
+        plan,
+        userId: userInfo,
+      }
+      return this.api.post(`/api/create-checkout-session`, { details })
+
+    }
   }
 
   updatePlanFunction = async (sessionId) => {

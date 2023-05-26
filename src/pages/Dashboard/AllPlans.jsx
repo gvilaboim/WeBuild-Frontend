@@ -8,15 +8,19 @@ import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import canvasStoreService from '../../services/canvas-store.service'
 import Button from 'react-bootstrap/Button'
+import { AuthContext } from '../../context/auth.context'
 
 function AllPlans() {
-  const { userPlan } = useContext(CanvasContext)
+  const { userPlan , fetchUserInfo} = useContext(CanvasContext)
+  const { user } = useContext(AuthContext)
+
   const [allPlans, setAllPlans] = useState()
 
   useEffect(() => {
     canvasStoreService.getAllPlans().then((response) => {
       setAllPlans(response.data)
     })
+    fetchUserInfo(user._id)
   }, [])
 
   return (
@@ -34,7 +38,7 @@ function AllPlans() {
                   >
                     <Card
                       className={
-                        userPlan.name === plan.name
+                        userPlan?.name === plan.name
                           ? 'p-3 dashboard-card border-dark'
                           : 'p-3 dashboard-card'
                       }
@@ -47,7 +51,7 @@ function AllPlans() {
                       <Card.Body style={{ width: '100%', height: '100%' }}>
                         <ListGroup variant='flush'>
                           <ListGroup.Item> {plan.duration} </ListGroup.Item>
-                          <ListGroup.Item> {plan.price} € </ListGroup.Item>
+                          <ListGroup.Item> {plan.text}  </ListGroup.Item>
 
                           <ListGroup.Item
                             className='bg-dark text-white'
@@ -61,7 +65,7 @@ function AllPlans() {
                           })}
                         </ListGroup>
                         <Link to={`/upgrade/${plan._id}`}>
-                          {userPlan.name === plan.name ? (
+                          {userPlan?.name === plan.name ? (
                             <Button variant='dark'>Current Plan</Button>
                           ) : (
                             <Button variant='outline-dark'>Select Plan</Button>

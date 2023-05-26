@@ -19,7 +19,13 @@ function SinglePlan() {
     e.preventDefault()
     canvasStoreService.checkout(plan, user._id).then((res) => {
       const { url } = res.data
-      window.location.href = url
+      if(plan.name === "Basic") 
+      {
+        window.location.href =  "/success"
+      }else {
+        window.location.href = url
+
+      }
     })
   }
 
@@ -62,8 +68,8 @@ function SinglePlan() {
               >
                 <Card className='text-center border-0'>
                   <Card.Body className='d-flex flex-column justify-content-evenly align-items-center'>
-                    <h2>${plan.price}/month</h2>
-                    {userPlan.name === plan.name ? (
+                    <h2>${plan.text}/month</h2>
+                    {userPlan?.name === plan.name ? (
                       <Button variant='light'>This is your current plan</Button>
                     ) : (
                       <form onSubmit={handleSubmit}>
@@ -71,7 +77,7 @@ function SinglePlan() {
                           type='submit'
                           variant='dark'
                         >
-                          Sign Up
+                          Buy Plan
                         </Button>
                       </form>
                     )}

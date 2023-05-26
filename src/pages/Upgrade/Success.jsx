@@ -14,8 +14,8 @@ const Success = () => {
   return (
     <Container className='h-100'>
       <div className='d-flex flex-column justify-content-center align-items-center h-100'>
-        <h1 className='pb-5 w-50'>Thanks for subscribing to the {userPlan.name} plan!</h1>
-        <Button className='p-4' href='/dashboard' variant='outline-dark'>Start Creating</Button>
+        <h1 className='pb-5 w-50'>Thanks for subscribing to the {userPlan?.name} plan!</h1>
+        <Button className='p-3' href='/dashboard' style={{width : "25%"}} variant='outline-dark'>Start Creating</Button>
       </div>
     </Container>
   )

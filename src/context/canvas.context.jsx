@@ -149,10 +149,12 @@ function CanvasProviderWrapper(props) {
 
   // Stripe/Pricing Plans
   const updatePlan = (sessionId) => {
+    if(sessionId){
     console.log('updatePlan ID', sessionId)
     canvasStoreService.updatePlanFunction(sessionId).then((res) => {
       fetchUserInfo(user._id)
     })
+  }
   }
 
   const UpdateUserInfo = async (userInfo) => {
