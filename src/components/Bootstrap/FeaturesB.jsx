@@ -68,9 +68,15 @@ const FeaturesB = ({ component, showSettings }) => {
 
     setHasChanges(true)
 
-    setComponentData((prevValue) => set({ ...prevValue }, name, value))
+    if (name.startsWith('title')) {
+      setComponentData((prevValue) =>
+        set({ ...prevValue }, `title.${name.split('.')[1]}`, value)
+      )
+    } else {
+      // Otherwise, update the regular component data
+      setComponentData((prevValue) => set({ ...prevValue }, name, value))
+    }
   }
-
   const handleCardChanges = (e) => {
     const { name, value } = e.target
     const [cardIndex, propName1, propName2, propName3] = name.split('.')
@@ -122,10 +128,7 @@ const FeaturesB = ({ component, showSettings }) => {
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
       }}
     >
-      <Container
-        
-        className='px-4 py-5'
-      >
+      <Container className='px-4 py-5'>
         {isEditing ? (
           <>
             <Form.Group className='mb-3'>
@@ -171,7 +174,7 @@ const FeaturesB = ({ component, showSettings }) => {
               <>
                 <Form.Group className='mb-3'>
                   <Form.Control
-                    name='title.description'
+                    name='description.text'
                     value={componentData.description.text}
                     onChange={handleChange}
                     style={{ color: componentData.description.color }}
@@ -241,6 +244,7 @@ const FeaturesB = ({ component, showSettings }) => {
                       name='button.backgroundColor'
                       type='color'
                       value={componentData.button.backgroundColor}
+
                       onChange={handleChange}
                     />
                   </div>
@@ -263,6 +267,7 @@ const FeaturesB = ({ component, showSettings }) => {
           <Col>
             <Row className='row-cols-1 row-cols-sm-2 g-4'>
               {componentData.cards.map((card) => {
+                console.log(card)
                 return (
                   <FeaturesCard
                     key={card.id}

@@ -83,6 +83,8 @@ const Subsection = ({
 
     //removing the id from the dropped component // Page 1 | Page 2 | Page 3 
     const { _id, ...droppedComponent } = draggedComponent
+    
+    console.log(droppedComponent.items[0])
     saveChanges(id, {
       menu:menu,
       droppedComponent,

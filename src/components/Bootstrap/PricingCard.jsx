@@ -14,7 +14,6 @@ const PricingCard = ({
     <Col md='4'>
       <Card className='mb-4 box-shadow'>
         {/* HANDLE CARD HEADER */}
-
         <Card.Header>
           <>
             {isEditing ? (
@@ -58,7 +57,6 @@ const PricingCard = ({
         </Card.Header>
 
         {/* HANDLE CARD BODY */}
-
         <Card.Body>
           {isEditing ? (
             <>
@@ -113,6 +111,7 @@ const PricingCard = ({
               {card.body.listedItems.map((listedItem, index) => {
                 return isEditing ? (
                   <Form.Control
+                    key={index}
                     name='text'
                     id={`listedItem-${index}`}
                     value={listedItem.text}
