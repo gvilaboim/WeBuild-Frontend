@@ -24,12 +24,12 @@ const NavigationBar = () => {
   return (
     <>
       <Button
-        className='px-1 text-white w-100'
+        className='px-1 text-white w-100 sticky-top'
         variant='dark'
         href='/dashboard'
       >
         {isOwner ? (
-          <Container className=''>
+          <Container>
             <h6 className='fw-bold my-auto py-2'>
               WeBuild - Upgrade your Plan to remove this banner
             </h6>

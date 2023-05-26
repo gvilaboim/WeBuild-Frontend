@@ -28,13 +28,13 @@ function AllPlans() {
       <Card className='bg-transparent border-0'>
         <Card.Body>
           <Row>
-            {allPlans &&
+            {userPlan && allPlans &&
               allPlans.length > 0 &&
               allPlans.map((plan) => {
                 return (
                   <Col
                     md={4}
-                    key={plan._id}
+                    key={plan._id}s
                   >
                     <Card
                       className={
