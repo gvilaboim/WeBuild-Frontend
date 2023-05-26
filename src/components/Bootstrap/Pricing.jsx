@@ -164,7 +164,7 @@ const Pricing = ({ component, showSettings }) => {
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
       }}
     >
-      <Container>
+      <Container >
         {/* HANDLE TITLE EDITS */}
 
         {isEditing ? (

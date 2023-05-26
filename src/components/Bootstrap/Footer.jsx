@@ -158,6 +158,7 @@ const Footer = ({ component, showSettings }) => {
           }% ${style?.padding?.bottom || ''}% ${style?.padding?.left || ''}%`,
           backgroundColor: `${style?.backgroundColor} !important`,
         }}
+        fluid
       >
         <Row className='border-top py-5 my-5 '>
           <Col mb={3}>

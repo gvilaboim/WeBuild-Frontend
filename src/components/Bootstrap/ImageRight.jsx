@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Row, Col, Card, Button, Image, Form } from 'react-bootstrap';
 import { CanvasContext } from '../../context/canvas.context';
 import { useParams } from 'react-router-dom';
+import { set } from 'lodash';
 
 const ImageRight = ({ component, showSettings }) => {
   const {
@@ -24,12 +25,10 @@ const ImageRight = ({ component, showSettings }) => {
   const [timestamp, setTimestamp] = useState(Date.now());
 
   const [componentData, setComponentData] = useState({
-    title: component.items[0]?.content?.title?.text,
-    titleColor: component.items[0]?.content?.title?.color,
+    title: component.items[0]?.content?.title,
+    description: component.items[0]?.content?.description,
+    image : component.items[0]?.content?.image
 
-    description: component.items[0]?.content?.description?.text,
-    imageSrc: component.items[0]?.content?.image?.src,
-    imageAlt: component.items[0]?.content?.image?.alt
   });
 
   useEffect(() => {
@@ -57,6 +56,7 @@ const ImageRight = ({ component, showSettings }) => {
   }
   useEffect(() => {
     if (clickedOutside && hasChanges) {
+      console.log("Sending changes" , componentData.items)
       saveChanges(id, {
         componentToEdit: { data: componentData, id: component._id },
       })
@@ -83,29 +83,13 @@ const ImageRight = ({ component, showSettings }) => {
     }
   }
 
-  useEffect(() => {
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
 
   const handleChange = (e) => {
     const { value, name } = e.target
     setHasChanges(true)
-    // If the name is primaryButton or secondaryButton,
-    // update the corresponding button text value
-    if (name === 'titleText') {
-      setComponentData((prevValue) => ({
-        ...prevValue,
-        title: { ...prevValue.title, text: value },
-      }))
-    } else {
-      // Otherwise, update the regular component data
-      setComponentData((prevValue) => ({ ...prevValue, [name]: value }))
-    }
+      setComponentData((prevValue) => set({ ...prevValue }, name, value))
+
   }
 
   const style = component.style;
@@ -129,10 +113,10 @@ const ImageRight = ({ component, showSettings }) => {
             <>
               <Form.Group className='mb-3'>
                 <Form.Control
-                  name='title'
+                  name='title.text'
                   as='textarea'
-                  style={{ color: componentData.titleColor }}
-                  value={componentData.title}
+                  style={{ color: componentData.title.color }}
+                  value={componentData.title.text}
                   onChange={handleChange}
                   className='input-title fw-bold lh-1 mb-3  bg-transparent'
                 />
@@ -141,9 +125,9 @@ const ImageRight = ({ component, showSettings }) => {
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Form.Label>Text Color:</Form.Label>
                   <Form.Control
-                    name='titleColor'
+                    name='title.color'
                     type='color'
-                    value={componentData.titleColor}
+                    value={componentData.title.color}
                     onChange={handleChange}
                   />
                 </div>
@@ -154,9 +138,9 @@ const ImageRight = ({ component, showSettings }) => {
               name='title-h1'
               onDoubleClick={(e) => handleDoubleClick(e)}
               className='display-5 fw-bold text-body-emphasis lh-1 mb-3'
-              style={{ color: componentData.titleColor }}
+              style={{ color: componentData.title.color }}
             >
-              {componentData.title}
+              {componentData.title.text}
             </h1>
           )}
 
@@ -166,10 +150,10 @@ const ImageRight = ({ component, showSettings }) => {
             <>
               <Form.Group className='mb-3'>
                 <Form.Control
-                  name='description'
+                  name='description.text'
                   as='textarea'
-                  style={{ color: componentData.descriptionColor }}
-                  value={componentData.description}
+                  style={{ color: componentData.description.color }}
+                  value={componentData.description.text}
                   onChange={handleChange}
                   className='input-title fw-bold lh-1 mb-3  bg-transparent'
                 />
@@ -178,9 +162,9 @@ const ImageRight = ({ component, showSettings }) => {
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Form.Label>Text Color:</Form.Label>
                   <Form.Control
-                    name='descriptionColor'
+                    name='description.color'
                     type='color'
-                    value={componentData.descriptionColor}
+                    value={componentData.description.color}
                     onChange={handleChange}
                   />
                 </div>
@@ -193,15 +177,15 @@ const ImageRight = ({ component, showSettings }) => {
 
               className="lead"
             >
-              {componentData.description}
+              {componentData.description.text}
             </p>
           )}
 
         </Col>
         <Col md={5}>
             <Image  key={isSaving ? Date.now() : undefined}
-      src={`${componentData.imageSrc}?cache=${timestamp}`}
-      alt={componentData.imageAlt}
+      src={`${componentData.image.src}?cache=${timestamp}`}
+      alt={componentData.image.src}
 
       fluid/>
     

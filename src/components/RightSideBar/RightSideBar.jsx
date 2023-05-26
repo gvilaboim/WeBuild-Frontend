@@ -527,4 +527,3 @@ const RightSideBar = () => {
 
 export default RightSideBar
 
-//acabar as cens pra enviar pra DB
