@@ -10,7 +10,7 @@ import canvasStoreService from '../../services/canvas-store.service'
 import Button from 'react-bootstrap/Button'
 
 function AllPlans() {
-  const { webSites, fetchAllWebsites } = useContext(CanvasContext)
+  const { userPlan } = useContext(CanvasContext)
   const [allPlans, setAllPlans] = useState()
 
   useEffect(() => {
@@ -19,31 +19,35 @@ function AllPlans() {
     })
   }, [])
 
-
   return (
     <>
-      <Card className='p-2 bg-transparent border-0'>
-        {/* <Card.Link href='/websites'>Start now!</Card.Link> */}
+      <Card className='bg-transparent border-0'>
         <Card.Body>
           <Row>
             {allPlans &&
               allPlans.length > 0 &&
-              allPlans.map((element) => {
+              allPlans.map((plan) => {
                 return (
                   <Col
                     md={4}
-                    key={element._id}
+                    key={plan._id}
                   >
-                    <Card className='p-3'>
-                      <Card.Title>{element.name}</Card.Title>
+                    <Card
+                      className={
+                        userPlan.name === plan.name
+                          ? 'p-3 dashboard-card border-dark'
+                          : 'p-3 dashboard-card'
+                      }
+                    >
+                      <Card.Title className='text-uppercase'>{plan.name}</Card.Title>
                       <Card.Subtitle className='mb-2 text-muted'>
-                        {element.category}
+                        {plan.category}
                       </Card.Subtitle>
 
                       <Card.Body style={{ width: '100%', height: '100%' }}>
                         <ListGroup variant='flush'>
-                          <ListGroup.Item> {element.duration} </ListGroup.Item>
-                          <ListGroup.Item> {element.price} € </ListGroup.Item>
+                          <ListGroup.Item> {plan.duration} </ListGroup.Item>
+                          <ListGroup.Item> {plan.price} € </ListGroup.Item>
 
                           <ListGroup.Item
                             className='bg-dark text-white'
@@ -52,12 +56,16 @@ function AllPlans() {
                             Features
                           </ListGroup.Item>
 
-                          {element.features.map((element) => {
-                            return <ListGroup.Item> {element} </ListGroup.Item>
+                          {plan.features.map((feature) => {
+                            return <ListGroup.Item> {feature} </ListGroup.Item>
                           })}
                         </ListGroup>
-                        <Link to={`/upgrade/${element._id}`}>
-                          <Button variant='outline-dark'>Select Plan</Button>
+                        <Link to={`/upgrade/${plan._id}`}>
+                          {userPlan.name === plan.name ? (
+                            <Button variant='dark'>Current Plan</Button>
+                          ) : (
+                            <Button variant='outline-dark'>Select Plan</Button>
+                          )}
                         </Link>
                       </Card.Body>
                     </Card>

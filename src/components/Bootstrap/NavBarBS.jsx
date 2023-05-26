@@ -7,9 +7,11 @@ import { CanvasContext } from '../../context/canvas.context'
 import { NavLink } from 'react-router-dom'
 
 const NavBarBS = ({  showSettings, component: { brand, navLinks }, component }) => {
-  const { publicView, website, setSelectedComponent ,menu , setMenu , ChangeMenu} = useContext(CanvasContext)
+  
+  const { publicView, website, setSelectedComponent ,ChangeMenu} = useContext(CanvasContext)
+  
   const [isEditing, setIsEditing] = useState(false)
-
+  
   const toggleSidebar = () => {
 
     if (!isEditing) {

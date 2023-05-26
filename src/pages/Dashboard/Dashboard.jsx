@@ -6,14 +6,15 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import { AuthContext } from '../../context/auth.context'
 import { Col, Table } from 'react-bootstrap'
+
+import { AuthContext } from '../../context/auth.context'
 
 import Statistics from './Statistics'
 import UserSettings from './UserSettings'
 import AllPlans from './AllPlans'
 import CreateForm from '../Create/CreateForm'
-import { useLocation, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 
 import { GrView } from 'react-icons/gr'
 
@@ -24,7 +25,6 @@ function Dashboard() {
     communityWebsites,
     fetchCommunityWebsites,
     getStatistics,
-    userInfo,
     clickedWebsite,
     setClickedWebsite,
   } = useContext(CanvasContext)
@@ -218,7 +218,7 @@ function Dashboard() {
           <div className='section-border'></div>
 
           <h2 className='display-4 section-title'>Community Websites</h2>
-          <Row>
+          <Row className='mx-1'>
             <Card
               body
               className='py-1 dashboard-card'

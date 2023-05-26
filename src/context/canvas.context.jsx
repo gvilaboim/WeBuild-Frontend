@@ -138,8 +138,8 @@ function CanvasProviderWrapper(props) {
         setUserPlan(response.data.plan)
 
         if (
-          response.data.plan.name === 'Profissional Plan' ||
-          response.data.plan.name === 'MySelf Plan'
+          response.data.plan.name === 'Standard' ||
+          response.data.plan.name === 'Advanced'
         ) {
           setPremiumPlan(true)
         }

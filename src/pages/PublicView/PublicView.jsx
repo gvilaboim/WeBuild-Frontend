@@ -7,21 +7,26 @@ import { AuthContext } from '../../context/auth.context'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
 
 const PublicView = () => {
-  const { UpdateStatistics, website, fetchOneWebsite, setPublicView , menu , setMenu} =
-    useContext(CanvasContext)
+  const {
+    UpdateStatistics,
+    premiumPlan,
+    website,
+    fetchOneWebsite,
+    setPublicView,
+    menu,
+    setMenu,
+  } = useContext(CanvasContext)
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
   const [locationName, setLocationName] = useState(null)
-
-
 
   const { id } = useParams()
   useEffect(() => {
     fetchOneWebsite(id)
     setPublicView(true)
-  }, [])
 
-  
+    console.log(premiumPlan)
+  }, [])
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -68,15 +73,18 @@ const PublicView = () => {
 
   return (
     <div>
-      {website && website.name  ? (
+      {website && website.name ? (
         <>
-          <NavigationBar />
-          <Canvas website={website}  setMenu = {setMenu} menu={menu}/>
+          {!premiumPlan && <NavigationBar />}
+          <Canvas
+            website={website}
+            setMenu={setMenu}
+            menu={menu}
+          />
         </>
       ) : (
-        <></> 
+        <></>
       )}
-
 
       <div></div>
     </div>

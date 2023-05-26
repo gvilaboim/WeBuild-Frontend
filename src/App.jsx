@@ -11,7 +11,7 @@ import IsPrivate from './components/IsPrivate/IsPrivate'
 import IsAnon from './components/IsAnon/IsAnon'
 import Create from './pages/Create/Create'
 import CreateForm from './pages/Create/CreateForm'
-import AllPlans from './pages/Upgrade/AllPlans'
+import AllPlans from './pages/Dashboard/AllPlans'
 import SinglePlan from './pages/Upgrade/SinglePlan'
 import Success from './pages/Upgrade/Success'
 import PublicView from './pages/PublicView/PublicView'
@@ -25,14 +25,13 @@ import { AuthContext } from './context/auth.context'
 
 function App() {
   const location = useLocation()
-  const { website, showMenu, setShowMenu, publicView, premiumPlan } =
+  const { website, showMenu, setShowMenu, } =
     useContext(CanvasContext)
   const { user } = useContext(AuthContext)
 
-  const [isCompactSideMenu, setIsCompactSideMenu] = useState(false)
+  const [collapseSidemenu, setCollapseSidemenu] = useState(false)
 
   useEffect(() => {
-    console.log(premiumPlan, user)
     if (
       location.pathname === '/' ||
       location.pathname === '/login' ||
@@ -48,14 +47,32 @@ function App() {
       website &&
       website.user &&
       website.user.plan &&
-      website.user.plan.name !== 'Free Plan'
+      website.user.plan.name !== 'Basic'
     ) {
       setShowMenu(false)
+      
     }
   }, [location.pathname])
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setCollapseSidemenu(false);
+      } else {
+        setCollapseSidemenu(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const sideMenuStyle = {
-    backgroundColor: isCompactSideMenu ? '#f8f9fa' : '#212529',
     flexBasis: !showMenu ? '0' : '25%',
   }
 
@@ -63,33 +80,13 @@ function App() {
     flexBasis: !showMenu ? '100%' : '75%',
   }
 
-  /* 
-  
-  
-  {publicView ? ( 
-   <></>
-      ) : (      <div
-        style={{ ...sideMenuStyle }}
-        className='side-menu'
-      >
-        <SideMenu
-          isCompactSideMenu={isCompactSideMenu}
-          setIsCompactSideMenu={setIsCompactSideMenu}
-        />
-      </div> )}
-  
-  
-  
-  */
-
   return (
     <div className='App'>
       <div
         style={{ ...sideMenuStyle }}
         className='side-menu'
       >
-        <SideMenu
-        />
+        <SideMenu collapseSidemenu={collapseSidemenu} />
       </div>
 
       <div
