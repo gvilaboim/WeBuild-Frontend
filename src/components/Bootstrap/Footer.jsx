@@ -257,7 +257,7 @@ const Footer = ({ component, showSettings }) => {
                         )}
                     </Nav.Item>
                     <Nav.Item className='mb-2'>
-                    {componentData.header2.links &&
+                      {componentData.header2.links &&
                         componentData.header2.links.length > 0 && (
                           <Nav.Link
                             href={componentData.header2?.links[2].href}
@@ -268,7 +268,7 @@ const Footer = ({ component, showSettings }) => {
                         )}
                     </Nav.Item>
                     <Nav.Item className='mb-2'>
-                    {componentData.header2.links &&
+                      {componentData.header2.links &&
                         componentData.header2.links.length > 0 && (
                           <Nav.Link
                             href={componentData.header2?.links[3].href}
@@ -279,7 +279,7 @@ const Footer = ({ component, showSettings }) => {
                         )}
                     </Nav.Item>
                     <Nav.Item className='mb-2'>
-                    {componentData.header2.links &&
+                      {componentData.header2.links &&
                         componentData.header2.links.length > 0 && (
                           <Nav.Link
                             href={componentData.header2?.links[4].href}
@@ -304,7 +304,7 @@ const Footer = ({ component, showSettings }) => {
 
                   <Nav className='flex-column'>
                     <Nav.Item className='mb-2'>
-                    {componentData.header3.links &&
+                      {componentData.header3.links &&
                         componentData.header3.links.length > 0 && (
                           <Nav.Link
                             href={componentData.header3?.links[0]?.href}
@@ -315,7 +315,7 @@ const Footer = ({ component, showSettings }) => {
                         )}
                     </Nav.Item>
                     <Nav.Item className='mb-2'>
-                    {componentData.header3.links &&
+                      {componentData.header3.links &&
                         componentData.header3.links.length > 0 && (
                           <Nav.Link
                             href={componentData.header3?.links[1]?.href}
@@ -326,7 +326,7 @@ const Footer = ({ component, showSettings }) => {
                         )}
                     </Nav.Item>
                     <Nav.Item className='mb-2'>
-                    {componentData.header3.links &&
+                      {componentData.header3.links &&
                         componentData.header3.links.length > 0 && (
                           <Nav.Link
                             href={componentData.header3?.links[2]?.href}
@@ -337,7 +337,7 @@ const Footer = ({ component, showSettings }) => {
                         )}
                     </Nav.Item>
                     <Nav.Item className='mb-2'>
-                    {componentData.header3.links &&
+                      {componentData.header3.links &&
                         componentData.header3.links.length > 0 && (
                           <Nav.Link
                             href={componentData.header3?.links[3]?.href}
@@ -348,7 +348,7 @@ const Footer = ({ component, showSettings }) => {
                         )}
                     </Nav.Item>
                     <Nav.Item className='mb-2'>
-                    {componentData.header3.links &&
+                      {componentData.header3.links &&
                         componentData.header3.links.length > 0 && (
                           <Nav.Link
                             href={componentData.header3?.links[4]?.href}

@@ -28,7 +28,7 @@ const NavigationBar = () => {
   return (
     <>
       <Button
-        className='px-1 text-white w-100 sticky-top'
+        className='px-1 text-white w-100 sticky-top rounded-0'
         variant='dark'
         href='/dashboard'
       >
