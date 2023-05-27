@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+### WeBuild
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Build and Host Your Own Websites - Client
 
-## Available Scripts
+This is the frontend repository of a MERN (MongoDB, Express, React, Node) stack web application that lets you build and host simple websites. With this app, you can easily create your own website without any prior knowledge of web development.
 
-In the project directory, you can run:
+The website builder feature of this app uses the React DND (Drag and Drop) library for a seamless drag and drop experience.
 
-### `npm start`
+## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Clone the repository:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+git clone https://github.com/gvilaboim/WeBuild-Frontend.git
+```
 
-### `npm test`
+# Install dependencies:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+cd client
+npm install
+```
 
-### `npm run build`
+# Start the development server:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Usage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Open the app in your web browser at http://localhost:3000.
+2. Click on the "Create New Website" button to start building your website.
+3. Use the drag and drop feature to add elements to your website from the side menu.
+4. Double Click components to edit styling and sizing.
+5. Once you're done building your website, click on the "Publish" button to host it.
+6. Use the Stripe integration to pay for extra features or use the Basic Plan for to quickly launch your ideas.
 
-### `npm run eject`
+Your website will be hosted at http://localhost:5000/<your-website-name>.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Credits
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This app was built by [Gonçalo Vilaboim](https://github.com/gvilaboim) and [Guilherme Ferreira](https://github.com/gferreira7)
