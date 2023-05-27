@@ -22,6 +22,7 @@ import { useContext, useEffect, useState } from 'react'
 import { CanvasContext } from './context/canvas.context'
 import SupportPage from './pages/SupportPage/SupportPage'
 import { AuthContext } from './context/auth.context'
+import HireDeveloperForm from './pages/HireDeveloperForm/HireDeveloperForm'
 
 function App() {
   const location = useLocation()
@@ -99,6 +100,7 @@ function App() {
               </IsPrivate>
             }
           />
+
           <Route
             path='/support'
             element={
@@ -107,6 +109,16 @@ function App() {
               </IsPrivate>
             }
           />
+
+          <Route
+            path='/hire-a-dev'
+            element={
+              <IsPrivate>
+                <HireDeveloperForm />
+              </IsPrivate>
+            }
+          />
+
           <Route
             path='/settings'
             element={

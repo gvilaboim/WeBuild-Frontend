@@ -106,20 +106,7 @@ const RightSideBar = () => {
                 </>
               )}
 
-              {componentData?.items && componentData.items.length > 0 && (
-                <>
-                  <Form.Group className='mb-3'>
-                    <Form.Label>Title:</Form.Label>
-                    <Form.Control
-                      name='items[0].content.title'
-                      type='text'
-                      value={componentData.items[0].content.title}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
-                </>
-              )}
-
+    
               {componentData.navLinks && componentData.navLinks.length > 0 && (
                 <Form.Group className='mb-3'>
                   <Form.Label>NavLinks:</Form.Label>

@@ -96,7 +96,7 @@ function Dashboard() {
 
           {userWebsites && userWebsites.length > 0 && (
             <Row className='my-websites-row dashboard-row'>
-              <Col md={6}>
+              <Col lg={9}>
                 <Card className='my-websites-table'>
                   <Card.Body>
                     <Table
@@ -149,13 +149,13 @@ function Dashboard() {
                                       updatedAt.toLocaleString().indexOf(',')
                                     )}
                                 </td>
-                                <td>
+                                <td className='text-center'>
                                   <a
                                     href={`/webuild/${website.user.name}/${website.name}/${website._id}`}
                                     target='_blank'
                                     rel='noopener noreferrer'
                                   >
-                                    <GrView className='view-button' />
+                                    <GrView className='view-button' size={30} />
                                   </a>
                                 </td>
                                 <td>
@@ -176,7 +176,7 @@ function Dashboard() {
               </Col>
 
               <Col
-                md={6}
+                lg={3}
                 className='my-websites-stats'
               >
                 {clickedWebsite ? (
@@ -220,6 +220,7 @@ function Dashboard() {
             <Card
               body
               className='py-1 dashboard-card'
+              style={{textAlign: "left"}}
             >
               <Table
                 variant='light'
