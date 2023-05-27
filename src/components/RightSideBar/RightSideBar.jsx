@@ -110,7 +110,7 @@ const RightSideBar = () => {
                   <Form.Group className='mb-3'>
                     <Form.Label>Title:</Form.Label>
                     <Form.Control
-                      name='title'
+                      name='items[0].content.title'
                       type='text'
                       value={componentData.items[0].content.title}
                       onChange={handleChange}
@@ -320,10 +320,9 @@ controlId='formBasicHeight'
                 </div>
               )}
 
-              {componentData.items &&
-                componentData.items.length > 0 &&
-                componentData.items[0].content &&
-                componentData.items[0]?.content.headers.length > 0 && (
+              {componentData.items && 
+                componentData.items[0] &&
+                componentData.items[0]?.content?.headers && (
                   <Form.Group className='mb-3'>
                     <Form.Label>
                       Section:
@@ -398,9 +397,9 @@ controlId='formBasicHeight'
                 )}
 
               {componentData.items &&
-                componentData.items.length > 0 &&
-                componentData.items[0].content &&
-                componentData.items[0]?.content.headers.length > 0 && (
+                componentData.items &&
+                componentData.items[0] &&
+                componentData.items[0]?.content?.headers && (
                   <Form.Group
                     className='mb-3'
                     controlId='formBasicBackgroundImage'
@@ -483,9 +482,9 @@ controlId='formBasicHeight'
                 )}
 
               {componentData.items &&
-                componentData.items.length > 0 &&
-                componentData.items[0].content &&
-                componentData.items[0]?.content.headers.length > 0 && (
+                componentData.items &&
+                componentData.items[0] &&
+                componentData.items[0]?.content?.headers && (
                   <Form.Group
                     className='mb-3'
                     controlId='formBasicBackgroundImage'
