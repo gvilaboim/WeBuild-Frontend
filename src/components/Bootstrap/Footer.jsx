@@ -151,11 +151,12 @@ const Footer = ({ component, showSettings }) => {
           width: `${style.width}%`,
           background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
           padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-          opacity: `${style.opacity}`
+          opacity: `${style.opacity}`,
+          
           }}
         fluid
       >
-        <Row className='border-top py-4 my-0 '>
+        <Row className='border-top py-4 my-0 ' >
           <Col mb={3}>
             {componentData &&
               componentData.header1 &&
@@ -171,7 +172,8 @@ const Footer = ({ component, showSettings }) => {
                         href={componentData.header1.links[0].href}
                         className='nav-link p-0 text-body-secondary'
                         onDoubleClick={handleDoubleClick}
-                      
+                        style={{ color: 'inherit', textDecoration: 'none' }}
+
                       >
                         {componentData.header1?.links[0]?.text}
                       </Nav.Link>
@@ -184,6 +186,8 @@ const Footer = ({ component, showSettings }) => {
                     <Nav.Link
                       href={componentData.header1?.links[1]?.href}
                       className='nav-link p-0 text-body-secondary'
+                      style={{ color: 'inherit', textDecoration: 'none' }}
+
                     >
                       {componentData.header1?.links[1]?.text}
                     </Nav.Link>
@@ -195,6 +199,8 @@ const Footer = ({ component, showSettings }) => {
                     <Nav.Link
                       href={componentData.header1?.links[2]?.href}
                       className='nav-link p-0 text-body-secondary'
+                      style={{ color: 'inherit', textDecoration: 'none' }}
+
                     >
                       {componentData.header1?.links[2]?.text}
                     </Nav.Link>
@@ -206,6 +212,8 @@ const Footer = ({ component, showSettings }) => {
                     <Nav.Link
                       href={componentData.header1?.links[3]?.href}
                       className='nav-link p-0 text-body-secondary'
+                      style={{ color: 'inherit', textDecoration: 'none' }}
+
                     >
                       {componentData.header1?.links[3].text}
                     </Nav.Link>
@@ -217,6 +225,8 @@ const Footer = ({ component, showSettings }) => {
                     <Nav.Link
                       href={componentData.header1?.links[4].href}
                       className='nav-link p-0 text-body-secondary'
+                      style={{ color: 'inherit', textDecoration: 'none' }}
+
                     >
                       {componentData.header1?.links[4].text}
                     </Nav.Link>
@@ -241,6 +251,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header2?.links[0].href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header2?.links[0].text}
                           </Nav.Link>
@@ -252,6 +264,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header2?.links[1].href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header2?.links[1].text}
                           </Nav.Link>
@@ -263,6 +277,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header2?.links[2].href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header2?.links[2].text}
                           </Nav.Link>
@@ -274,6 +290,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header2?.links[3].href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header2?.links[3].text}
                           </Nav.Link>
@@ -285,6 +303,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header2?.links[4].href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header2?.links[4].text}
                           </Nav.Link>
@@ -310,6 +330,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header3?.links[0]?.href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header3?.links[0]?.text}
                           </Nav.Link>
@@ -321,6 +343,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header3?.links[1]?.href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header3?.links[1]?.text}
                           </Nav.Link>
@@ -332,6 +356,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header3?.links[2]?.href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header3?.links[2]?.text}
                           </Nav.Link>
@@ -343,6 +369,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header3?.links[3]?.href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header3?.links[3]?.text}
                           </Nav.Link>
@@ -354,6 +382,8 @@ const Footer = ({ component, showSettings }) => {
                           <Nav.Link
                             href={componentData.header3?.links[4]?.href}
                             className='nav-link p-0 text-body-secondary'
+                            style={{ color: 'inherit', textDecoration: 'none' }}
+
                           >
                             {componentData.header3?.links[4]?.text}
                           </Nav.Link>

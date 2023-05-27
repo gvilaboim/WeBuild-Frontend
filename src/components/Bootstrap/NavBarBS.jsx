@@ -50,14 +50,14 @@ const NavBarBS = ({
               ChangeMenu(0)
             }}
           >
-            {brand.text}
+           <h4> <b> {brand.text} </b>    </h4>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
               {navLinks &&
                 navLinks.map((link, index) => (
-                 <b>  <NavLink
+                 <h4> <b>  <NavLink
                     className='nav-link'
                     key={link.text}
                     onClick={() => {
@@ -66,7 +66,7 @@ const NavBarBS = ({
                   >
                     {link.text}
                   </NavLink>
-                  </b>
+                  </b>  </h4> 
                 ))}
             </Nav>
           </Navbar.Collapse>
