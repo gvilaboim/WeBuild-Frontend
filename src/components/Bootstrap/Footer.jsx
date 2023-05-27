@@ -151,7 +151,8 @@ const Footer = ({ component, showSettings }) => {
           width: `${style.width}%`,
           background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
           padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-        }}
+          opacity: "0.5"
+          }}
         fluid
       >
         <Row className='border-top py-5 my-5 '>
