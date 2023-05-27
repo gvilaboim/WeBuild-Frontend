@@ -57,7 +57,7 @@ const NavBarBS = ({
             <Nav className='ms-auto'>
               {navLinks &&
                 navLinks.map((link, index) => (
-                  <NavLink
+                 <b>  <NavLink
                     className='nav-link'
                     key={link.text}
                     onClick={() => {
@@ -66,6 +66,7 @@ const NavBarBS = ({
                   >
                     {link.text}
                   </NavLink>
+                  </b>
                 ))}
             </Nav>
           </Navbar.Collapse>
