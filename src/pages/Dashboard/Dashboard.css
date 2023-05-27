@@ -69,7 +69,7 @@
   height: 300px;
   overflow-y: scroll;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  /* border-radius: 0; */
+
 }
 
 .my-websites-stats {
@@ -80,7 +80,7 @@
 
 .stats-card {
   flex: 1;
-  /* border-radius: 0; */
+
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 

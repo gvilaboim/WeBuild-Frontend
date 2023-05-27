@@ -152,7 +152,6 @@ const Hero = ({ component, showSettings }) => {
               className='d-block mx-lg-auto img-fluid'
               alt='Bootstrap Themes'
               width={component.items[0].image.style.width}
-              height={component.items[0].image.style.height}
               loading='lazy'
             />
           </Col>
@@ -228,7 +227,7 @@ const Hero = ({ component, showSettings }) => {
                 {componentData.subtitle.text}
               </p>
             )}
-            <div className='d-grid gap-2 d-md-flex justify-content-md-start'>
+            <div className='d-grid gap-4 mt-4 d-md-flex justify-content-md-start'>
               {isEditing ? (
                 <>
                   <Form.Group className='mb-3'>
