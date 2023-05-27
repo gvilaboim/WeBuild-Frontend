@@ -10,7 +10,7 @@ import Loading from '../../components/Loading/Loading'
 import { Button, Carousel, Collapse } from 'react-bootstrap'
 import { AuthContext } from '../../context/auth.context'
 import canvasStoreService from '../../services/canvas-store.service'
-import {RiDeleteBinLine} from 'react-icons/ri'
+import { RiDeleteBinLine } from 'react-icons/ri'
 
 const Create = () => {
   const { fetchOneWebsite, website, publishWebsite, setWebsite } =
@@ -32,7 +32,9 @@ const Create = () => {
   }
 
   const handleDeleteSite = async () => {
-    canvasStoreService.deleteWebsite(id).then(response => navigate('/dashboard'))
+    canvasStoreService
+      .deleteWebsite(id)
+      .then((response) => navigate('/dashboard'))
   }
 
   const handBackgroundChange = (e) => {
@@ -48,21 +50,36 @@ const Create = () => {
       {website && (
         <>
           <div className='p-2 d-flex justify-content-center align-items-center gap-2'>
-            {website.background ? (
+            {openCarousel && (
+              <>
+                
               <Button
-                variant='outline-secondary'
-                onClick={handBackgroundChange}
-              >
-                Remove Background
-              </Button>
-            ) : (
+                  variant='outline-secondary'
+                  onClick={() => setOpenCarousel(!openCarousel)}
+                  aria-controls='change-bg-container'
+                  aria-expanded={openCarousel}
+                >
+                  Close
+                </Button>
+            
+                {website.background && <Button
+                  variant='outline-danger'
+                  onClick={handBackgroundChange}
+                >
+                  Remove Background
+                </Button>}
+
+              </>
+            )}
+
+            {!openCarousel && (
               <Button
                 variant='outline-secondary'
                 onClick={() => setOpenCarousel(!openCarousel)}
                 aria-controls='change-bg-container'
                 aria-expanded={openCarousel}
               >
-                {openCarousel ? 'Close' : `Change Background`}
+                Change Background
               </Button>
             )}
             {website.isPublished ? (
@@ -83,14 +100,12 @@ const Create = () => {
               </Button>
             )}
 
-            
-
             <Button
               variant='outline-danger'
               className='px-4'
               onClick={handleDeleteSite}
             >
-            <RiDeleteBinLine />
+              <RiDeleteBinLine />
             </Button>
             <Button
               href={`/webuild/${user.name}/${website.name}/${website._id}`}
