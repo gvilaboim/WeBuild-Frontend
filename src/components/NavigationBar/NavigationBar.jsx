@@ -18,7 +18,11 @@ const NavigationBar = () => {
   }, [user])
 
   useEffect(() => {
+    if(website && user){
+
+    
     setIsOwner(website.user._id === user._id)
+  }
   }, [])
 
   return (

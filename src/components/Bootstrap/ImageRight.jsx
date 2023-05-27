@@ -99,10 +99,9 @@ const ImageRight = ({ component, showSettings }) => {
       onClick={() => showSettings(component)}
       style={{
         ...style,
-        height: `${style.height}px`,
+        minHeight: `${style.height}px`,
         width: `${style.width}%`,
-        backgroundColor: `${style.backgroundColor}` || "",
-        background: `no-repeat  center/cover url(${style.backgroundImage})`,
+        background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
       }}
     >
@@ -184,7 +183,7 @@ const ImageRight = ({ component, showSettings }) => {
         </Col>
         <Col md={5}>
             <Image  key={isSaving ? Date.now() : undefined}
-      src={`${componentData.image.src}?cache=${timestamp}`}
+        src={`${componentData.image.src}?cache=${timestamp}`}
       alt={componentData.image.src}
 
       fluid/>

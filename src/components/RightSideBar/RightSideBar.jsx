@@ -159,7 +159,7 @@ const RightSideBar = () => {
                 </Form.Group>
               )}
 
-              {componentData?.items?.[0]?.content && componentData.items[0].content?.image &&  (
+              {componentData?.items?.[0]?.content && componentData.items[0].content?.image && (
                 <Form.Group className='mb-3'>
                   <Form.Label>Image:</Form.Label>
                   <Form.Control
@@ -170,6 +170,52 @@ const RightSideBar = () => {
                   />
                 </Form.Group>
               )}
+
+              {componentData.items && componentData.items[0]?.image && (
+
+<> 
+                <Form.Group
+                  className='mb-3'
+                  controlId='formBasicBackgroundImage'
+                >
+                  <Form.Label>Image:</Form.Label>
+                  <Form.Control
+                    name='items[0].image.src'
+                    type='text'
+                    value={componentData.items[0].image.src}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+
+                  
+<Form.Group
+className='mb-3'
+controlId='formBasicHeight'
+>
+<Form.Label> Image Height:</Form.Label>
+<Form.Control
+  name='items[0].image.style.height'
+  type='number'
+  value={componentData.items[0].image.style.height}
+  onChange={handleChange}
+/>
+</Form.Group>
+<Form.Group
+className='mb-3'
+controlId='formBasicHeight'
+>
+<Form.Label> Image width:</Form.Label>
+<Form.Control
+  name='items[0].image.style.width'
+  type='number'
+  value={componentData.items[0].image.style.width}
+  onChange={handleChange}
+/>
+</Form.Group>
+</>
+              )}
+
+
 
               {componentData.style && (
                 <div>

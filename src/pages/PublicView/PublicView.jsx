@@ -5,6 +5,10 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { AuthContext } from '../../context/auth.context'
 import NavigationBar from '../../components/NavigationBar/NavigationBar'
+import NotFoundPage from '../NotFoundPage/NotFoundPage'
+import Loading from '../../components/Loading/Loading'
+import "./PublicView.css";
+
 
 const PublicView = () => {
   const {
@@ -19,10 +23,12 @@ const PublicView = () => {
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
   const [locationName, setLocationName] = useState(null)
+  const [loading , setLoading] = useState(true)
 
   const { id } = useParams()
+
   useEffect(() => {
-    fetchOneWebsite(id)
+    fetchOneWebsite(id).then(() => setLoading(false))
     setPublicView(true)
 
     console.log(premiumPlan)
@@ -73,7 +79,9 @@ const PublicView = () => {
 
   return (
     <div>
-      {website && website.name ? (
+
+      
+      {website && website.name && website.isPublished  ? (
         <>
           {!premiumPlan && <NavigationBar />}
           <Canvas
@@ -83,7 +91,17 @@ const PublicView = () => {
           />
         </>
       ) : (
-        <></>
+        <>
+   {loading ? (
+    <div className='loading-container'> 
+  <Loading/>
+  </div> 
+   ):(
+    <NotFoundPage/>
+
+   )}
+        
+        </>
       )}
 
       <div></div>

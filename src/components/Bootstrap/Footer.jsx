@@ -147,16 +147,10 @@ const Footer = ({ component, showSettings }) => {
         onDoubleClick={toggleSidebar}
         style={{
           ...style,
-          alignItems: `${style?.alignItems || ''}`,
-          height: `${style?.height || ''}px`,
-          width: `${style?.width || ''}%`,
-          background: `no-repeat center/cover url(${
-            style?.backgroundImage || ''
-          })`,
-          padding: `${style?.padding?.top || ''}% ${
-            style?.padding?.right || ''
-          }% ${style?.padding?.bottom || ''}% ${style?.padding?.left || ''}%`,
-          backgroundColor: `${style?.backgroundColor} !important`,
+          minHeight: `${style.height}px`,
+          width: `${style.width}%`,
+          background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
+          padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
         }}
         fluid
       >
@@ -176,9 +170,7 @@ const Footer = ({ component, showSettings }) => {
                         href={componentData.header1.links[0].href}
                         className='nav-link p-0 text-body-secondary'
                         onDoubleClick={handleDoubleClick}
-                        style={{
-                          color: componentData.header1?.links[0]?.color,
-                        }}
+                      
                       >
                         {componentData.header1?.links[0]?.text}
                       </Nav.Link>
