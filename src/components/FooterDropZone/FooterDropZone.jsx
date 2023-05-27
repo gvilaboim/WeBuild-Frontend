@@ -55,7 +55,7 @@ const FooterDropZone = () => {
   return (
     <div
       ref={drop}
-      style={{ ...style, backgroundColor }}
+      style={{ ...style, backgroundColor  }}
       className={className}
     >
       {website &&

@@ -103,6 +103,8 @@ const ImageLeft = ({ component, showSettings }) => {
         width: `${style.width}%`,
         background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
+        opacity: `${style.opacity}`
+
       }}
     >
       <Row className="featurette">
@@ -173,6 +175,7 @@ const ImageLeft = ({ component, showSettings }) => {
             <p
               name='title-h1'
               onDoubleClick={(e) => handleDoubleClick(e)}
+              style={{ color: componentData.description.color }}
 
               className="lead"
             >

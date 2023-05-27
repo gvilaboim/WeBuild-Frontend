@@ -41,6 +41,7 @@ function CreateForm() {
               name='name'
               value={name}
               onChange={handleChange}
+              required
             />
           </Col>
         </Form.Group>

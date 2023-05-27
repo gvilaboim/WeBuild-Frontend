@@ -159,9 +159,10 @@ const Pricing = ({ component, showSettings }) => {
         ...style,
         minHeight: `${style.height}px`,
         width: `${style.width}%`,
-        backgroundColor: `${style.backgroundColor}`,
-        background: `no-repeat  center/cover url(${style.backgroundImage})`,
+        background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
+
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
+        opacity: `${style.opacity}`
       }}
     >
       <Container >

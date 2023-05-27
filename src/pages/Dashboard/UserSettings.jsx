@@ -60,15 +60,7 @@ const UserSettings = () => {
                 onChange={handleChange}
               />
             </Form.Group>
-            <Form.Group>
-              <Form.Label>Username:</Form.Label>
-              <Form.Control
-                type='text'
-                name='username'
-                value={userInfo.username}
-                onChange={handleChange}
-              />
-            </Form.Group>
+            
             <Form.Group>
               <Form.Label>Email:</Form.Label>
               <Form.Control

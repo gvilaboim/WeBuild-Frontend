@@ -36,6 +36,7 @@ const SideMenu = ({ collapseSidemenu }) => {
     fetchUserInfo,
     userPlan,
     fetchStoreItems,
+    userInfo
   } = useContext(CanvasContext)
 
   const location = useLocation()
@@ -83,7 +84,7 @@ const SideMenu = ({ collapseSidemenu }) => {
                     )}
                     <Card.Text className='my-5'>
                       <span className='text-muted'>Signed in as </span>
-                      <a href='/account'>{user.name}</a>
+                      <a href='/account'>{userInfo?.name}</a>
                     </Card.Text>
 
                     <Button
@@ -108,7 +109,7 @@ const SideMenu = ({ collapseSidemenu }) => {
                   }
                 >
                   <Card.Header>
-                    <CustomToggle eventKey='dashboard'>Dashboard</CustomToggle>
+                    <CustomToggle eventKey='dashboard'  > <a href="#section1"> Dashboard  </a></CustomToggle>
                   </Card.Header>
                 </Card>
 
@@ -199,10 +200,10 @@ const SideMenu = ({ collapseSidemenu }) => {
                       <Accordion.Collapse eventKey='user-settings'>
                         <ListGroup>
                           <ListGroup.Item className='custom-sidebar-links'>
-                            Settings
+                          <a href="#section3">   Settings </a>
                           </ListGroup.Item>
                           <ListGroup.Item className='custom-sidebar-links'>
-                            Plans
+                          <a href="#section4">    Plans</a>
                           </ListGroup.Item>
                         </ListGroup>
                       </Accordion.Collapse>
@@ -215,8 +216,21 @@ const SideMenu = ({ collapseSidemenu }) => {
                       </Card.Header>
                       <Accordion.Collapse eventKey='4'>
                         <ListGroup>
+                          <ListGroup.Item className='custom-sidebar-links' >
+                      <a href='/support'>Help Forum </a>      
+                          </ListGroup.Item>
+                        </ListGroup>
+                      </Accordion.Collapse>
+                    </Card>
+
+                    <Card className='bg-dark border-none'>
+                      <Card.Header>
+                        <CustomToggle eventKey='11'>Community </CustomToggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey='11'>
+                        <ListGroup>
                           <ListGroup.Item className='custom-sidebar-links'>
-                            Help Forum
+                          <a href="#section2">  Community websites </a>
                           </ListGroup.Item>
                         </ListGroup>
                       </Accordion.Collapse>

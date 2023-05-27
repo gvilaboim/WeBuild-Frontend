@@ -12,7 +12,7 @@ const PricingCard = ({
   const { publicView } = useContext(CanvasContext)
   return (
     <Col md='4'>
-      <Card className='mb-4 box-shadow'>
+      <Card className='mb-4 box-shadow' >
         {/* HANDLE CARD HEADER */}
         <Card.Header>
           <>

@@ -143,7 +143,7 @@ const Footer = ({ component, showSettings }) => {
     <div>
       <Container
         expand='lg'
-        className='mb-3'
+        className='mb-0'
         onDoubleClick={toggleSidebar}
         style={{
           ...style,
@@ -151,11 +151,11 @@ const Footer = ({ component, showSettings }) => {
           width: `${style.width}%`,
           background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
           padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-          opacity: "0.5"
+          opacity: `${style.opacity}`
           }}
         fluid
       >
-        <Row className='border-top py-5 my-5 '>
+        <Row className='border-top py-4 my-0 '>
           <Col mb={3}>
             {componentData &&
               componentData.header1 &&

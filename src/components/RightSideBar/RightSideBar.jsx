@@ -22,6 +22,7 @@ const RightSideBar = () => {
   const { id } = useParams()
 
   const [componentData, setComponentData] = useState({})
+  const [theme, setTheme] = useState("")
 
   const handleCloseSettingsSidebar = () => setShowSettingsSidebar(false)
 
@@ -174,46 +175,46 @@ const RightSideBar = () => {
 
               {componentData.items && componentData.items[0]?.image && (
 
-<> 
-                <Form.Group
-                  className='mb-3'
-                  controlId='formBasicBackgroundImage'
-                >
-                  <Form.Label>Image:</Form.Label>
-                  <Form.Control
-                    name='items[0].image.src'
-                    type='text'
-                    value={componentData.items[0].image.src}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
+                <>
+                  <Form.Group
+                    className='mb-3'
+                    controlId='formBasicBackgroundImage'
+                  >
+                    <Form.Label>Image:</Form.Label>
+                    <Form.Control
+                      name='items[0].image.src'
+                      type='text'
+                      value={componentData.items[0].image.src}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
 
-                  
-<Form.Group
-className='mb-3'
-controlId='formBasicHeight'
->
-<Form.Label> Image Height:</Form.Label>
-<Form.Control
-  name='items[0].image.style.height'
-  type='number'
-  value={componentData.items[0].image.style.height}
-  onChange={handleChange}
-/>
-</Form.Group>
-<Form.Group
-className='mb-3'
-controlId='formBasicHeight'
->
-<Form.Label> Image width:</Form.Label>
-<Form.Control
-  name='items[0].image.style.width'
-  type='number'
-  value={componentData.items[0].image.style.width}
-  onChange={handleChange}
-/>
-</Form.Group>
-</>
+
+                  <Form.Group
+                    className='mb-3'
+                    controlId='formBasicHeight'
+                  >
+                    <Form.Label> Image Height:</Form.Label>
+                    <Form.Control
+                      name='items[0].image.style.height'
+                      type='number'
+                      value={componentData.items[0].image.style.height}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                  <Form.Group
+                    className='mb-3'
+                    controlId='formBasicHeight'
+                  >
+                    <Form.Label> Image width:</Form.Label>
+                    <Form.Control
+                      name='items[0].image.style.width'
+                      type='number'
+                      value={componentData.items[0].image.style.width}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </>
               )}
 
 
@@ -231,6 +232,22 @@ controlId='formBasicHeight'
                         style={{ width: '100%' }}
                       />
                     </div>
+                  </Form.Group>
+
+                  <Form.Group
+                    className='mb-3'
+                    controlId='formBasicHeight'
+                  >
+                    <Form.Label> opacity:</Form.Label>
+                    <Form.Control
+                      name='style.opacity'
+                      type='number'
+                      step=".01"
+                      min="0"
+                      max="1"
+                      value={componentData.style.opacity}
+                      onChange={handleChange}
+                    />
                   </Form.Group>
 
                   <Form.Group
@@ -320,7 +337,7 @@ controlId='formBasicHeight'
                 </div>
               )}
 
-              {componentData.items && 
+              {componentData.items &&
                 componentData.items[0] &&
                 componentData.items[0]?.content?.headers && (
                   <Form.Group className='mb-3'>

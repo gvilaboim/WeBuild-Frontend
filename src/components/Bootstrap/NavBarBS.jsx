@@ -29,8 +29,8 @@ const NavBarBS = ({
     <>
       <Navbar
         expand='lg'
-        className='mb-3'
-        onClick={toggleSidebar}
+        className='mb-0'
+        onDoubleClick={toggleSidebar}
         style={{
           ...style,
           alignItems: `${style?.alignItems || ''}`,
@@ -40,6 +40,8 @@ const NavBarBS = ({
           padding: `${style?.padding?.top || ''}% ${
             style?.padding?.right || ''
           }% ${style?.padding?.bottom || ''}% ${style?.padding?.left || ''}%`,
+          opacity: `${style.opacity}`
+
         }}
       >
         <Container>

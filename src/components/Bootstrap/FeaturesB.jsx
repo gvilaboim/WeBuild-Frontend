@@ -126,6 +126,8 @@ const FeaturesB = ({ component, showSettings }) => {
         backgroundColor: `${style.backgroundColor}`,
         background: `no-repeat center/cover url(${style.backgroundImage})`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
+        opacity: `${style.opacity}`
+
       }}
     >
       <Container className='px-4 py-5'>

@@ -34,7 +34,12 @@ const UserSettings = () => {
           try {
             const loadedUserInfo = await  UpdateUserInfo(userInfo)
         console.log(loadedUserInfo)
-         setUserInfo(userInfo)
+        try {
+
+          const loadedUserInfo = await  fetchUserInfo(user._id)
+        } catch (error) {
+          console.log(error);
+        }
 
           } catch (error) {
             console.log(error);
@@ -58,16 +63,9 @@ const UserSettings = () => {
         name='name'
         value={userInfo.name}
         onChange={handleChange}
+        required
       />
        <br/>
-     <label>Username: </label>
-      <input
-        type='text'
-        name='username'
-        value={userInfo.username}
-        onChange={handleChange}
-      />
-             <br/>
 
     <label>Email: </label>
 
@@ -76,6 +74,7 @@ const UserSettings = () => {
         name='email'
         value={userInfo.email}
         onChange={handleChange}
+        required
       />
        <br/>
 

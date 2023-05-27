@@ -51,9 +51,9 @@ function Dashboard() {
     <>
       <div className='dashboard'>
         <Container>
-          <h2 className='display-4 section-title'>My Websites</h2>
+          <h2 className='display-4 section-title' id="section1">My Websites</h2>
 
-          <Row className='dashboard-row'>
+          <Row className='dashboard-row'  >
             <Col md={6}>
               <CreateForm />
             </Col>
@@ -215,7 +215,7 @@ function Dashboard() {
 
           <div className='section-border'></div>
 
-          <h2 className='display-4 section-title'>Community Websites</h2>
+          <h2 className='display-4 section-title'  id="section2">Community Websites</h2>
           <Row className='mx-1'>
             <Card
               body
@@ -291,14 +291,14 @@ function Dashboard() {
 
           <div className='section-border'></div>
 
-          <h2 className='display-4 section-title'>User Settings</h2>
-          <Row className='user-settings-container'>
+          <h2 className='display-4 section-title' id="section3">User Settings</h2>
+          <Row className='user-settings-container' >
             <UserSettings />
           </Row>
 
           <div className='section-border'></div>
 
-          <h2 className='display-4 section-title'>Upgrade</h2>
+          <h2 className='display-4 section-title' id="section4">Upgrade</h2>
           <AllPlans />
         </Container>
       </div>
