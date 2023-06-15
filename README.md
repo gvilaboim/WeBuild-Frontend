@@ -1,7 +1,9 @@
 ### WeBuild
 
-## Build and Host Your Own Websites - Client
 ![Preview](https://github.com/gferreira7/WeBuild-Frontend/assets/104030930/0b108bb6-a58e-4e64-a866-e8c33a20a2d6)
+
+
+## Build and Host Your Own Websites - Client
 
 This is the frontend repository of a MERN (MongoDB, Express, React, Node) stack web application that lets you build and host simple websites. With this app, you can easily create your own website without any prior knowledge of web development.
 
@@ -11,6 +13,9 @@ You can try it out here: https://webuildproject.netlify.app
 
 ## DEMO
 https://github.com/gferreira7/WeBuild-Frontend/assets/104030930/44abe099-662b-470f-8815-40e53b28353d
+
+
+
 
 ## Installation
 
