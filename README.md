@@ -9,9 +9,8 @@ The website builder feature of this app uses the React DND (Drag and Drop) libra
 
 You can try it out here: https://webuildproject.netlify.app
 
-
-[DEMO](https://github-production-user-asset-6210df.s3.amazonaws.com/104030930/246103069-80643384-3e26-429f-bc7c-f375db6173e7.mp4)
-
+## DEMO
+https://github.com/gferreira7/WeBuild-Frontend/assets/104030930/44abe099-662b-470f-8815-40e53b28353d
 
 ## Installation
 
