@@ -7,8 +7,9 @@ This is the frontend repository of a MERN (MongoDB, Express, React, Node) stack 
 The website builder feature of this app uses the React DND (Drag and Drop) library for a seamless drag and drop experience.
 
 Check our live version [here](https://webuildproject.netlify.app)
-https://github.com/gferreira7/WeBuild-Frontend/assets/104030930/48e72b87-f3b5-47cc-880d-48bdc695bb1d
-
+<video width="640" height="480" controls>
+  <source src="https://github.com/gferreira7/WeBuild-Frontend/assets/104030930/48e72b87-f3b5-47cc-880d-48bdc695bb1d" type="video/mp4">
+</video>
 
 ## Installation
 
