@@ -1,15 +1,16 @@
 ### WeBuild
 
 ## Build and Host Your Own Websites - Client
+![Preview](https://github.com/gferreira7/WeBuild-Frontend/assets/104030930/0b108bb6-a58e-4e64-a866-e8c33a20a2d6)
 
 This is the frontend repository of a MERN (MongoDB, Express, React, Node) stack web application that lets you build and host simple websites. With this app, you can easily create your own website without any prior knowledge of web development.
 
 The website builder feature of this app uses the React DND (Drag and Drop) library for a seamless drag and drop experience.
 
-Check our live version [here](https://webuildproject.netlify.app)
-<video width="640" height="480" controls>
-  <source src="https://github.com/gferreira7/WeBuild-Frontend/assets/104030930/48e72b87-f3b5-47cc-880d-48bdc695bb1d" type="video/mp4">
-</video>
+You can try it out here: https://webuildproject.netlify.app
+https://github.com/gferreira7/WeBuild-Frontend/assets/104030930/80643384-3e26-429f-bc7c-f375db6173e7
+
+
 
 ## Installation
 
