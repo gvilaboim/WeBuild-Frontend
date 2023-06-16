@@ -21,56 +21,72 @@ import SideMenu from './pages/Dashboard/SideMenu'
 import { useContext, useEffect, useState } from 'react'
 import { CanvasContext } from './context/canvas.context'
 import SupportPage from './pages/SupportPage/SupportPage'
-import { AuthContext } from './context/auth.context'
 import HireDeveloperForm from './pages/HireDeveloperForm/HireDeveloperForm'
+import MobileWarning from './pages/HomePage/MobileWarning'
 
 function App() {
   const location = useLocation()
-  const { website, showMenu, setShowMenu, } =
-    useContext(CanvasContext)
-  const { user } = useContext(AuthContext)
-
-  const [collapseSidemenu, setCollapseSidemenu] = useState(false)
+  const {
+    showMenu,
+    setShowMenu,
+    collapseSidemenu,
+    setCollapseSidemenu,
+    isMobile,
+    setIsMobile,
+  } = useContext(CanvasContext)
 
   useEffect(() => {
     if (
       location.pathname === '/' ||
       location.pathname === '/login' ||
       location.pathname === '/signup' ||
+      location.pathname === '/mobile-warning' ||
       location.pathname.startsWith('/webuild')
     ) {
       setShowMenu(false)
     } else {
       setShowMenu(true)
     }
-
   }, [location.pathname])
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setCollapseSidemenu(false);
+        setCollapseSidemenu(true)
+        setIsMobile(true)
       } else {
-        setCollapseSidemenu(true);
+        setIsMobile(false)
+        setCollapseSidemenu(false)
       }
-    };
+    }
 
-    handleResize();
+    handleResize()
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
 
-  console.log(showMenu)
   const sideMenuStyle = {
-    flexBasis: !showMenu ? '0' : '25%',
+    flexBasis: !showMenu
+      ? '0'
+      : collapseSidemenu
+      ? '10%'
+      : isMobile
+      ? '40%'
+      : '25%',
   }
 
   const contentStyle = {
-    flexBasis: !showMenu ? '100%' : '75%',
+    flexBasis: !showMenu
+      ? '100%'
+      : collapseSidemenu
+      ? '90%'
+      : isMobile
+      ? '60%'
+      : '75%',
   }
 
   return (
@@ -89,7 +105,7 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<HomePage />}
+            element={<HomePage isMobile={isMobile} />}
           />
 
           <Route
@@ -97,6 +113,14 @@ function App() {
             element={
               <IsPrivate>
                 <Dashboard />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path='/mobile-warning'
+            element={
+              <IsPrivate>
+                <MobileWarning />
               </IsPrivate>
             }
           />
