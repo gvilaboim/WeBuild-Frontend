@@ -25,7 +25,7 @@ function AllPlans() {
 
   return (
     <>
-      <Card className='bg-transparent border-0'>
+      <Card className='bg-transparent border-0 mb-4'>
         <Card.Body>
           <Row>
             {userPlan && allPlans &&
@@ -33,8 +33,9 @@ function AllPlans() {
               allPlans.map((plan) => {
                 return (
                   <Col
-                    md={4}
-                    key={plan._id}s
+                    lg={4}
+                    key={plan._id}
+                    className='mb-4'
                   >
                     <Card
                       className={

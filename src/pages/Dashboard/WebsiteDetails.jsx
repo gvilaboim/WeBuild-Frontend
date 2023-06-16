@@ -18,7 +18,7 @@ const WebsiteDetails = ({ website }) => {
         <Card
           md={3}
           style={{ height: '250px' }}
-          className='my-3 dashboard-card'
+          className='my-3  dashboard-card'
         >
           <Card.Body>
             <Card.Title>{website.name}</Card.Title>

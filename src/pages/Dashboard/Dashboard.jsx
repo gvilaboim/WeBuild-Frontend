@@ -14,12 +14,13 @@ import Statistics from './Statistics'
 import UserSettings from './UserSettings'
 import AllPlans from './AllPlans'
 import CreateForm from '../Create/CreateForm'
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { GrView } from 'react-icons/gr'
 
 function Dashboard() {
   const {
+    isMobile,
     userWebsites,
     fetchUserWebsites,
     communityWebsites,
@@ -51,10 +52,18 @@ function Dashboard() {
     <>
       <div className='dashboard'>
         <Container>
-          <h2 className='display-4 section-title' id="section1">My Websites</h2>
+          <h2
+            className='display-4 section-title'
+            id='section1'
+          >
+            My Websites
+          </h2>
 
-          <Row className='dashboard-row'  >
-            <Col md={6}>
+          <Row className='dashboard-row'>
+            <Col
+              md={6}
+              className={isMobile && 'mb-4'}
+            >
               <CreateForm />
             </Col>
             <Col md={6}>
@@ -64,8 +73,9 @@ function Dashboard() {
                     Need Help?
                   </Card.Text>
                 </Row>
-                <Row className='support-cards m-5'>
+                <Row className='support-cards'>
                   <Col
+                    sm={12}
                     onClick={() => navigate('/support')}
                     className='support-card'
                   >
@@ -77,6 +87,7 @@ function Dashboard() {
                     />
                   </Col>
                   <Col
+                    sm={12}
                     onClick={() => navigate('/hire-a-dev')}
                     className='support-card'
                   >
@@ -97,7 +108,7 @@ function Dashboard() {
           {userWebsites && userWebsites.length > 0 && (
             <Row className='my-websites-row dashboard-row'>
               <Col lg={9}>
-                <Card className='my-websites-table'>
+                <Card className='my-websites-table mb-4'>
                   <Card.Body>
                     <Table
                       variant='light'
@@ -155,7 +166,10 @@ function Dashboard() {
                                     target='_blank'
                                     rel='noopener noreferrer'
                                   >
-                                    <GrView className='view-button' size={30} />
+                                    <GrView
+                                      className='view-button'
+                                      size={30}
+                                    />
                                   </a>
                                 </td>
                                 <td>
@@ -215,12 +229,17 @@ function Dashboard() {
 
           <div className='section-border'></div>
 
-          <h2 className='display-4 section-title'  id="section2">Community Websites</h2>
+          <h2
+            className='display-4 section-title'
+            id='section2'
+          >
+            Community Websites
+          </h2>
           <Row className='mx-1'>
             <Card
               body
               className='py-1 dashboard-card'
-              style={{textAlign: "left"}}
+              style={{ textAlign: 'left' }}
             >
               <Table
                 variant='light'
@@ -292,14 +311,24 @@ function Dashboard() {
 
           <div className='section-border'></div>
 
-          <h2 className='display-4 section-title' id="section3">User Settings</h2>
-          <Row className='user-settings-container' >
+          <h2
+            className='display-4 section-title'
+            id='section3'
+          >
+            User Settings
+          </h2>
+          <Row className='user-settings-container'>
             <UserSettings />
           </Row>
 
           <div className='section-border'></div>
 
-          <h2 className='display-4 section-title' id="section4">Upgrade</h2>
+          <h2
+            className='display-4 section-title'
+            id='section4'
+          >
+            Upgrade
+          </h2>
           <AllPlans />
         </Container>
       </div>

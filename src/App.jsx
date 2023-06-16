@@ -75,7 +75,7 @@ function App() {
       : collapseSidemenu
       ? '10%'
       : isMobile
-      ? '40%'
+      ? '45%'
       : '25%',
   }
 
@@ -85,7 +85,7 @@ function App() {
       : collapseSidemenu
       ? '90%'
       : isMobile
-      ? '60%'
+      ? '65%'
       : '75%',
   }
 

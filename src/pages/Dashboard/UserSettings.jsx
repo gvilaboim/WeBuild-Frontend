@@ -7,10 +7,9 @@ import Button from 'react-bootstrap/Button'
 import { Col, Figure, Row } from 'react-bootstrap'
 const UserSettings = () => {
   const { isLoggedIn, user, logOutUser } = useContext(AuthContext)
-  const { fetchUserInfo, userPlan, userInfo, setUserInfo, UpdateUserInfo } =
+  const { fetchUserInfo, userPlan, userInfo, setUserInfo, UpdateUserInfo, isMobile } =
     useContext(CanvasContext)
 
-  console.log(user.profilePic)
 
   useEffect(() => {
     const loadInfoUser = async () => {
@@ -48,7 +47,7 @@ const UserSettings = () => {
   return (
     <>
 
-      <Col md={6} className='px-5 d-flex flex-column justify-content-center'>
+      <Col md={6} className={isMobile ? ' ': 'px-5 d-flex flex-column justify-content-center'}>
         {userInfo && (
           <Form onSubmit={handleSubmit} className='px-5'>
             <Form.Group>
