@@ -49,8 +49,8 @@ function AllPlans() {
                         {plan.category}
                       </Card.Subtitle>
 
-                      <Card.Body style={{ width: '100%', height: '100%' }}>
-                        <ListGroup variant='flush'>
+                      <Card.Body style={{ width: '100%', height: '100%', padding: 0 }}>
+                        <ListGroup variant='flush' className='px-0'>
                           <ListGroup.Item> {plan.duration} </ListGroup.Item>
                           <ListGroup.Item> {plan.text}  </ListGroup.Item>
 
