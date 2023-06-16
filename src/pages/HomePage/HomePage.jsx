@@ -14,7 +14,7 @@ function HomePage({ isMobile }) {
 
         <Button
           className='mt-3'
-          href='/dashboard'
+          href='/mobile-warning'
           variant='dark'
         >
           Get started

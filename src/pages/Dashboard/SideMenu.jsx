@@ -61,7 +61,7 @@ const SideMenu = ({ collapseSidemenu }) => {
         {collapseSidemenu ? (
           <CiMenuBurger
             className='text-white mt-5'
-            size={30}
+            size={20}
             onClick={() => setCollapseSidemenu(false)}
           />
         ) : (
