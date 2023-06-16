@@ -9,12 +9,12 @@
   height: 100vh;
   overflow-y: scroll;
   display: flex;
-  
   justify-content: center;
   align-items: flex-start;
   border-right: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  z-index: 100;
 }
-
 
 
 
