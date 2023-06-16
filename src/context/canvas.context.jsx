@@ -8,11 +8,16 @@ const CanvasContext = React.createContext()
 function CanvasProviderWrapper(props) {
   const { user } = useContext(AuthContext)
 
+  //for sidebar collapse and changing to the touch backend for Drag and Drop
+  const [isMobile, setIsMobile] = useState(false)
+
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
 
   // Left Menu
   const [showMenu, setShowMenu] = useState(true)
+  const [collapseSidemenu, setCollapseSidemenu] = useState(false)
+
   // clicked on the left menu to display stats in the dashboard
   const [clickedWebsite, setClickedWebsite] = useState(null)
 
@@ -20,7 +25,6 @@ function CanvasProviderWrapper(props) {
   const [publicView, setPublicView] = useState(false)
   const [menu, setMenu] = useState(0)
   const [isSaving, setIsSaving] = useState(false)
-
 
   //remove?
   const [userInfo, setUserInfo] = useState({})
@@ -151,12 +155,12 @@ function CanvasProviderWrapper(props) {
 
   // Stripe/Pricing Plans
   const updatePlan = (sessionId) => {
-    if(sessionId){
-    console.log('updatePlan ID', sessionId)
-    canvasStoreService.updatePlanFunction(sessionId).then((res) => {
-      fetchUserInfo(user._id)
-    })
-  }
+    if (sessionId) {
+      console.log('updatePlan ID', sessionId)
+      canvasStoreService.updatePlanFunction(sessionId).then((res) => {
+        fetchUserInfo(user._id)
+      })
+    }
   }
 
   const UpdateUserInfo = async (userInfo) => {
@@ -182,7 +186,6 @@ function CanvasProviderWrapper(props) {
   }
 
   const getStatistics = async (id) => {
-
     try {
       const response = await canvasStoreService.getStats(id)
       console.log(response.data)
@@ -192,22 +195,23 @@ function CanvasProviderWrapper(props) {
     }
   }
 
-
   useEffect(() => {
     if (user) {
       fetchUserInfo(user._id)
     }
   }, [user])
 
-
   return (
     <CanvasContext.Provider
       value={{
+        isMobile,
+        setIsMobile,
         storeComponents,
 
         showMenu,
         setShowMenu,
-
+        collapseSidemenu,
+        setCollapseSidemenu,
         website,
         setWebsite,
 
@@ -258,7 +262,7 @@ function CanvasProviderWrapper(props) {
         premiumPlan,
         setPremiumPlan,
         setIsSaving,
-        isSaving
+        isSaving,
       }}
     >
       {props.children}

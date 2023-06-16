@@ -128,7 +128,7 @@ const Subsection = ({
       key={sectionId}
       ref={drop}
       style={{ ...style, backgroundColor }}
-      className='sub-section'
+      className='sub-section py-5'
       onMouseLeave={handleHideBtns}
       onMouseEnter={handleShowBtns}
     >

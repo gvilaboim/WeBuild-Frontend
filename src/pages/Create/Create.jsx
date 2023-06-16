@@ -7,13 +7,16 @@ import RightSideBar from '../../components/RightSideBar/RightSideBar'
 import { CanvasContext } from '../../context/canvas.context'
 import { useNavigate, useParams } from 'react-router-dom'
 import Loading from '../../components/Loading/Loading'
-import { Button, Carousel, Collapse } from 'react-bootstrap'
+import { Button, Carousel, Col, Collapse, Row } from 'react-bootstrap'
 import { AuthContext } from '../../context/auth.context'
 import canvasStoreService from '../../services/canvas-store.service'
 import { RiDeleteBinLine } from 'react-icons/ri'
+import { IoIosColorPalette } from 'react-icons/io'
+import { BiHide } from 'react-icons/bi'
+import { BiShow } from 'react-icons/bi'
 
 const Create = () => {
-  const { fetchOneWebsite, website, publishWebsite, setWebsite } =
+  const { fetchOneWebsite, website, publishWebsite, setWebsite, isMobile } =
     useContext(CanvasContext)
   const { user } = useContext(AuthContext)
   const { id } = useParams()
@@ -49,11 +52,10 @@ const Create = () => {
     <div className='create-page'>
       {website && (
         <>
-          <div className='p-2 d-flex justify-content-center align-items-center gap-2'>
+          <div className='pt-3 d-flex justify-content-center align-items-center sticky-top flex-w gap-2'>
             {openCarousel && (
               <>
-                
-              <Button
+                <Button
                   variant='outline-secondary'
                   onClick={() => setOpenCarousel(!openCarousel)}
                   aria-controls='change-bg-container'
@@ -61,61 +63,64 @@ const Create = () => {
                 >
                   Close
                 </Button>
-            
-                {website.background && <Button
-                  variant='outline-danger'
-                  onClick={handBackgroundChange}
-                >
-                  Remove Background
-                </Button>}
 
+                {website.background && (
+                  <Button
+                    variant='outline-danger'
+                    onClick={handBackgroundChange}
+                  >
+                    Remove
+                  </Button>
+                )}
               </>
             )}
 
             {!openCarousel && (
               <Button
-                variant='outline-secondary'
+                variant='outline-dark'
                 onClick={() => setOpenCarousel(!openCarousel)}
                 aria-controls='change-bg-container'
                 aria-expanded={openCarousel}
               >
-                Change Background
-              </Button>
-            )}
-            {website.isPublished ? (
-              <Button
-                onClick={() => handlePublishWebsite(id)}
-                variant='secondary'
-                className='px-4'
-              >
-                Unpublish
-              </Button>
-            ) : (
-              <Button
-                onClick={() => handlePublishWebsite(id)}
-                variant='success'
-                className='px-4'
-              >
-                Publish
+                {isMobile ? <IoIosColorPalette /> : 'Background Color'}
               </Button>
             )}
 
             <Button
               variant='outline-danger'
-              className='px-4'
+              className=''
               onClick={handleDeleteSite}
             >
               <RiDeleteBinLine />
             </Button>
-            <Button
-              href={`/webuild/${user.name}/${website.name}/${website._id}`}
-              target='_blank'
-              rel='noopener noreferrer'
-              variant='dark'
-              className='px-4'
-            >
-              Go to Website
-            </Button>
+            {website.isPublished ? (
+              <Button
+                onClick={() => handlePublishWebsite(id)}
+                variant='outline-dark'
+              >
+                {isMobile ? <BiShow/> : 'Unpublish'}
+                
+
+              </Button>
+            ) : (
+              <Button
+                onClick={() => handlePublishWebsite(id)}
+                variant='outline-dark'
+              >
+                {isMobile ? <BiHide /> : 'Publish'}
+              </Button>
+            )}
+            {website.isPublished && (
+              <Button
+                href={`/webuild/${user.name}/${website.name}/${website._id}`}
+                target='_blank'
+                rel='noopener noreferrer'
+                variant='outline-dark'
+                className=''
+              >
+                Website
+              </Button>
+            )}
           </div>
           <div>
             <Collapse in={openCarousel}>

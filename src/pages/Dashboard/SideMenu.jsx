@@ -36,7 +36,8 @@ const SideMenu = ({ collapseSidemenu }) => {
     fetchUserInfo,
     userPlan,
     fetchStoreItems,
-    userInfo
+    userInfo,
+    setCollapseSidemenu
   } = useContext(CanvasContext)
 
   const location = useLocation()
@@ -57,10 +58,11 @@ const SideMenu = ({ collapseSidemenu }) => {
   return (
     <>
       <Container className=''>
-        {!collapseSidemenu ? (
+        {collapseSidemenu ? (
           <CiMenuBurger
             className='text-white mt-5'
-            size={40}
+            size={20}
+            onClick={() => setCollapseSidemenu(false)}
           />
         ) : (
           <>
@@ -109,7 +111,10 @@ const SideMenu = ({ collapseSidemenu }) => {
                   }
                 >
                   <Card.Header>
-                    <CustomToggle eventKey='dashboard'  > <a href="#section1"> Dashboard  </a></CustomToggle>
+                    <CustomToggle eventKey='dashboard'>
+                      {' '}
+                      <a href='#section1'> Dashboard </a>
+                    </CustomToggle>
                   </Card.Header>
                 </Card>
 
@@ -200,10 +205,10 @@ const SideMenu = ({ collapseSidemenu }) => {
                       <Accordion.Collapse eventKey='user-settings'>
                         <ListGroup>
                           <ListGroup.Item className='custom-sidebar-links'>
-                          <a href="#section3">   Settings </a>
+                            <a href='#section3'> Settings </a>
                           </ListGroup.Item>
                           <ListGroup.Item className='custom-sidebar-links'>
-                          <a href="#section4">    Plans</a>
+                            <a href='#section4'> Plans</a>
                           </ListGroup.Item>
                         </ListGroup>
                       </Accordion.Collapse>
@@ -216,8 +221,8 @@ const SideMenu = ({ collapseSidemenu }) => {
                       </Card.Header>
                       <Accordion.Collapse eventKey='4'>
                         <ListGroup>
-                          <ListGroup.Item className='custom-sidebar-links' >
-                      <a href='/support'>Help Forum </a>      
+                          <ListGroup.Item className='custom-sidebar-links'>
+                            <a href='/support'>Help Forum </a>
                           </ListGroup.Item>
                         </ListGroup>
                       </Accordion.Collapse>
@@ -230,7 +235,7 @@ const SideMenu = ({ collapseSidemenu }) => {
                       <Accordion.Collapse eventKey='11'>
                         <ListGroup>
                           <ListGroup.Item className='custom-sidebar-links'>
-                          <a href="#section2">  Community websites </a>
+                            <a href='#section2'> Community websites </a>
                           </ListGroup.Item>
                         </ListGroup>
                       </Accordion.Collapse>
