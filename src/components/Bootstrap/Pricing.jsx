@@ -174,7 +174,7 @@ const Pricing = ({ component, showSettings }) => {
     >
       <Container>
         {isMobile ||
-          (isTablet && (
+          (isTablet && !publicView && (
             <Button
               variant='outline-dark'
               style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
