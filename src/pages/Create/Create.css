@@ -8,3 +8,10 @@
   object-position: center;
   object-fit: cover;
 }
+
+.canvas-btn-container{
+  background-color: #f8f9fa;
+  opacity: 0.9;
+  padding-bottom: 1rem;
+  box-shadow: 0 0 5px;
+}

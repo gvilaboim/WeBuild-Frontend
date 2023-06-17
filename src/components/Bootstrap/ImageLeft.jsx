@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Row, Col, Card, Button, Image, Form } from 'react-bootstrap';
-import { CanvasContext } from '../../context/canvas.context';
-import { useParams } from 'react-router-dom';
-import { set } from 'lodash';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { Row, Col, Card, Button, Image, Form } from 'react-bootstrap'
+import { CanvasContext } from '../../context/canvas.context'
+import { useParams } from 'react-router-dom'
+import { set } from 'lodash'
+import { FaEdit } from 'react-icons/fa'
 
 const ImageLeft = ({ component, showSettings }) => {
   const {
@@ -11,37 +12,32 @@ const ImageLeft = ({ component, showSettings }) => {
     publicView,
     setShowSettingsSidebar,
     isSaving,
-    setIsSaving
+    isMobile,
+    isTablet,
   } = useContext(CanvasContext)
   const { id } = useParams()
 
   //needed to detect clicks outside
   const wrapperRef = useRef(null)
   const [hasChanges, setHasChanges] = useState(false)
-  const [clickedOutside, setClickedOutside] = useState(false);
+  const [clickedOutside, setClickedOutside] = useState(false)
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false)
 
-  const [timestamp, setTimestamp] = useState(Date.now());
+  const [timestamp, setTimestamp] = useState(Date.now())
 
   const [componentData, setComponentData] = useState({
     title: component.items[0]?.content?.title,
     description: component.items[0]?.content?.description,
-    image : component.items[0]?.content?.image
-
-  });
+    image: component.items[0]?.content?.image,
+  })
 
   useEffect(() => {
-
     console.log(isSaving)
-    if(isSaving)
-    {
-      setTimestamp(Date.now()); // Unique value
-
+    if (isSaving) {
+      setTimestamp(Date.now()) // Unique value
     }
-
   }, [isSaving])
-
 
   const handleClickOutside = async (event) => {
     if (!publicView) {
@@ -56,7 +52,7 @@ const ImageLeft = ({ component, showSettings }) => {
   }
   useEffect(() => {
     if (clickedOutside && hasChanges) {
-      console.log("Sending changes" , componentData.items)
+      console.log('Sending changes', componentData.items)
       saveChanges(id, {
         componentToEdit: { data: componentData, id: component._id },
       })
@@ -83,16 +79,13 @@ const ImageLeft = ({ component, showSettings }) => {
     }
   }
 
-
-
   const handleChange = (e) => {
     const { value, name } = e.target
     setHasChanges(true)
-      setComponentData((prevValue) => set({ ...prevValue }, name, value))
-
+    setComponentData((prevValue) => set({ ...prevValue }, name, value))
   }
 
-  const style = component.style;
+  const style = component.style
   return (
     <div
       ref={wrapperRef}
@@ -103,13 +96,24 @@ const ImageLeft = ({ component, showSettings }) => {
         width: `${style.width}%`,
         background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-        opacity: `${style.opacity}`
-
+        opacity: `${style.opacity}`,
       }}
     >
-      <Row className="featurette">
-      <Col md={7} className="order-md-2">
-
+      {isMobile ||
+        (isTablet && (
+          <Button
+            variant='outline-dark'
+            style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+            onClick={handleDoubleClick}
+          >
+            <FaEdit size={20} />
+          </Button>
+        ))}
+      <Row className='featurette'>
+        <Col
+          md={7}
+          className='order-md-2'
+        >
           {isEditing ? (
             <>
               <Form.Group className='mb-3'>
@@ -145,8 +149,6 @@ const ImageLeft = ({ component, showSettings }) => {
             </h1>
           )}
 
-
-
           {isEditing ? (
             <>
               <Form.Group className='mb-3'>
@@ -176,25 +178,23 @@ const ImageLeft = ({ component, showSettings }) => {
               name='title-h1'
               onDoubleClick={(e) => handleDoubleClick(e)}
               style={{ color: componentData.description.color }}
-
-              className="lead"
+              className='lead'
             >
               {componentData.description.text}
             </p>
           )}
-
         </Col>
         <Col md={5}>
-            <Image  key={isSaving ? Date.now() : undefined}
-        src={`${componentData.image.src}?cache=${timestamp}`}
-      alt={componentData.image.src}
-
-      fluid/>
-    
+          <Image
+            key={isSaving ? Date.now() : undefined}
+            src={`${componentData.image.src}?cache=${timestamp}`}
+            alt={componentData.image.src}
+            fluid
+          />
         </Col>
       </Row>
     </div>
-  );
-};
+  )
+}
 
-export default ImageLeft; 
+export default ImageLeft

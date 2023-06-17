@@ -52,7 +52,7 @@ const Create = () => {
     <div className='create-page'>
       {website && (
         <>
-          <div className='pt-3 d-flex justify-content-center align-items-center sticky-top flex-w gap-2'>
+          <div className='pt-3 d-flex justify-content-center align-items-center sticky-top flex-w gap-2 canvas-btn-container' >
             {openCarousel && (
               <>
                 <Button

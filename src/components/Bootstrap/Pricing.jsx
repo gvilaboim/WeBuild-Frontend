@@ -1,12 +1,19 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Container, Row, Form } from 'react-bootstrap'
+import { Container, Row, Form, Button } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { CanvasContext } from '../../context/canvas.context'
 import PricingCard from './PricingCard'
 import { set } from 'lodash'
+import { FaEdit } from 'react-icons/fa'
 const Pricing = ({ component, showSettings }) => {
-  const { setWebsite, saveChanges, publicView, setShowSettingsSidebar } =
-    useContext(CanvasContext)
+  const {
+    setWebsite,
+    saveChanges,
+    publicView,
+    setShowSettingsSidebar,
+    isMobile,
+    isTablet,
+  } = useContext(CanvasContext)
   const { id } = useParams()
 
   const wrapperRef = useRef(null)
@@ -162,10 +169,20 @@ const Pricing = ({ component, showSettings }) => {
         background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
 
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-        opacity: `${style.opacity}`
+        opacity: `${style.opacity}`,
       }}
     >
-      <Container >
+      <Container>
+        {isMobile ||
+          (isTablet && (
+            <Button
+              variant='outline-dark'
+              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              onClick={handleDoubleClick}
+            >
+              <FaEdit size={20} />
+            </Button>
+          ))}
         {/* HANDLE TITLE EDITS */}
 
         {isEditing ? (

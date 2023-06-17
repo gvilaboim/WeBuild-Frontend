@@ -15,6 +15,8 @@ import ImageRight from '../Bootstrap/ImageRight'
 import ImageLeft from '../Bootstrap/ImageLeft'
 import { useParams } from 'react-router-dom'
 
+import { FaEdit } from 'react-icons/fa'
+
 const Subsection = ({
   sectionId,
   subsection,
@@ -29,16 +31,13 @@ const Subsection = ({
     setShowSettingsSidebar,
     setSelectedComponent,
     publicView,
-    setMenu,
-    menu
+    menu,
+    isMobile,
   } = useContext(CanvasContext)
-
 
   const { id } = useParams()
 
-
   const handleShowSettingsSidebar = (componentToEdit) => {
-    console.log("teste ma g")
     if (!publicView) {
       setSelectedComponent(componentToEdit)
       setShowSettingsSidebar(true)
@@ -59,7 +58,7 @@ const Subsection = ({
       website.pages[menu].sections.length === 2 ||
       (subsection.length !== 1 && subsection.components.length === 0)
     ) {
-      handleDeleteSubsection(id, subsection._id, sectionId , menu)
+      handleDeleteSubsection(id, subsection._id, sectionId, menu)
     } else {
       setShowConfirmDelete(true)
     }
@@ -68,8 +67,6 @@ const Subsection = ({
 
   const handleDrop = async (draggedComponent) => {
     // Find the section and subsection to modify
-  
-  
 
     const sectionIndex = website.pages[menu].sections.findIndex(
       (sectionFromDb) => sectionFromDb._id === sectionId
@@ -81,12 +78,11 @@ const Subsection = ({
       (subsectionFromDb) => subsectionFromDb._id === subsection._id
     )
 
-    //removing the id from the dropped component // Page 1 | Page 2 | Page 3 
+    //removing the id from the dropped component // Page 1 | Page 2 | Page 3
     const { _id, ...droppedComponent } = draggedComponent
-    
-    console.log(droppedComponent.items[0])
+
     saveChanges(id, {
-      menu:menu,
+      menu: menu,
       droppedComponent,
       sectionIndex,
       subsectionIndex,
@@ -121,13 +117,13 @@ const Subsection = ({
 
   const style = publicView ? {} : { border: '1px dashed black' }
   if (!subsection) {
-    return null; // Return null or handle the empty state accordingly
+    return null // Return null or handle the empty state accordingly
   }
   return (
     <div
       key={sectionId}
       ref={drop}
-      style={{ ...style, backgroundColor }}
+      style={{ ...style, backgroundColor, position: 'relative' }}
       className='sub-section py-5'
       onMouseLeave={handleHideBtns}
       onMouseEnter={handleShowBtns}
@@ -203,6 +199,7 @@ const Subsection = ({
           )}
         </>
       )}
+ 
       <Modal
         show={showConfirmDelete}
         onHide={handleHideDeleteConfirmation}
@@ -231,7 +228,7 @@ const Subsection = ({
           <Button
             variant='primary'
             onClick={() =>
-              handleDeleteSubsection(id, subsection._id, sectionId , menu)
+              handleDeleteSubsection(id, subsection._id, sectionId, menu)
             }
           >
             Understood

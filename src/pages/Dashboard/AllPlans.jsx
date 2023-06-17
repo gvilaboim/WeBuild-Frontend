@@ -61,8 +61,8 @@ function AllPlans() {
                             Features
                           </ListGroup.Item>
 
-                          {plan.features.map((feature) => {
-                            return <ListGroup.Item> {feature} </ListGroup.Item>
+                          {plan.features.map((feature, index) => {
+                            return <ListGroup.Item key={feature}> {feature} </ListGroup.Item>
                           })}
                         </ListGroup>
                         <Link to={`/upgrade/${plan._id}`}>
