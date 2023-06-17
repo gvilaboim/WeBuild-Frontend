@@ -22,13 +22,11 @@ const RightSideBar = () => {
   const { id } = useParams()
 
   const [componentData, setComponentData] = useState({})
-  const [theme, setTheme] = useState("")
 
   const handleCloseSettingsSidebar = () => setShowSettingsSidebar(false)
 
   useEffect(() => {
     setComponentData(selectedComponent)
-    console.log(selectedComponent)
   }, [selectedComponent])
 
   const handleChange = (e) => {
@@ -48,7 +46,6 @@ const RightSideBar = () => {
       setSelectedComponent(response.data.updatedComponent)
       setWebsite(response.data.updatedWebsite)
       setIsSaving(false)
-      console.log(response.data.updatedWebsite)
     } catch (error) {
       console.log(error)
       setIsSaving(false)
@@ -106,7 +103,6 @@ const RightSideBar = () => {
                 </>
               )}
 
-    
               {componentData.navLinks && componentData.navLinks.length > 0 && (
                 <Form.Group className='mb-3'>
                   <Form.Label>NavLinks:</Form.Label>
@@ -148,20 +144,20 @@ const RightSideBar = () => {
                 </Form.Group>
               )}
 
-              {componentData?.items?.[0]?.content && componentData.items[0].content?.image && (
-                <Form.Group className='mb-3'>
-                  <Form.Label>Image:</Form.Label>
-                  <Form.Control
-                    name='items[0].content.image.src'
-                    type='text'
-                    value={componentData.items[0].content?.image.src || ''}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
-              )}
+              {componentData?.items?.[0]?.content &&
+                componentData.items[0].content?.image && (
+                  <Form.Group className='mb-3'>
+                    <Form.Label>Image:</Form.Label>
+                    <Form.Control
+                      name='items[0].content.image.src'
+                      type='text'
+                      value={componentData.items[0].content?.image.src || ''}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                )}
 
               {componentData.items && componentData.items[0]?.image && (
-
                 <>
                   <Form.Group
                     className='mb-3'
@@ -175,7 +171,6 @@ const RightSideBar = () => {
                       onChange={handleChange}
                     />
                   </Form.Group>
-
 
                   <Form.Group
                     className='mb-3'
@@ -204,8 +199,6 @@ const RightSideBar = () => {
                 </>
               )}
 
-
-
               {componentData.style && (
                 <div>
                   <Form.Group className='mb-3'>
@@ -229,9 +222,9 @@ const RightSideBar = () => {
                     <Form.Control
                       name='style.opacity'
                       type='number'
-                      step=".01"
-                      min="0"
-                      max="1"
+                      step='.01'
+                      min='0'
+                      max='1'
                       value={componentData.style.opacity}
                       onChange={handleChange}
                     />
@@ -574,4 +567,3 @@ const RightSideBar = () => {
 }
 
 export default RightSideBar
-

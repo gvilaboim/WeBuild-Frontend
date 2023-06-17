@@ -4,8 +4,9 @@ import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import { CanvasContext } from '../../context/canvas.context'
 
 import './Bootstrap-override.css'
+import { FaEdit } from 'react-icons/fa'
 const Hero = ({ component, showSettings }) => {
-  const { setWebsite, saveChanges, publicView, setShowSettingsSidebar } =
+  const { setWebsite, saveChanges, publicView, setShowSettingsSidebar,isMobile, isTablet } =
     useContext(CanvasContext)
   const { id } = useParams()
 
@@ -142,6 +143,16 @@ const Hero = ({ component, showSettings }) => {
         fluid='xxl'
         className='px-5 py-1'
       >
+      {isMobile ||
+          (isTablet && (
+            <Button
+              variant='outline-dark'
+              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              onClick={handleDoubleClick}
+            >
+              <FaEdit size={20} />
+            </Button>
+          ))}
         <Row className='flex-lg-row-reverse align-items-center g-5 py-1'>
           <Col
             lg={6}

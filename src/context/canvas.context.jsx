@@ -10,6 +10,7 @@ function CanvasProviderWrapper(props) {
 
   //for sidebar collapse and changing to the touch backend for Drag and Drop
   const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
 
   //components that the user can drag to the canvas
   const [storeComponents, setStoreComponents] = useState([])
@@ -206,6 +207,7 @@ function CanvasProviderWrapper(props) {
       value={{
         isMobile,
         setIsMobile,
+        isTablet, setIsTablet,
         storeComponents,
 
         showMenu,

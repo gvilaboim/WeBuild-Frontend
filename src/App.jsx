@@ -33,6 +33,8 @@ function App() {
     setCollapseSidemenu,
     isMobile,
     setIsMobile,
+    isTablet,
+    setIsTablet,
   } = useContext(CanvasContext)
 
   useEffect(() => {
@@ -53,9 +55,15 @@ function App() {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setCollapseSidemenu(true)
-        setIsMobile(true)
+        setIsTablet(true)
+        setIsMobile(false)
+      } else if (window.innerWidth < 1280) {
+        setIsTablet(true)
+        setIsMobile(false)
+        setCollapseSidemenu(false)
       } else {
         setIsMobile(false)
+        setIsTablet(false)
         setCollapseSidemenu(false)
       }
     }
@@ -63,9 +71,11 @@ function App() {
     handleResize()
 
     window.addEventListener('resize', handleResize)
+    window.addEventListener('orientationchange', handleResize)
 
     return () => {
       window.removeEventListener('resize', handleResize)
+      window.removeEventListener('orientationchange', handleResize)
     }
   }, [])
 

@@ -3,6 +3,7 @@ import { Row, Col, Card, Button, Image, Form } from 'react-bootstrap';
 import { CanvasContext } from '../../context/canvas.context';
 import { useParams } from 'react-router-dom';
 import { set } from 'lodash';
+import { FaEdit } from 'react-icons/fa';
 
 const ImageRight = ({ component, showSettings }) => {
   const {
@@ -11,7 +12,7 @@ const ImageRight = ({ component, showSettings }) => {
     publicView,
     setShowSettingsSidebar,
     isSaving,
-    setIsSaving
+    isMobile, isTablet
   } = useContext(CanvasContext)
   const { id } = useParams()
 
@@ -107,6 +108,16 @@ const ImageRight = ({ component, showSettings }) => {
 
       }}
     >
+    {isMobile ||
+          (isTablet && (
+            <Button
+              variant='outline-dark'
+              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              onClick={handleDoubleClick}
+            >
+              <FaEdit size={20} />
+            </Button>
+          ))}
       <Row className="featurette">
         <Col md={7}>
 

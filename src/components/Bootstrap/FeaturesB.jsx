@@ -4,9 +4,10 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { set } from 'lodash'
 import FeaturesCard from './FeaturesCard'
+import { FaEdit } from 'react-icons/fa'
 
 const FeaturesB = ({ component, showSettings }) => {
-  const { saveChanges, setWebsite, publicView, setShowSettingsSidebar } =
+  const { saveChanges, setWebsite, publicView, setShowSettingsSidebar,isMobile, isTablet } =
     useContext(CanvasContext)
   const { id } = useParams()
   const wrapperRef = useRef(null)
@@ -130,6 +131,16 @@ const FeaturesB = ({ component, showSettings }) => {
       }}
     >
       <Container className='px-4 py-5'>
+      {isMobile ||
+          (isTablet && (
+            <Button
+              variant='outline-dark'
+              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              onClick={handleDoubleClick}
+            >
+              <FaEdit size={20} />
+            </Button>
+          ))}
         {isEditing ? (
           <>
             <Form.Group className='mb-3'>

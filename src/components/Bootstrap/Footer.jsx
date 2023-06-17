@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { Container, Row, Col, Nav } from 'react-bootstrap'
+import { Container, Row, Col, Nav, Button } from 'react-bootstrap'
 import { CanvasContext } from '../../context/canvas.context'
+import { FaEdit } from 'react-icons/fa'
 
 const Footer = ({ component, showSettings }) => {
   const {
@@ -9,7 +10,7 @@ const Footer = ({ component, showSettings }) => {
     publicView,
     setShowSettingsSidebar,
     setSelectedComponent,
-    website,
+    website,isMobile, isTablet
   } = useContext(CanvasContext)
 
   const year = new Date().getFullYear()
@@ -156,6 +157,16 @@ const Footer = ({ component, showSettings }) => {
           }}
         fluid
       >
+      {isMobile ||
+          (isTablet && (
+            <Button
+              variant='outline-dark'
+              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              onClick={handleDoubleClick}
+            >
+              <FaEdit size={20} />
+            </Button>
+          ))}
         <Row className='border-top py-4 my-0 ' >
           <Col mb={3}>
             {componentData &&
