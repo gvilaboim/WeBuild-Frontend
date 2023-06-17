@@ -7,8 +7,14 @@ import FeaturesCard from './FeaturesCard'
 import { FaEdit } from 'react-icons/fa'
 
 const FeaturesB = ({ component, showSettings }) => {
-  const { saveChanges, setWebsite, publicView, setShowSettingsSidebar,isMobile, isTablet } =
-    useContext(CanvasContext)
+  const {
+    saveChanges,
+    setWebsite,
+    publicView,
+    setShowSettingsSidebar,
+    isMobile,
+    isTablet,
+  } = useContext(CanvasContext)
   const { id } = useParams()
   const wrapperRef = useRef(null)
 
@@ -131,8 +137,8 @@ const FeaturesB = ({ component, showSettings }) => {
       }}
     >
       <Container className='px-4 py-5'>
-      {isMobile ||
-          (isTablet && (
+        {isMobile ||
+          (isTablet && !publicView && (
             <Button
               variant='outline-dark'
               style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
