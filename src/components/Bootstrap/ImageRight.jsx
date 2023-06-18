@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Row, Col, Card, Button, Image, Form } from 'react-bootstrap';
-import { CanvasContext } from '../../context/canvas.context';
-import { useParams } from 'react-router-dom';
-import { set } from 'lodash';
-import { FaEdit } from 'react-icons/fa';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { Row, Col, Card, Button, Image, Form } from 'react-bootstrap'
+import { CanvasContext } from '../../context/canvas.context'
+import { useParams } from 'react-router-dom'
+import { set } from 'lodash'
+import { FaEdit } from 'react-icons/fa'
 
 const ImageRight = ({ component, showSettings }) => {
   const {
@@ -12,37 +12,34 @@ const ImageRight = ({ component, showSettings }) => {
     publicView,
     setShowSettingsSidebar,
     isSaving,
-    isMobile, isTablet
+    isMobile,
+    isTablet,
   } = useContext(CanvasContext)
   const { id } = useParams()
 
   //needed to detect clicks outside
   const wrapperRef = useRef(null)
+  const editBtnRef = useRef(null)
+
   const [hasChanges, setHasChanges] = useState(false)
-  const [clickedOutside, setClickedOutside] = useState(false);
+  const [clickedOutside, setClickedOutside] = useState(false)
 
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false)
 
-  const [timestamp, setTimestamp] = useState(Date.now());
+  const [timestamp, setTimestamp] = useState(Date.now())
 
   const [componentData, setComponentData] = useState({
     title: component.items[0]?.content?.title,
     description: component.items[0]?.content?.description,
-    image : component.items[0]?.content?.image
-
-  });
+    image: component.items[0]?.content?.image,
+  })
 
   useEffect(() => {
-
     console.log(isSaving)
-    if(isSaving)
-    {
-      setTimestamp(Date.now()); // Unique value
-
+    if (isSaving) {
+      setTimestamp(Date.now()) // Unique value
     }
-
   }, [isSaving])
-
 
   const handleClickOutside = async (event) => {
     if (!publicView) {
@@ -57,7 +54,7 @@ const ImageRight = ({ component, showSettings }) => {
   }
   useEffect(() => {
     if (clickedOutside && hasChanges) {
-      console.log("Sending changes" , componentData.items)
+      console.log('Sending changes', componentData.items)
       saveChanges(id, {
         componentToEdit: { data: componentData, id: component._id },
       })
@@ -84,43 +81,48 @@ const ImageRight = ({ component, showSettings }) => {
     }
   }
 
-
-
   const handleChange = (e) => {
     const { value, name } = e.target
     setHasChanges(true)
-      setComponentData((prevValue) => set({ ...prevValue }, name, value))
-
+    setComponentData((prevValue) => set({ ...prevValue }, name, value))
   }
 
-  const style = component.style;
+  const toggleSidebar = (e) => {
+    // check added to prevent the right customization menu from taking the whole screen on mobile
+    //it will not popup if the user clicks the edit button on mobile
+    if (
+      e.target !== editBtnRef.current.children[0] &&
+      e.target.parentNode !== editBtnRef.current.children[0]
+    )
+      showSettings(component)
+  }
+  const style = component.style
   return (
     <div
       ref={wrapperRef}
-      onClick={() => showSettings(component)}
+      onClick={toggleSidebar}
       style={{
         ...style,
         minHeight: `${style.height}px`,
         width: `${style.width}%`,
         background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-        opacity: `${style.opacity}`
-
+        opacity: `${style.opacity}`,
       }}
     >
-    {isMobile ||
-          (isTablet && !publicView &&(
+       {(isMobile || isTablet) && !publicView && (
             <Button
               variant='outline-dark'
-              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              style={{ position: 'absolute', top: '0.5em', left: '3.2em' }}
+              ref={editBtnRef}
+              name='edit-btn'
               onClick={handleDoubleClick}
             >
               <FaEdit size={20} />
             </Button>
-          ))}
-      <Row className="featurette">
+          )}
+      <Row className='featurette'>
         <Col md={7}>
-
           {isEditing ? (
             <>
               <Form.Group className='mb-3'>
@@ -156,8 +158,6 @@ const ImageRight = ({ component, showSettings }) => {
             </h1>
           )}
 
-
-
           {isEditing ? (
             <>
               <Form.Group className='mb-3'>
@@ -187,24 +187,23 @@ const ImageRight = ({ component, showSettings }) => {
               name='title-h1'
               onDoubleClick={(e) => handleDoubleClick(e)}
               style={{ color: componentData.description.color }}
-              className="lead"
+              className='lead'
             >
               {componentData.description.text}
             </p>
           )}
-
         </Col>
         <Col md={5}>
-            <Image  key={isSaving ? Date.now() : undefined}
-        src={`${componentData.image.src}?cache=${timestamp}`}
-      alt={componentData.image.src}
-
-      fluid/>
-    
+          <Image
+            key={isSaving ? Date.now() : undefined}
+            src={`${componentData.image.src}?cache=${timestamp}`}
+            alt={componentData.image.src}
+            fluid
+          />
         </Col>
       </Row>
     </div>
-  );
-};
+  )
+}
 
-export default ImageRight; 
+export default ImageRight

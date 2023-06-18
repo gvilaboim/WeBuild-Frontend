@@ -12,6 +12,7 @@ const Hero = ({ component, showSettings }) => {
 
   //needed to detect clicks outside
   const wrapperRef = useRef(null)
+  const editBtnRef = useRef(null)
 
   const [isEditing, setIsEditing] = useState(false)
   const [hasChanges, setHasChanges] = useState(false)
@@ -120,8 +121,11 @@ const Hero = ({ component, showSettings }) => {
     }
   }
 
-  const toggleSidebar = () => {
-    if (!isEditing) showSettings(component)
+  const toggleSidebar = (e) => {
+  
+    // check added to prevent the right customization menu from taking the whole screen on mobile
+    //it will not popup if the user clicks the edit button on mobile
+    if (e.target !== editBtnRef.current.children[0] && e.target.parentNode !== editBtnRef.current.children[0] ) showSettings(component)
   }
 
   const style = component.style
@@ -143,16 +147,17 @@ const Hero = ({ component, showSettings }) => {
         fluid='xxl'
         className='px-5 py-1'
       >
-      {isMobile ||
-          (isTablet && !publicView &&(
+     {(isMobile || isTablet) && !publicView && (
             <Button
               variant='outline-dark'
-              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              style={{ position: 'absolute', top: '0.5em', left: '3.2em' }}
+              ref={editBtnRef}
+              name='edit-btn'
               onClick={handleDoubleClick}
             >
               <FaEdit size={20} />
             </Button>
-          ))}
+          )}
         <Row className='flex-lg-row-reverse align-items-center g-5 py-1'>
           <Col
             lg={6}

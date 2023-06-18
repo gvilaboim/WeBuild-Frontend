@@ -19,6 +19,8 @@ const ImageLeft = ({ component, showSettings }) => {
 
   //needed to detect clicks outside
   const wrapperRef = useRef(null)
+  const editBtnRef = useRef(null)
+
   const [hasChanges, setHasChanges] = useState(false)
   const [clickedOutside, setClickedOutside] = useState(false)
 
@@ -85,11 +87,20 @@ const ImageLeft = ({ component, showSettings }) => {
     setComponentData((prevValue) => set({ ...prevValue }, name, value))
   }
 
+  const toggleSidebar = (e) => {
+    // check added to prevent the right customization menu from taking the whole screen on mobile
+    //it will not popup if the user clicks the edit button on mobile
+    if (
+      e.target !== editBtnRef.current.children[0] &&
+      e.target.parentNode !== editBtnRef.current.children[0]
+    )
+      showSettings(component)
+  }
   const style = component.style
   return (
     <div
       ref={wrapperRef}
-      onClick={() => showSettings(component)}
+      onClick={toggleSidebar}
       style={{
         ...style,
         minHeight: `${style.height}px`,
@@ -99,16 +110,17 @@ const ImageLeft = ({ component, showSettings }) => {
         opacity: `${style.opacity}`,
       }}
     >
-      {isMobile ||
-        (isTablet && !publicView && (
-          <Button
-            variant='outline-dark'
-            style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
-            onClick={handleDoubleClick}
-          >
-            <FaEdit size={20} />
-          </Button>
-        ))}
+       {(isMobile || isTablet) && !publicView && (
+            <Button
+              variant='outline-dark'
+              style={{ position: 'absolute', top: '0.5em', left: '3.2em' }}
+              ref={editBtnRef}
+              name='edit-btn'
+              onClick={handleDoubleClick}
+            >
+              <FaEdit size={20} />
+            </Button>
+          )}
       <Row className='featurette'>
         <Col
           md={7}

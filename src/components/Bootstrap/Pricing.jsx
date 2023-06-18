@@ -17,6 +17,7 @@ const Pricing = ({ component, showSettings }) => {
   const { id } = useParams()
 
   const wrapperRef = useRef(null)
+  const editBtnRef = useRef(null)
 
   const [isEditing, setIsEditing] = useState(false)
   const [hasChanges, setHasChanges] = useState(false)
@@ -42,7 +43,6 @@ const Pricing = ({ component, showSettings }) => {
 
   useEffect(() => {
     if (clickedOutside && hasChanges) {
-      console.log(componentData)
       saveChanges(id, {
         componentToEdit: { data: componentData, id: component._id },
       })
@@ -153,8 +153,14 @@ const Pricing = ({ component, showSettings }) => {
     }
   }
 
-  const toggleSidebar = () => {
-    if (!isEditing) showSettings(component)
+  const toggleSidebar = (e) => {
+    // check added to prevent the right customization menu from taking the whole screen on mobile
+    //it will not popup if the user clicks the edit button on mobile
+    if (
+      e.target !== editBtnRef.current.children[0] &&
+      e.target.parentNode !== editBtnRef.current.children[0]
+    )
+      showSettings(component)
   }
   const style = component.style
 
@@ -173,16 +179,17 @@ const Pricing = ({ component, showSettings }) => {
       }}
     >
       <Container>
-        {isMobile ||
-          (isTablet && !publicView && (
-            <Button
-              variant='outline-dark'
-              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
-              onClick={handleDoubleClick}
-            >
-              <FaEdit size={20} />
-            </Button>
-          ))}
+        {(isMobile || isTablet) && !publicView && (
+          <Button
+            variant='outline-dark'
+            style={{ position: 'absolute', top: '0.5em', left: '3.2em' }}
+            ref={editBtnRef}
+            name='edit-btn'
+            onClick={handleDoubleClick}
+          >
+            <FaEdit size={20} />
+          </Button>
+        )}
         {/* HANDLE TITLE EDITS */}
 
         {isEditing ? (
