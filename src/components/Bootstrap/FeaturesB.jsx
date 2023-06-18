@@ -17,6 +17,8 @@ const FeaturesB = ({ component, showSettings }) => {
   } = useContext(CanvasContext)
   const { id } = useParams()
   const wrapperRef = useRef(null)
+  const editBtnRef = useRef(null)
+
 
   const [isEditing, setIsEditing] = useState(false)
   const [hasChanges, setHasChanges] = useState(false)
@@ -115,8 +117,11 @@ const FeaturesB = ({ component, showSettings }) => {
     }
   }
 
-  const toggleSidebar = () => {
-    if (!isEditing) showSettings(component)
+  const toggleSidebar = (e) => {
+  
+    // check added to prevent the right customization menu from taking the whole screen on mobile
+    //it will not popup if the user clicks the edit button on mobile
+    if (e.target !== editBtnRef.current.children[0] && e.target.parentNode !== editBtnRef.current.children[0] ) showSettings(component)
   }
 
   const style = component.style
@@ -137,16 +142,17 @@ const FeaturesB = ({ component, showSettings }) => {
       }}
     >
       <Container className='px-4 py-5'>
-        {isMobile ||
-          (isTablet && !publicView && (
+      {(isMobile || isTablet) && !publicView && (
             <Button
               variant='outline-dark'
-              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              style={{ position: 'absolute', top: '0.5em', left: '3.2em' }}
+              ref={editBtnRef}
+              name='edit-btn'
               onClick={handleDoubleClick}
             >
               <FaEdit size={20} />
             </Button>
-          ))}
+          )}
         {isEditing ? (
           <>
             <Form.Group className='mb-3'>
@@ -290,7 +296,6 @@ const FeaturesB = ({ component, showSettings }) => {
                     card={card}
                     featureName={component.name}
                     isEditing={isEditing}
-                    setIsEditing={setIsEditing}
                     handleDoubleClick={handleDoubleClick}
                     onChange={handleCardChanges}
                   />

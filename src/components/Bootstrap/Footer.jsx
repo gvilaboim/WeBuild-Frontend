@@ -157,16 +157,15 @@ const Footer = ({ component, showSettings }) => {
           }}
         fluid
       >
-      {isMobile ||
-          (isTablet && !publicView &&(
+     {(isMobile || isTablet) && !publicView && (
             <Button
               variant='outline-dark'
-              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              style={{ position: 'absolute', top: '0.5em', left: '3.2em' }}
               onClick={handleDoubleClick}
             >
               <FaEdit size={20} />
             </Button>
-          ))}
+          )}
         <Row className='border-top py-4 my-0 ' >
           <Col mb={3}>
             {componentData &&

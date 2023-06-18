@@ -5,7 +5,7 @@ import './HomePage.css'
 import { useContext } from 'react'
 import { AuthContext } from '../../context/auth.context'
 
-function HomePage({ isMobile }) {
+function HomePage({ isMobile, isTablet }) {
   return (
     <div className='home-page'>
       <Container>
@@ -14,7 +14,7 @@ function HomePage({ isMobile }) {
 
         <Button
           className='mt-3'
-          href={isMobile? '/mobile-warning' : '/dashboard'}
+          href={isMobile || isTablet ? '/mobile-warning' : '/dashboard'}
           variant='dark'
         >
           Get started

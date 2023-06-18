@@ -55,8 +55,8 @@ function App() {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setCollapseSidemenu(true)
-        setIsTablet(true)
-        setIsMobile(false)
+        setIsTablet(false)
+        setIsMobile(true)
       } else if (window.innerWidth < 1280) {
         setIsTablet(true)
         setIsMobile(false)
@@ -115,7 +115,7 @@ function App() {
         <Routes>
           <Route
             path='/'
-            element={<HomePage isMobile={isMobile} />}
+            element={<HomePage isMobile={isMobile} isTablet={isTablet}/>}
           />
 
           <Route

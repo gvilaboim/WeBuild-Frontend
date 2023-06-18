@@ -7,10 +7,17 @@ import FeaturesCard from './FeaturesCard'
 import { FaEdit } from 'react-icons/fa'
 
 const FeaturesA = ({ component, showSettings }) => {
-  const { saveChanges, setWebsite, publicView, setShowSettingsSidebar,isMobile, isTablet } =
-    useContext(CanvasContext)
+  const {
+    saveChanges,
+    setWebsite,
+    publicView,
+    setShowSettingsSidebar,
+    isMobile,
+    isTablet,
+  } = useContext(CanvasContext)
   const { id } = useParams()
   const wrapperRef = useRef(null)
+  const editBtnRef = useRef(null)
 
   const [isEditing, setIsEditing] = useState(false)
   const [hasChanges, setHasChanges] = useState(false)
@@ -57,7 +64,7 @@ const FeaturesA = ({ component, showSettings }) => {
 
   const handleDoubleClick = (e) => {
     if (!publicView) {
-      setIsEditing(true)
+      setIsEditing(!isEditing)
       setShowSettingsSidebar(false)
     }
   }
@@ -109,8 +116,11 @@ const FeaturesA = ({ component, showSettings }) => {
     }
   }
 
-  const toggleSidebar = () => {
-    if (!isEditing) showSettings(component)
+  const toggleSidebar = (e) => {
+  
+    // check added to prevent the right customization menu from taking the whole screen on mobile
+    //it will not popup if the user clicks the edit button on mobile
+    if (e.target !== editBtnRef.current.children[0] && e.target.parentNode !== editBtnRef.current.children[0] ) showSettings(component)
   }
 
   const style = component.style
@@ -126,8 +136,7 @@ const FeaturesA = ({ component, showSettings }) => {
         width: `${style.width}%`,
         background: `no-repeat  center/cover url(${style.backgroundImage}) ${style.backgroundColor}`,
         padding: `${style.padding.top}% ${style.padding.right}% ${style.padding.bottom}% ${style.padding.left}%`,
-        opacity: `${style.opacity}`
-
+        opacity: `${style.opacity}`,
       }}
     >
       <Container fluid>
@@ -135,16 +144,17 @@ const FeaturesA = ({ component, showSettings }) => {
           className='px-4 py-5'
           id={`featured-0`}
         >
-        {isMobile ||
-          (isTablet && !publicView && (
+          {(isMobile || isTablet) && !publicView && (
             <Button
               variant='outline-dark'
-              style={{ position: 'absolute', top: '0.8em', left: '3.2em' }}
+              style={{ position: 'absolute', top: '0.5em', left: '3.2em' }}
+              ref={editBtnRef}
+              name='edit-btn'
               onClick={handleDoubleClick}
             >
               <FaEdit size={20} />
             </Button>
-          ))}
+          )}
           {isEditing ? (
             <>
               <Form.Group className='mb-3'>
@@ -193,7 +203,6 @@ const FeaturesA = ({ component, showSettings }) => {
                   card={card}
                   featureName={component.name}
                   isEditing={isEditing}
-                  setIsEditing={setIsEditing}
                   handleDoubleClick={handleDoubleClick}
                   onChange={handleCardChanges}
                 />

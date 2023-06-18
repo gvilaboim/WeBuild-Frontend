@@ -2,7 +2,7 @@ import { Accordion, Button, Card, Container, ListGroup } from 'react-bootstrap'
 import { useAccordionButton } from 'react-bootstrap/AccordionButton'
 import { CiMenuBurger } from 'react-icons/ci'
 import { MdDashboard, MdDomain } from 'react-icons/md'
-import { FaSignOutAlt, FaUser } from 'react-icons/fa'
+import { FaSignOutAlt, FaUser, FaProductHunt } from 'react-icons/fa'
 import { HiUserGroup } from 'react-icons/hi'
 
 import './Dashboard.css'
@@ -96,13 +96,18 @@ const SideMenu = ({ collapseSidemenu }) => {
                 {isLoggedIn && (
                   <>
                     {userPlan && (
-                      <Card.Text>
-                        Plan: <a href='/account'>{userPlan.name}</a>
+                      <Card.Text >
+                        {isMobile ? <FaProductHunt size={20} className='mb-1'/> : 'Plan:'}
+                        <a href='/dashboard#section4'> {userPlan.name}</a>
                       </Card.Text>
                     )}
                     <Card.Text className={isMobile ? 'my-3' : 'my-5'}>
-                      <span className='text-muted'>Signed in as </span>
-                      <a href='/account'>{userInfo?.name}</a>
+                      {isMobile ? (
+                        <FaUser size={20} className='mb-1'/>
+                      ) : (
+                        <span className='text-muted'>Signed in as </span>
+                      )}
+                      <a href='/dashboard#section3'> {userInfo?.name}</a>
                     </Card.Text>
 
                     <Button
@@ -253,7 +258,7 @@ const SideMenu = ({ collapseSidemenu }) => {
                     <Card className='bg-dark border-none'>
                       <Card.Header>
                         <CustomToggle eventKey='11'>
-                          {isMobile ? <HiUserGroup size={30}/> : 'Community'}{' '}
+                          {isMobile ? <HiUserGroup size={30} /> : 'Community'}{' '}
                         </CustomToggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey='11'>
@@ -269,7 +274,7 @@ const SideMenu = ({ collapseSidemenu }) => {
                     <Card className='bg-dark border-none'>
                       <Card.Header>
                         <CustomToggle eventKey='5'>
-                          {isMobile ? <MdDomain size={30}/> : 'Customize URLs'}
+                          {isMobile ? <MdDomain size={30} /> : 'Customize URLs'}
                         </CustomToggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey='5'>
@@ -285,7 +290,7 @@ const SideMenu = ({ collapseSidemenu }) => {
                     <Card className='bg-dark border-none'>
                       <Card.Header>
                         <CustomToggle eventKey='6'>
-                          {isMobile ? <FaShopify size={30}/> : 'My Products'}
+                          {isMobile ? <FaShopify size={30} /> : 'My Products'}
                         </CustomToggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey='6'>
